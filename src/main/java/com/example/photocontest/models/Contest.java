@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Data
@@ -20,6 +21,13 @@ public class Contest {
 
     private String name;
     private String description;
+
+    @OneToOne
+    @JoinColumn(name = "winner_id")
+    private PhotoPost winner;
+
+    @OneToMany
+    private List<PhotoPost> photoPosts;
 
     @Temporal(TemporalType.DATE)
     @Column(name = "start_date")
@@ -40,7 +48,11 @@ public class Contest {
     @JoinColumn(name = "creator_id")
     private User creator;
 
+    @OneToOne
+    @JoinColumn(name = "contest_type_id")
     private ContestType contestType;
 
+    @OneToOne
+    @JoinColumn(name = "contest_phase_id")
     private  ContestPhase contestPhase;
 }
