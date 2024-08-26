@@ -40,5 +40,7 @@ public class Contest {
     @JoinColumn(name = "creator_id")
     private User creator;
 
+    private ContestType contestType;
 
+    private  ContestPhase contestPhase;
 }
