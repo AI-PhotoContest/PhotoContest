@@ -1,8 +1,9 @@
 package com.example.photocontest.models;
 
 
-import com.example.photocontest.models.enums.Phase;
-import com.example.photocontest.models.enums.Status;
+import com.example.photocontest.models.enums.ContestPhase;
+import com.example.photocontest.models.enums.ContestStatus;
+import com.example.photocontest.models.enums.ContestType;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -47,10 +48,13 @@ public class Contest {
     private Date endDate;
 
     @Enumerated(EnumType.STRING)
-    private Status status;
+    private ContestStatus status;
 
     @Enumerated(EnumType.STRING)
-    private Phase phase;
+    private ContestPhase phase;
+
+    @Enumerated(EnumType.STRING)
+    private ContestType type;
 
     @ManyToOne
     @JoinColumn(name = "category_id")

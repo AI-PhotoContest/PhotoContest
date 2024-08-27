@@ -12,6 +12,6 @@ import org.mockito.BDDMockito;
 public class UserRegistrationFutureTest {
 // test with gherkin
 
-    
+
 
 }
