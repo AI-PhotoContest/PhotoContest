@@ -28,9 +28,9 @@ public class User {
     private String password;
     private String email;
 
-//    @ManyToOne
-//    @JoinColumn(name = "role_id")
-//    private Set<Role> role;
+    @Enumerated(EnumType.STRING)
+    @JoinColumn(name = "role_id")
+    private Role role;
     private String firstName;
     private String lastName;
     private String profilePicture;
@@ -47,7 +47,7 @@ public class User {
     private boolean isVotable;
 
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.singletonList(new SimpleGrantedAuthority("ROLE_" + role.name()));
+        return Collections.singletonList(new SimpleGrantedAuthority("ROLE_" + role.toString()));
     }
 
 
