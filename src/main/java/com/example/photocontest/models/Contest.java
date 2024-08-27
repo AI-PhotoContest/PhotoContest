@@ -1,6 +1,7 @@
 package com.example.photocontest.models;
 
 
+import com.example.photocontest.models.enums.Phase;
 import com.example.photocontest.models.enums.Status;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -22,6 +23,14 @@ public class Contest {
     private String name;
     private String description;
 
+    @ManyToMany
+    @JoinTable(
+            name = "contest_judges",
+            joinColumns = @JoinColumn(name = "contest_id"),
+            inverseJoinColumns = @JoinColumn(name = "judge_id"))
+    private List<User> judges;
+
+
     @OneToOne
     @JoinColumn(name = "winner_id")
     private PhotoPost winner;
@@ -40,6 +49,9 @@ public class Contest {
     @Enumerated(EnumType.STRING)
     private Status status;
 
+    @Enumerated(EnumType.STRING)
+    private Phase phase;
+
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
@@ -48,11 +60,9 @@ public class Contest {
     @JoinColumn(name = "creator_id")
     private User creator;
 
-    @OneToOne
-    @JoinColumn(name = "contest_type_id")
-    private ContestType contestType;
+//    @OneToOne
+//    @JoinColumn(name = "contest_type_id")
+//    private ContestType contestType;
+//
 
-    @OneToOne
-    @JoinColumn(name = "contest_phase_id")
-    private  ContestPhase contestPhase;
 }

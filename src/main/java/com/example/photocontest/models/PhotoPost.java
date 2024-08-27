@@ -23,6 +23,11 @@ public class PhotoPost {
     private String description;
     private String image;
 
+
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "ranking_id")
+    private Ranking ranking;
+
     @ManyToOne
     @JoinColumn(name = "likes_id")
     private User likes;
