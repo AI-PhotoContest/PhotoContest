@@ -24,15 +24,21 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
     private String username;
+
     private String password;
+
     private String email;
 
     @Enumerated(EnumType.STRING)
     @JoinColumn(name = "role_id")
     private Role role;
+
     private String firstName;
+
     private String lastName;
+
     private String profilePicture;
 
     private int points;

@@ -1,5 +1,6 @@
 package com.example.photocontest.models;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,30 +19,11 @@ public class PhotoPost {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-
     private String title;
+
     private String description;
+
     private String image;
-
-
-    @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "ranking_id")
-    private Ranking ranking;
-
-    @ManyToOne
-    @JoinColumn(name = "likes_id")
-    private User likes;
-
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "photo_post_id")
-    private Set<Comment> comments;
-
-    @Column(name = "seen_count")
-    private int seenCount;
-
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "category_id")
-    private Category category;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "creator_id")
@@ -61,5 +43,15 @@ public class PhotoPost {
 
     @Column(name = "retouching_applied")
     private String retouchingApplied;
+
     private String location;
+
+    @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @JsonManagedReference
+    @JoinTable(
+            name = "photo_post_tags",
+            joinColumns = @JoinColumn(name = "photo_post_id"),
+            inverseJoinColumns = @JoinColumn(name = "tag_id")
+    )
+    private Set<Tag> tags;
 }

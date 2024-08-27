@@ -1,17 +1,21 @@
 package com.example.photocontest.models;
 
 
-import com.example.photocontest.models.enums.Phase;
-import com.example.photocontest.models.enums.Status;
+import com.example.photocontest.models.enums.ContestPhase;
+import com.example.photocontest.models.enums.ContestStatus;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 @Entity
-@Data
+@Setter
+@Getter
 @NoArgsConstructor
 @Table(name = "contests")
 public class Contest {
@@ -20,7 +24,8 @@ public class Contest {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    private String name;
+    private String title;
+
     private String description;
 
     @ManyToMany
@@ -47,22 +52,16 @@ public class Contest {
     private Date endDate;
 
     @Enumerated(EnumType.STRING)
-    private Status status;
+    private ContestStatus status;
 
     @Enumerated(EnumType.STRING)
-    private Phase phase;
+    private ContestPhase phase;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "category_id")
     private Category category;
 
     @ManyToOne
     @JoinColumn(name = "creator_id")
     private User creator;
-
-//    @OneToOne
-//    @JoinColumn(name = "contest_type_id")
-//    private ContestType contestType;
-//
-
 }
