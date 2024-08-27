@@ -1,8 +1,11 @@
 package com.example.photocontest.models;
 
+import com.example.photocontest.models.enums.Role;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
@@ -11,7 +14,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @Entity
 @Table(name = "users")
@@ -24,9 +28,9 @@ public class User {
     private String password;
     private String email;
 
-    @ManyToOne
-    @JoinColumn(name = "role_id")
-    private Role role;
+//    @ManyToOne
+//    @JoinColumn(name = "role_id")
+//    private Set<Role> role;
     private String firstName;
     private String lastName;
     private String profilePicture;
@@ -43,7 +47,7 @@ public class User {
     private boolean isVotable;
 
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.singletonList(new SimpleGrantedAuthority("ROLE_" + role.getName()));
+        return Collections.singletonList(new SimpleGrantedAuthority("ROLE_" + role.name()));
     }
 
 

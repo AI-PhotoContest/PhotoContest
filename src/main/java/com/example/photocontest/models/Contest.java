@@ -39,8 +39,4 @@ public class Contest {
     @ManyToOne
     @JoinColumn(name = "creator_id")
     private User creator;
-
-    private ContestType contestType;
-
-    private  ContestPhase contestPhase;
 }
