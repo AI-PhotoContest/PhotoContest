@@ -1,6 +1,6 @@
 package com.example.photocontest.models.enums;
 
-public enum Status {
+public enum ContestStatus {
     OPEN,
     INVITATIONAL;
 

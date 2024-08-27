@@ -1,12 +1,14 @@
 package com.example.photocontest.models;
 
 
+import com.example.photocontest.models.enums.Phase;
 import com.example.photocontest.models.enums.Status;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Data
