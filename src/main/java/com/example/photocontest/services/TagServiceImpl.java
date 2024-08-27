@@ -1,0 +1,57 @@
+package com.example.photocontest.services;
+
+
+import com.example.photocontest.exceptions.EntityNotFoundException;
+import com.example.photocontest.models.Tag;
+import com.example.photocontest.repositories.TagRepository;
+import com.example.photocontest.services.contracts.TagService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+@Service
+public class TagServiceImpl implements TagService {
+
+    private final TagRepository tagRepository;
+
+    @Autowired
+    public TagServiceImpl(TagRepository tagRepository) {
+        this.tagRepository = tagRepository;
+    }
+
+    @Override
+    public List<Tag> get() {
+        return tagRepository.findAll();
+    }
+
+    @Override
+    public Tag getById(int id) {
+        return tagRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Tag",id));
+    }
+
+    @Override
+    public void create(Tag tag) {
+        tagRepository.save(tag);
+    }
+
+    @Override
+    public void update(Tag tag) {
+        tagRepository.save(tag);
+    }
+
+    @Override
+    public void delete(int id) {
+        tagRepository.deleteById(id);
+    }
+
+    @Override
+    public Set<Tag> findOrCreateTags(Set<Tag> tags) {
+        return tags.stream()
+                .map(tag -> tagRepository.findByName(tag.getName()).orElseGet(() -> tagRepository.save(tag)))
+                .collect(Collectors.toSet());
+    }
+}
