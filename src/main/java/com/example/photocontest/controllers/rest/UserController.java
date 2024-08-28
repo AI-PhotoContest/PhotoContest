@@ -1,10 +1,13 @@
 package com.example.photocontest.controllers.rest;
 
 import com.example.photocontest.mappers.UserMapper;
+import com.example.photocontest.models.User;
 import com.example.photocontest.models.dto.UserDto;
 import com.example.photocontest.services.contracts.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("users")
@@ -20,18 +23,18 @@ public class UserController {
     }
 
     @GetMapping
-    public void getAllUsers() {
-        userService.getAll();
+    public List<User> getAllUsers() {
+      return userService.getAll();
     }
 
     @GetMapping("/{id}")
-    public void getUserById(@PathVariable int id) {
-        userService.findUserById(id);
+    public User getUserById(@PathVariable int id) {
+       return userService.findUserById(id);
     }
 
     @PostMapping
-    public void createUser(@RequestBody UserDto userDto) {
-        userService.createUser(userMapper.fromDto(userDto));
+    public User createUser(@RequestBody UserDto userDto) {
+        return userService.createUser(userMapper.fromDto(userDto));
     }
 
 }
