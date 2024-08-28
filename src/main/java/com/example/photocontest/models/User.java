@@ -25,8 +25,9 @@ public class User {
 
     private String email;
 
+
     @JsonIgnore
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id"),
@@ -40,7 +41,7 @@ public class User {
 
     private String profilePicture;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "points_id")
     private PointsSystem points;
 

@@ -33,8 +33,7 @@ dependencies {
 
     //email validation dependencies
     implementation 'org.apache.httpcomponents:httpclient:4.5.13'
-    implementation 'com.fasterxml.jackson.core:jackson-databind:2.12.3'
-
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.15.2'
     // Cucumber Dependencies
     testImplementation 'io.cucumber:cucumber-java:7.0.0'
     testImplementation 'io.cucumber:cucumber-spring:7.0.0'

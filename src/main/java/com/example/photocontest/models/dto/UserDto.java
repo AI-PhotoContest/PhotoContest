@@ -34,16 +34,16 @@ public class UserDto {
                     "it must be 4-12 characters long.")
     private String password;
 
-    @NotEmpty
-    @NotNull
-    @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\\W)(?!.* ).{4,12}$",
-            message = "Password must contain one digit from 1 to 9, " +
-                    "one lowercase letter, " +
-                    "one uppercase letter, " +
-                    "one special character, " +
-                    "no space, and " +
-                    "it must be 4-12 characters long.")
-    private String confirmPassword;
+//    @NotEmpty
+//    @NotNull
+//    @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\\W)(?!.* ).{4,12}$",
+//            message = "Password must contain one digit from 1 to 9, " +
+//                    "one lowercase letter, " +
+//                    "one uppercase letter, " +
+//                    "one special character, " +
+//                    "no space, and " +
+//                    "it must be 4-12 characters long.")
+//    private String confirmPassword;
 
     @Pattern(regexp = "^[\\+]?[(]?[0-9]{3}[)]?[-\\s\\.]?[0-9]{3}[-\\s\\.]?[0-9]{4,6}$",
             message = "Phone number must be a valid phone number!")

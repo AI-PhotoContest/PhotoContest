@@ -1,5 +1,6 @@
 package com.example.photocontest.models;
 
+import com.example.photocontest.models.enums.RoleType;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,7 +14,10 @@ public class Role {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "role", unique = true, nullable = false)
-    private String name;
+//    @Column(name = "role", unique = true, nullable = false)
+
+    @Enumerated(EnumType.STRING)
+    @Column(unique = true, nullable = false)
+    private RoleType name;
 
 }

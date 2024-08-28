@@ -1,4 +1,4 @@
-package com.example.photocontest.controllers;
+package com.example.photocontest.controllers.rest;
 
 
 import com.example.photocontest.exceptions.AuthorizationException;

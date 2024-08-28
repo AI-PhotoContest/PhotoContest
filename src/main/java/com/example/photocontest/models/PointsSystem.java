@@ -9,11 +9,17 @@ import lombok.Data;
 @Table(name = "points_system")
 public class PointsSystem {
 
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int id;
 
     int points;
+
+    public PointsSystem InitializePoints() {
+        this.points = 0;
+        return this;
+    }
 
     public String toString() {
         String result;
@@ -30,5 +36,6 @@ public class PointsSystem {
         }
         return result;
     }
+
 
 }
