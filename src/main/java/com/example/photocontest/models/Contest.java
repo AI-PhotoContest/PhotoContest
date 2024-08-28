@@ -28,6 +28,8 @@ public class Contest {
 
     private String description;
 
+    private String photoUrl;
+
     @ManyToMany
     @JoinTable(
             name = "contest_judges",
