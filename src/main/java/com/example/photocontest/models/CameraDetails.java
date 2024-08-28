@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 @Data
 @Entity
+@NoArgsConstructor
 @Table(name = "camera_details")
 public class CameraDetails {
 
