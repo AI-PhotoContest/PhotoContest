@@ -80,7 +80,7 @@ public class UserServiceImpl implements UserService {
         checkEmailUnique(user);
         RoleType photoJunkieType = RoleType.PHOTO_JUNKIE;
         Role role = roleRepository.findByName(photoJunkieType);
-        user.setRoles(Set.of(role));
+        user.setRoles(List.of(role));
         PointsSystem pointsSystem = new PointsSystem().InitializePoints();
         user.setPoints(pointsSystem);
         String rawPassword = user.getPassword();
