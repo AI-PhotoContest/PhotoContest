@@ -1,5 +1,6 @@
 package com.example.photocontest;
 
+import com.example.photocontest.services.EmailService;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 

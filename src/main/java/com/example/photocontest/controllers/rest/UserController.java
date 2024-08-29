@@ -3,6 +3,7 @@ package com.example.photocontest.controllers.rest;
 import com.example.photocontest.mappers.UserMapper;
 import com.example.photocontest.models.User;
 import com.example.photocontest.models.dto.UserDto;
+import com.example.photocontest.services.EmailService;
 import com.example.photocontest.services.contracts.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -15,11 +16,13 @@ public class UserController {
 
     private final UserService userService;
     private final UserMapper userMapper;
+    private final EmailService emailService;
 
     @Autowired
-    public UserController(UserService userService, UserMapper userMapper) {
+    public UserController(UserService userService, UserMapper userMapper, EmailService emailService) {
         this.userService = userService;
         this.userMapper = userMapper;
+        this.emailService = emailService;
     }
 
     @GetMapping
@@ -34,7 +37,8 @@ public class UserController {
 
     @PostMapping
     public User createUser(@RequestBody UserDto userDto) {
-        return userService.createUser(userMapper.fromDto(userDto));
+        User user = userService.createUser(userMapper.fromDto(userDto));
+        emailService.sendSimpleEmail(user.getEmail(),user.getUsername());
+        return user;
     }
-
 }

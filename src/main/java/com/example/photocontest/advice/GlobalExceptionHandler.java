@@ -60,4 +60,11 @@ public class GlobalExceptionHandler {
         return errorMap;
     }
 
+    @ExceptionHandler(RuntimeException.class)
+    public Map<String, String> handleException(RuntimeException exception) {
+        Map<String, String> errorMap = new HashMap<>();
+        errorMap.put("error message ", exception.getMessage());
+        return errorMap;
+    }
+
 }
