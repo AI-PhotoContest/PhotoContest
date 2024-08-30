@@ -3,7 +3,7 @@ package com.example.photocontest.services;
 import com.example.photocontest.exceptions.EntityDuplicateException;
 import com.example.photocontest.exceptions.EntityNotFoundException;
 import com.example.photocontest.filters.UserFilterOptions;
-import com.example.photocontest.filters.UserSpecifications;
+import com.example.photocontest.filters.specifications.UserSpecifications;
 import com.example.photocontest.models.PointsSystem;
 import com.example.photocontest.models.Role;
 import com.example.photocontest.models.User;
@@ -20,7 +20,6 @@ import org.springframework.stereotype.Service;
 
 
 import java.util.List;
-import java.util.Set;
 
 @Service
 public class UserServiceImpl implements UserService {

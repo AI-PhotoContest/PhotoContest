@@ -1,5 +1,6 @@
-package com.example.photocontest.filters;
+package com.example.photocontest.filters.specifications;
 
+import com.example.photocontest.filters.UserFilterOptions;
 import org.springframework.data.jpa.domain.Specification;
 import com.example.photocontest.models.User;
 
