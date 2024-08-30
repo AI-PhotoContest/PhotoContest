@@ -106,12 +106,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User blockUser(User user) {
-        return null;
+        user.setBlocked(true);
+        return userRepository.save(user);
     }
 
     @Override
     public User unblockUser(User user) {
-        return null;
+        user.setBlocked(false);
+        return userRepository.save(user);
     }
 
     @Override
@@ -135,11 +137,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User setRole(int userId, String role) {
-        User user = userRepository.findById(userId);
-        if (user == null) {
-            throw new EntityNotFoundException("User", userId);
-        }
+    public User setRole(User user, String role) {
+
         Role roleToSet = roleRepository.findByName(RoleType.valueOf(role.toUpperCase()));
         if (roleToSet == null) {
             throw new EntityNotFoundException("Role", "role", role);
@@ -153,11 +152,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User removeRole(int userId, String role) {
-        User user = userRepository.findById(userId);
-        if (user == null) {
-            throw new EntityNotFoundException("User", userId);
-        }
+    public User removeRole(User user, String role) {
+
         Role roleToRemove = roleRepository.findByName(RoleType.valueOf(role.toUpperCase()));
         if (roleToRemove == null) {
             throw new EntityNotFoundException("Role", "role", role);
@@ -167,6 +163,18 @@ public class UserServiceImpl implements UserService {
         }
         List<Role> roles = user.getRoles();
         roles.remove(roleToRemove);
+        return userRepository.save(user);
+    }
+
+    @Override
+    public User makeUserVotable(User user) {
+        user.setVotable(true);
+        return userRepository.save(user);
+    }
+
+    @Override
+    public User makeUserNotVotable(User user) {
+        user.setVotable(false);
         return userRepository.save(user);
     }
 

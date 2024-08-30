@@ -22,6 +22,9 @@ public interface UserService {
 
     void createUserWithRole(User user, String role);
 
+    User makeUserVotable(User user);
+    User makeUserNotVotable(User user);
+
     User blockUser(User user);
 
     User unblockUser(User user);
@@ -39,6 +42,6 @@ public interface UserService {
 
     void processOAuthPostLogin(String email,String Username);
 
-    User setRole(int userId, String role);
-    User removeRole(int userId, String role);
+    User setRole(User user, String role);
+    User removeRole(User user, String role);
 }

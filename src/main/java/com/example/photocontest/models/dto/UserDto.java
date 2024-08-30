@@ -45,8 +45,5 @@ public class UserDto {
 //                    "it must be 4-12 characters long.")
 //    private String confirmPassword;
 
-    @Pattern(regexp = "^[\\+]?[(]?[0-9]{3}[)]?[-\\s\\.]?[0-9]{3}[-\\s\\.]?[0-9]{4,6}$",
-            message = "Phone number must be a valid phone number!")
-    private String phoneNumber;
 
 }

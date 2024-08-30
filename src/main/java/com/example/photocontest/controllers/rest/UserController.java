@@ -4,34 +4,35 @@ import com.example.photocontest.mappers.UserMapper;
 import com.example.photocontest.models.Role;
 import com.example.photocontest.models.User;
 import com.example.photocontest.models.dto.UserDto;
+import com.example.photocontest.repositories.UserRepository;
 import com.example.photocontest.services.EmailService;
 import com.example.photocontest.services.contracts.UserService;
-import  org.springframework.security.core.Authentication;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
-import java.security.Security;
 import java.util.List;
 
+import static com.example.photocontest.helpers.AuthenticationHelpers.checkPermission;
+import static com.example.photocontest.helpers.AuthenticationHelpers.checkUserExist;
+
 @RestController
-@RequestMapping("users")
+@RequestMapping("/api/users")
 public class UserController {
 
+
     private final UserService userService;
+    private final UserRepository userRepository;
     private final UserMapper userMapper;
     private final EmailService emailService;
-    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserController(UserService userService, UserMapper userMapper, EmailService emailService, PasswordEncoder passwordEncoder) {
+    public UserController(UserService userService, UserRepository userRepository, UserMapper userMapper, EmailService emailService) {
         this.userService = userService;
+        this.userRepository = userRepository;
         this.userMapper = userMapper;
         this.emailService = emailService;
-        this.passwordEncoder = passwordEncoder;
     }
 
     @GetMapping
@@ -45,16 +46,10 @@ public class UserController {
     }
 
     @PostMapping
-    public User createUser(@RequestBody UserDto userDto) {
+    public User registerUser(@Valid @RequestBody UserDto userDto) {
         User user = userService.createUser(userMapper.fromDto(userDto));
         emailService.sendSimpleEmail(user.getEmail(),user.getUsername());
         return user;
-    }
-
-    @PostMapping("/{id}/roles")
-    public User setRole(@PathVariable int id, @RequestParam String role, Principal principal) {
-        checkPermission(principal, "ADMIN");
-        return userService.setRole(id, role);
     }
 
     @GetMapping("/{id}/roles")
@@ -62,20 +57,6 @@ public class UserController {
         return userService.findUserById(id).getRoles();
     }
 
-    @DeleteMapping("/{id}/roles")
-    public User removeRole(@PathVariable int id, @RequestParam String role, Principal principal) {
-        checkPermission(principal, "ADMIN");
-        return userService.removeRole(id, role);
-    }
 
-    private void checkPermission(Principal principal, String requestedRole) {
-        User user = userService.findUserByUsername(principal.getName());
-        for (Role role : user.getRoles()) {
-            if (role.getName().name().equalsIgnoreCase(requestedRole)) {
-                return;
-            }
-        }
-        throw new SecurityException("You do not have permission to perform this operation");
-    }
 
 }
