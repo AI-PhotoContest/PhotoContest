@@ -11,11 +11,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.security.Principal;
 import java.util.List;
-
-import static com.example.photocontest.helpers.AuthenticationHelpers.checkPermission;
-import static com.example.photocontest.helpers.AuthenticationHelpers.checkUserExist;
 
 @RestController
 @RequestMapping("/api/users")
