@@ -135,8 +135,39 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void changeRole(User user, Role role) {
+    public User setRole(int userId, String role) {
+        User user = userRepository.findById(userId);
+        if (user == null) {
+            throw new EntityNotFoundException("User", userId);
+        }
+        Role roleToSet = roleRepository.findByName(RoleType.valueOf(role.toUpperCase()));
+        if (roleToSet == null) {
+            throw new EntityNotFoundException("Role", "role", role);
+        }
+        if (user.getRoles().contains(roleToSet)) {
+            return user;
+        }
+        List<Role> roles = user.getRoles();
+        roles.add(roleToSet);
+        return userRepository.save(user);
+    }
 
+    @Override
+    public User removeRole(int userId, String role) {
+        User user = userRepository.findById(userId);
+        if (user == null) {
+            throw new EntityNotFoundException("User", userId);
+        }
+        Role roleToRemove = roleRepository.findByName(RoleType.valueOf(role.toUpperCase()));
+        if (roleToRemove == null) {
+            throw new EntityNotFoundException("Role", "role", role);
+        }
+        if (!user.getRoles().contains(roleToRemove)) {
+            return user;
+        }
+        List<Role> roles = user.getRoles();
+        roles.remove(roleToRemove);
+        return userRepository.save(user);
     }
 
     @Override

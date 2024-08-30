@@ -1,6 +1,7 @@
 package com.example.photocontest.controllers.rest;
 
 import com.example.photocontest.mappers.UserMapper;
+import com.example.photocontest.models.Role;
 import com.example.photocontest.models.User;
 import com.example.photocontest.models.dto.UserDto;
 import com.example.photocontest.services.EmailService;
@@ -34,9 +35,7 @@ public class UserController {
     }
 
     @GetMapping
-    public List<User> getAllUsers(Authentication authentication) {
-    User user = userService.findUserByUsername("pesho");
-    boolean matching = passwordEncoder.matches("Sashko123.", user.getPassword());
+    public List<User> getAllUsers() {
       return userService.getAll();
     }
 
@@ -51,4 +50,32 @@ public class UserController {
         emailService.sendSimpleEmail(user.getEmail(),user.getUsername());
         return user;
     }
+
+    @PostMapping("/{id}/roles")
+    public User setRole(@PathVariable int id, @RequestParam String role, Principal principal) {
+        checkPermission(principal, "ADMIN");
+        return userService.setRole(id, role);
+    }
+
+    @GetMapping("/{id}/roles")
+    public List<Role> getUserRoles(@PathVariable int id) {
+        return userService.findUserById(id).getRoles();
+    }
+
+    @DeleteMapping("/{id}/roles")
+    public User removeRole(@PathVariable int id, @RequestParam String role, Principal principal) {
+        checkPermission(principal, "ADMIN");
+        return userService.removeRole(id, role);
+    }
+
+    private void checkPermission(Principal principal, String requestedRole) {
+        User user = userService.findUserByUsername(principal.getName());
+        for (Role role : user.getRoles()) {
+            if (role.getName().name().equalsIgnoreCase(requestedRole)) {
+                return;
+            }
+        }
+        throw new SecurityException("You do not have permission to perform this operation");
+    }
+
 }

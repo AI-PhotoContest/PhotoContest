@@ -34,9 +34,11 @@ public interface UserService {
 
     void unbanUser(User user);
 
-    void changeRole(User user, Role role);
 
     Role getRoleByName(String name);
 
     void processOAuthPostLogin(String email,String Username);
+
+    User setRole(int userId, String role);
+    User removeRole(int userId, String role);
 }
