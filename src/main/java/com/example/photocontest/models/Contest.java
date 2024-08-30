@@ -1,17 +1,13 @@
 package com.example.photocontest.models;
 
-
 import com.example.photocontest.models.enums.ContestPhase;
 import com.example.photocontest.models.enums.ContestStatus;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Setter
