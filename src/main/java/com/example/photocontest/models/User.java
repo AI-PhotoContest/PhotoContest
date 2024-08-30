@@ -59,15 +59,6 @@ public class User {
     @Column(name = "is_votable")
     private boolean isVotable;
 
-//    @Override
-//    public Collection<? extends GrantedAuthority> getAuthorities() {
-//        List<GrantedAuthority> authorities = new ArrayList<>();
-//        for (Role role : roles) {
-//            authorities.add(new SimpleGrantedAuthority("ROLE_" + role.getName().name()));
-//        }
-//        return authorities;
-//    }
-
 
 
 }

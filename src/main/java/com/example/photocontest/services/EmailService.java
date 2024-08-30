@@ -36,7 +36,7 @@ public class EmailService {
                     + "<p>Best regards,<br>The PhotoContestAI Team<br>Alexander and Ivan</p>";
 
 
-            helper.setFrom("photocontestai@hotmail.com");  // This should match your authenticated email
+            helper.setFrom("photocontestai@hotmail.com");  // This should match the authenticated email in app.properties
             helper.setTo(emailTo);
             helper.setSubject(subject);
             helper.setText(content, true);

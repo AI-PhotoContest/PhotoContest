@@ -24,26 +24,26 @@ public class CustomUserDetails implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        // Намиране на потребителя по име (или email)
+        // Find user by username
         User user = userRepository.findByUsername(username);
 
         if (user == null) {
             throw new UsernameNotFoundException("No user found with username: " + username);
         }
 
-        // Преобразуване на ролите в GrantedAuthority
+        //  Create authorities for the user
         List<GrantedAuthority> authorities = new ArrayList<>();
         for (Role role : user.getRoles()) {
             authorities.add(new SimpleGrantedAuthority("ROLE_" + role.getName()));
         }
 
-        // Създаване на UserDetails обект
+        // Create UserDetails object from the user
         return org.springframework.security.core.userdetails.User.builder()
-                .username(user.getUsername()) // използвайте `user.getUsername()` вместо `user.getEmail()`, ако потребителят се логва с потребителско име
+                .username(user.getUsername())
                 .password(user.getPassword())
                 .authorities(authorities)
-                .accountLocked(user.isBlocked()) // Проверка дали акаунтът е блокиран
-                .disabled(user.isBanned()) // Проверка дали акаунтът е забранен
+                .accountLocked(user.isBlocked())
+                .disabled(user.isBanned())
                 .build();
     }
 }
