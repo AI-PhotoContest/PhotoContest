@@ -2,6 +2,8 @@ package com.example.photocontest.services;
 
 import com.example.photocontest.exceptions.EntityDuplicateException;
 import com.example.photocontest.exceptions.EntityNotFoundException;
+import com.example.photocontest.filters.UserFilterOptions;
+import com.example.photocontest.filters.UserSpecifications;
 import com.example.photocontest.models.PointsSystem;
 import com.example.photocontest.models.Role;
 import com.example.photocontest.models.User;
@@ -12,8 +14,10 @@ import com.example.photocontest.services.contracts.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
 
 import java.util.List;
 import java.util.Set;
@@ -34,6 +38,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public Page<User> findAll(String usernameFilter, String emailFilter, String firstNameFilter, Pageable pageable) {
         return null;
+    }
+
+    public Page<User> searchUsers(UserFilterOptions filterOptions, Pageable pageable) {
+        Specification<User> spec = UserSpecifications.buildUserSpecification(filterOptions);
+        return userRepository.findAll(spec, pageable);
     }
 
     @Override

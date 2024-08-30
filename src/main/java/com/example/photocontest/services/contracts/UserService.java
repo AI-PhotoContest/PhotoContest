@@ -1,5 +1,6 @@
 package com.example.photocontest.services.contracts;
 
+import com.example.photocontest.filters.UserFilterOptions;
 import com.example.photocontest.models.Role;
 import com.example.photocontest.models.User;
 import org.springframework.data.domain.Page;
@@ -11,6 +12,7 @@ public interface UserService {
 
     Page<User> findAll(String usernameFilter, String emailFilter, String firstNameFilter, Pageable pageable);
     List<User> getAll();
+    Page<User> searchUsers(UserFilterOptions filterOptions, Pageable pageable);
     User findUserById(int id);
     User findUserByEmail(String email);
     User findUserByUsername(String username);
