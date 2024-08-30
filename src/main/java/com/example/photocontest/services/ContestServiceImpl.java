@@ -1,6 +1,5 @@
 package com.example.photocontest.services;
 
-import com.example.photocontest.exceptions.EntityNotFoundException;
 import com.example.photocontest.filters.ContestFilterOptions;
 import com.example.photocontest.filters.specifications.ContestSpecifications;
 import com.example.photocontest.models.Contest;
@@ -12,6 +11,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 import static com.example.photocontest.helpers.ContestHelpers.checkIfContestExists;
 
@@ -49,7 +50,7 @@ public class ContestServiceImpl implements ContestService {
 
     @Override
     public Contest updateContest(Contest contest) {
-        return null;
+       return contestRepository.save(contest);
     }
 
     @Override
@@ -73,27 +74,33 @@ public class ContestServiceImpl implements ContestService {
     }
 
     @Override
-    public Contest addJudgeToContest(Contest contest, User user) {
-        return null;
+    public void addJudgeToContest(Contest contest, User user) {
+        if (contest.getJudges() == null) {
+            List<User> judges = List.of(user);
+            contest.setJudges(judges);
+        }
+         contest.getJudges().add(user);
     }
 
     @Override
-    public Contest removeJudgeFromContest(Contest contest, User user) {
-        return null;
+    public void removeJudgeFromContest(Contest contest, User user) {
+        if (contest.getJudges() != null) {
+            contest.getJudges().remove(user);
+        }
     }
 
-    @Override
-    public Contest ratePhotoPost(Contest contest, int photoPostId, int rating) {
-        return null;
-    }
+        @Override
+        public Contest ratePhotoPost (Contest contest,int photoPostId, int rating){
+            return null;
+        }
 
-    @Override
-    public Contest switchContestPhase(Contest contest) {
-        return null;
-    }
+        @Override
+        public Contest switchContestPhase (Contest contest){
+            return null;
+        }
 
-    @Override
-    public Contest switchContestStatus(Contest contest) {
-        return null;
-    }
+        @Override
+        public Contest switchContestStatus (Contest contest){
+            return null;
+        }
 }

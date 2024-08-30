@@ -7,6 +7,7 @@ import com.example.photocontest.models.Contest;
 import com.example.photocontest.models.User;
 import com.example.photocontest.models.dto.ContestDto;
 import com.example.photocontest.services.contracts.ContestService;
+import com.example.photocontest.services.contracts.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -16,7 +17,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+
+import static com.example.photocontest.helpers.AuthenticationHelpers.checkPermission;
 
 @RestController
 @RequestMapping("/api/contests")
@@ -24,12 +30,18 @@ public class ContestController {
 
     private final ContestService contestService;
     private final ContestMapper contestMapper;
+    private final UserService userService;
 
     @Autowired
-    public ContestController(ContestService contestService, ContestMapper contestMapper) {
+    public ContestController(ContestService contestService,
+                             ContestMapper contestMapper,
+                             UserService userService) {
         this.contestService = contestService;
         this.contestMapper = contestMapper;
+        this.userService = userService;
     }
+
+
 
     /**
      * Creates a new contest.
@@ -52,10 +64,17 @@ public class ContestController {
      * ```
      */
     @PostMapping
-    public Contest createContest(@Valid @RequestBody ContestDto contestDto, @AuthenticationPrincipal User creator) {
-        Contest contest = contestMapper.fromDto(contestDto, creator);
+    public Contest createContest(@Valid @RequestBody ContestDto contestDto,
+                                 Principal principal) {
+        checkPermission(principal, "ORGANIZER");
+
+        User loggedUser = userService.findUserByUsername(principal.getName());
+        Contest contest = contestMapper.fromDto(contestDto, loggedUser);
+
         return contestService.createContest(contest);
     }
+
+
 
     /**
      * Updates an existing contest with new details.
@@ -80,16 +99,21 @@ public class ContestController {
     @PutMapping("/{id}")
     public Contest updateContest(
             @PathVariable int id,
-            @Valid @RequestBody ContestDto contestDto) {
-        Contest existingContest = contestService.getContestById(id);
+            @Valid @RequestBody ContestDto contestDto,Principal principal) {
+        checkPermission(principal, "ORGANIZER");
 
-        if (existingContest != null) {
+        Contest existingContest = contestService.getContestById(id);
+        User loggedUser = userService.findUserByUsername(principal.getName());
+
+        if (existingContest.getCreator() != loggedUser){
+            throw new IllegalArgumentException("You are not the creator of this contest");
+        }
+
             Contest updatedContest = contestMapper.updateContestFromDto(existingContest, contestDto);
             return contestService.updateContest(updatedContest);
-        } else {
-            throw new EntityNotFoundException("Contest", id);
-        }
     }
+
+
 
 
     /**
@@ -148,6 +172,81 @@ public class ContestController {
         return contestService.getContestById(id);
     }
 
+
+
+    /**
+     * Adds one or more judges to an existing contest.
+     * <p>
+     * Example usage with Postman:
+     * <p>
+     * To add judges to a contest, you need to send a `POST` request with the contest's ID in the URL path
+     * and a list of judge usernames in the request body as JSON.
+     * <p>
+     * Example Postman request:
+     * <p>
+     * ```
+     * POST http://localhost:8080/api/contests/{id}/judges
+     * ```
+     * <p>
+     * Request Body:
+     * ```
+     * [
+     *   "judge1",
+     *   "judge2",
+     *   "judge3"
+     * ]
+     * ```
+     * <p>
+     * This request will add the users with the usernames "judge1", "judge2", and "judge3" as judges to the contest with the specified ID.
+     * <p>
+     * The method retrieves the `User` objects corresponding to the provided usernames, adds them as judges to the contest,
+     * and then updates the contest to reflect these changes.
+     * <p>
+     * @param id the ID of the contest to which judges should be added
+     * @param judgeUsernames a list of usernames of the judges to be added
+     * @return the updated contest details with the new judges added
+     */
+    @PostMapping("/{id}/judges")
+    public Contest addJudgesToContest(@PathVariable int id,
+                                      @RequestBody List<String> judgeUsernames,
+                                      Principal principal) {
+
+        checkPermission(principal, "ORGANIZER");
+        Contest contest = contestService.getContestById(id);
+
+        // Fetch the User objects based on the provided usernames
+        List<User> judges = judgeUsernames.stream()
+                .map(userService::findUserByUsername)
+                .toList();
+
+        // Add each judge to the contest
+        for (User judge : judges) {
+            contestService.addJudgeToContest(contest, judge);
+        }
+
+        return contestService.updateContest(contest);
+    }
+
+    @DeleteMapping("/{id}/judges")
+    public Contest removeJudgesFromContest(@PathVariable int id,
+                                           @RequestBody List<String> judgeUsernames,
+                                           Principal principal) {
+
+        checkPermission(principal, "ORGANIZER");
+        Contest contest = contestService.getContestById(id);
+
+        // Fetch the User objects based on the provided usernames
+        List<User> judges = judgeUsernames.stream()
+                .map(userService::findUserByUsername)
+                .toList();
+
+        // Remove each judge from the contest
+        for (User judge : judges) {
+            contestService.removeJudgeFromContest(contest, judge);
+        }
+
+        return contestService.updateContest(contest);
+    }
 
 
 }

@@ -16,8 +16,8 @@ public interface ContestService {
     void closeContest(int id);
     Contest addPhotoPostToContest(Contest contest, int photoPostId);
     Contest removePhotoPostFromContest(Contest contest, int photoPostId);
-    Contest addJudgeToContest(Contest contest, User user);
-    Contest removeJudgeFromContest(Contest contest, User user);
+    void addJudgeToContest(Contest contest, User user);
+    void removeJudgeFromContest(Contest contest, User user);
     Contest ratePhotoPost(Contest contest, int photoPostId, int rating);
     Contest switchContestPhase(Contest contest);
     Contest switchContestStatus(Contest contest);
