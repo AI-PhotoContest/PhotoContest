@@ -122,7 +122,7 @@ public class ContestServiceImpl implements ContestService {
 
     @Override
     public List<PhotoPost> findTop3ByContestId(int contestId) {
-        List<PhotoPost> allPosts = contestRepository.findAllPhotoPostsByContestId(contestId);
+        List<PhotoPost> allPosts = contestRepository.findAllByContestId(contestId);
         return allPosts.stream()
                 .sorted(Comparator.comparing(PhotoPost::getScore).reversed())
                 .limit(3)

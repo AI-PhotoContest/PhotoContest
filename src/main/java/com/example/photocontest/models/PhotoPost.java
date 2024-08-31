@@ -59,6 +59,10 @@ public class PhotoPost {
     )
     private Set<Tag> tags;
 
+    @ManyToOne
+    @JoinColumn(name = "contest_id")
+    private Contest contest;
+
     @OneToMany(mappedBy = "photoPost", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Vote> votes;
 

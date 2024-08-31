@@ -14,9 +14,7 @@ public interface ContestRepository extends JpaRepository<Contest, Integer>, JpaS
 
     Contest findById(int id);
 
-    List<PhotoPost> getAllPhotoPosts(int id);
-
-    @Query("SELECT p FROM Contest c JOIN c.photoPosts p WHERE c.id = :contestId")
-    List<PhotoPost> findAllPhotoPostsByContestId(@Param("contestId") int contestId);
+    @Query("SELECT p FROM PhotoPost p WHERE p.contest.id = :contestId")
+    List<PhotoPost> findAllByContestId(@Param("contestId") int contestId);
 
 }
