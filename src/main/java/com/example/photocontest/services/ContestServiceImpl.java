@@ -3,8 +3,10 @@ package com.example.photocontest.services;
 import com.example.photocontest.filters.ContestFilterOptions;
 import com.example.photocontest.filters.specifications.ContestSpecifications;
 import com.example.photocontest.models.Contest;
+import com.example.photocontest.models.PhotoPost;
 import com.example.photocontest.models.User;
 import com.example.photocontest.repositories.ContestRepository;
+import com.example.photocontest.repositories.PhotoPostRepository;
 import com.example.photocontest.services.contracts.ContestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -20,10 +22,12 @@ import static com.example.photocontest.helpers.ContestHelpers.checkIfContestExis
 public class ContestServiceImpl implements ContestService {
 
     private final ContestRepository contestRepository;
+    private final PhotoPostRepository photoPostRepository;
 
     @Autowired
-    public ContestServiceImpl(ContestRepository contestRepository) {
+    public ContestServiceImpl(ContestRepository contestRepository, PhotoPostRepository photoPostRepository) {
         this.contestRepository = contestRepository;
+        this.photoPostRepository = photoPostRepository;
     }
 
     @Override
@@ -38,7 +42,7 @@ public class ContestServiceImpl implements ContestService {
 
     @Override
     public Contest createContest(Contest contest) {
-        return null;
+       return contestRepository.save(contest);
     }
 
     @Override
@@ -65,7 +69,12 @@ public class ContestServiceImpl implements ContestService {
 
     @Override
     public Contest addPhotoPostToContest(Contest contest, int photoPostId) {
-        return null;
+        PhotoPost photoPost = photoPostRepository.getPhotoPostById(photoPostId);
+        if (photoPost == null) {
+            throw new IllegalArgumentException("Photo post with id " + photoPostId + " does not exist!");
+        }
+        contest.getPhotoPosts().add(photoPost);
+        return contestRepository.save(contest);
     }
 
     @Override

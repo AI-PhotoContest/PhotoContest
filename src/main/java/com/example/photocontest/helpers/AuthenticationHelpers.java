@@ -19,12 +19,30 @@ public class AuthenticationHelpers {
 
     public static final String USER_NOT_FOUND = "User not found";
 
-    public static void checkPermission(Principal principal, String requestedRole) {
+    public static boolean checkPermission(Principal principal, String requestedRole) {
         User user = userService.findUserByUsername(principal.getName());
         for (Role role : user.getRoles()) {
             if (role.getName().name().equalsIgnoreCase(requestedRole)) {
-                return;
+                return true;
             }
+        }
+        throw new SecurityException("You do not have permission to perform this operation");
+    }
+
+    public static boolean checkPermission(Principal principal , String requestedRole,String requestedRole2) {
+        User user = userService.findUserByUsername(principal.getName());
+        for (Role role : user.getRoles()) {
+            if (role.getName().name().equalsIgnoreCase(requestedRole) || role.getName().name().equalsIgnoreCase(requestedRole2)) {
+                return true;
+            }
+        }
+        throw new SecurityException("You do not have permission to perform this operation");
+    }
+
+    public static boolean checkIfCurrentUserIsTheCreator(Principal principal, User user) {
+        User currentUser = userService.findUserByUsername(principal.getName());
+        if (currentUser.getId() == user.getId()) {
+            return true;
         }
         throw new SecurityException("You do not have permission to perform this operation");
     }

@@ -1,12 +1,16 @@
 package com.example.photocontest.controllers.rest;
 
+import com.example.photocontest.exceptions.AuthorizationException;
 import com.example.photocontest.exceptions.EntityNotFoundException;
 import com.example.photocontest.filters.ContestFilterOptions;
+import com.example.photocontest.filters.PhotoPostFilterOptions;
 import com.example.photocontest.mappers.ContestMapper;
 import com.example.photocontest.models.Contest;
+import com.example.photocontest.models.PhotoPost;
 import com.example.photocontest.models.User;
 import com.example.photocontest.models.dto.ContestDto;
 import com.example.photocontest.services.contracts.ContestService;
+import com.example.photocontest.services.contracts.PhotoPostService;
 import com.example.photocontest.services.contracts.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +26,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import static com.example.photocontest.helpers.AuthenticationHelpers.checkIfCurrentUserIsTheCreator;
 import static com.example.photocontest.helpers.AuthenticationHelpers.checkPermission;
 
 @RestController
@@ -31,25 +36,31 @@ public class ContestController {
     private final ContestService contestService;
     private final ContestMapper contestMapper;
     private final UserService userService;
+    private final PhotoPostService photoPostService;
 
     @Autowired
     public ContestController(ContestService contestService,
                              ContestMapper contestMapper,
-                             UserService userService) {
+                             UserService userService, PhotoPostService photoPostService) {
         this.contestService = contestService;
         this.contestMapper = contestMapper;
         this.userService = userService;
+        this.photoPostService = photoPostService;
     }
 
 
-
     /**
-     * Creates a new contest.
-     *<p>
+     * Creates a new contest with specific phase time limits.
+     * <p>
      * Example usage with Postman:
+     * <p>
+     * To create a new contest, you need to send a `POST` request with the contest details in the request body as JSON.
+     * <p>
+     * Example Postman request:
+     * <p>
      * ```
      * POST http://localhost:8080/api/contests
-     *<p>
+     * <p>
      * Request Body:
      * {
      *   "title": "New Contest",
@@ -58,10 +69,22 @@ public class ContestController {
      *   "startDate": "2024-09-01",
      *   "endDate": "2024-09-30",
      *   "status": "OPEN",
-     *   "phase": "PHASE1",
-     *   "category": "Photography"
+     *   "category": "Photography",
+     *   "phaseIStartTime": "2024-09-01T00:00:00",
+     *   "phaseIEndTime": "2024-09-15T00:00:00",
+     *   "phaseIIStartTime": "2024-09-16T00:00:00",
+     *   "phaseIIEndTime": "2024-09-16T12:00:00"
      * }
      * ```
+     * <p>
+     * The phase time limits must adhere to the following rules:
+     * <ul>
+     *   <li>Phase I duration must be between 1 day and 1 month.</li>
+     *   <li>Phase II duration must be between 1 hour and 1 day.</li>
+     * </ul>
+     * <p>
+     * If these constraints are violated, the request will be rejected with an appropriate error message.
+     * This ensures that the contest adheres to the required timing constraints for each phase.
      */
     @PostMapping
     public Contest createContest(@Valid @RequestBody ContestDto contestDto,
@@ -75,7 +98,6 @@ public class ContestController {
     }
 
 
-
     /**
      * Updates an existing contest with new details.
      * <p>
@@ -85,35 +107,32 @@ public class ContestController {
      * <p>
      * Request Body:
      * {
-     *   "title": "Updated Contest Title",
-     *   "description": "Updated description",
-     *   "photoUrl": "http://example.com/newphoto.jpg",
-     *   "startDate": "2024-10-01",
-     *   "endDate": "2024-10-31",
-     *   "status": "INVITATIONAL",
-     *   "phase": "PHASE2",
-     *   "category": "Art"
+     * "title": "Updated Contest Title",
+     * "description": "Updated description",
+     * "photoUrl": "http://example.com/newphoto.jpg",
+     * "startDate": "2024-10-01",
+     * "endDate": "2024-10-31",
+     * "status": "INVITATIONAL",
+     * "category": "Art"
      * }
      * ```
      */
     @PutMapping("/{id}")
     public Contest updateContest(
             @PathVariable int id,
-            @Valid @RequestBody ContestDto contestDto,Principal principal) {
+            @Valid @RequestBody ContestDto contestDto, Principal principal) {
         checkPermission(principal, "ORGANIZER");
 
         Contest existingContest = contestService.getContestById(id);
         User loggedUser = userService.findUserByUsername(principal.getName());
 
-        if (existingContest.getCreator() != loggedUser){
+        if (existingContest.getCreator() != loggedUser) {
             throw new IllegalArgumentException("You are not the creator of this contest");
         }
 
-            Contest updatedContest = contestMapper.updateContestFromDto(existingContest, contestDto);
-            return contestService.updateContest(updatedContest);
+        Contest updatedContest = contestMapper.updateContestFromDto(existingContest, contestDto);
+        return contestService.updateContest(updatedContest);
     }
-
-
 
 
     /**
@@ -140,7 +159,7 @@ public class ContestController {
      * Example Postman request:
      * <p>
      * ```
-     *  http://localhost:8080/contests?title=Photo Contest&category=Photography&phase=Open&page=0&size=10&sort=title,desc
+     * http://localhost:8080/contests?title=Photo Contest&category=Photography&phase=Open&page=0&size=10&sort=title,desc
      * ```
      * <p>
      * This request will search for contests with the title "Photo Contest", in the category "Photography", and in the "Open" phase,
@@ -173,7 +192,6 @@ public class ContestController {
     }
 
 
-
     /**
      * Adds one or more judges to an existing contest.
      * <p>
@@ -191,9 +209,9 @@ public class ContestController {
      * Request Body:
      * ```
      * [
-     *   "judge1",
-     *   "judge2",
-     *   "judge3"
+     * "judge1",
+     * "judge2",
+     * "judge3"
      * ]
      * ```
      * <p>
@@ -202,7 +220,8 @@ public class ContestController {
      * The method retrieves the `User` objects corresponding to the provided usernames, adds them as judges to the contest,
      * and then updates the contest to reflect these changes.
      * <p>
-     * @param id the ID of the contest to which judges should be added
+     *
+     * @param id             the ID of the contest to which judges should be added
      * @param judgeUsernames a list of usernames of the judges to be added
      * @return the updated contest details with the new judges added
      */
@@ -246,6 +265,72 @@ public class ContestController {
         }
 
         return contestService.updateContest(contest);
+    }
+
+
+    /**
+     * This method retrieves a paginated list of photo posts for a specific contest.
+     * <p>
+     * The method allows clients to filter the photo posts by title and supports pagination and sorting.
+     * <p>
+     * Example usage with Postman:
+     * <p>
+     * To get photo posts for a specific contest with optional title filtering:
+     * <p>
+     * - `title` (optional): The title to filter the photo posts (e.g., `Sunset`).
+     * - `page` (optional): The page number to retrieve (e.g., `0` for the first page).
+     * - `size` (optional): The number of photo posts per page (e.g., `10`).
+     * - `sort` (optional): The sorting criteria (e.g., `title,asc` for ascending order by title).
+     * <p>
+     * Example Postman request:
+     * <p>
+     * ```
+     * GET http://localhost:8080/api/contests/{id}/photo-posts?title=Sunset&page=0&size=10&sort=title,asc
+     * ```
+     * <p>
+     * This request will return a paginated list of photo posts for the contest with the specified ID,
+     * filtered by the title "Sunset" if provided, and sorted by title in ascending order.
+     *
+     * @param id       the ID of the contest to retrieve photo posts for
+     * @param title    the title to filter the photo posts by (optional)
+     * @param pageable the pagination and sorting information
+     * @return a page of photo posts matching the criteria
+     */
+    @GetMapping("/{id}/photo-posts")
+    public Page<PhotoPost> getPhotoPostsForContest(
+            @PathVariable int id,
+            @RequestParam(value = "title", required = false) String title,
+            Pageable pageable) {
+
+        Contest contest = contestService.getContestById(id);
+
+        PhotoPostFilterOptions filterOptions = new PhotoPostFilterOptions();
+        filterOptions.setTitle(title);
+        filterOptions.setContest(contest);
+
+        return photoPostService.searchPhotoPosts(filterOptions, pageable);
+    }
+
+
+    @PostMapping("/{id}/photo-posts")
+    public Contest addPhotoPostToContest(@PathVariable int id,
+                                         @RequestBody int photoPostId,
+                                         Principal principal) {
+        checkPermission(principal, "PHOTO_JUNKIE");
+        Contest contest = contestService.getContestById(id);
+        return contestService.addPhotoPostToContest(contest, photoPostId);
+    }
+
+    @DeleteMapping("/{id}/photo-posts")
+    public Contest removePhotoPostFromContest(@PathVariable int id,
+                                              @RequestBody int photoPostId,
+                                              Principal principal) {
+        PhotoPost photoPost = photoPostService.getPhotoPostById(photoPostId);
+        if (checkIfCurrentUserIsTheCreator(principal, photoPost.getCreator()) || checkPermission(principal, "ADMIN")) {
+            Contest contest = contestService.getContestById(id);
+            return contestService.removePhotoPostFromContest(contest, photoPostId);
+        }
+        throw new AuthorizationException("You are not authorized to remove this photo post from the contest");
     }
 
 

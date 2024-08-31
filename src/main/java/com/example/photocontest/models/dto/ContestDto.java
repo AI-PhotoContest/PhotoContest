@@ -31,9 +31,18 @@ public class ContestDto {
     @NotNull(message = "Status is mandatory")
     private ContestStatus status;
 
-    @NotNull(message = "Phase is mandatory")
-    private ContestPhase phase;
-
     @NotNull(message = "Category is mandatory")
     private String category;
+
+    @NotNull(message = "Phase I start time is required")
+    private Date phaseIStartTime;
+
+    @NotNull(message = "Phase I end time is required")
+    private Date phaseIEndTime;
+
+    @NotNull(message = "Phase II start time is required")
+    private Date phaseIIStartTime;
+
+    @NotNull(message = "Phase II end time is required")
+    private Date phaseIIEndTime;
 }

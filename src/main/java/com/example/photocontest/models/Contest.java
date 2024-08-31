@@ -6,7 +6,10 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import java.util.Date;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.time.Duration;
+import java.time.LocalDate;
 import java.util.List;
 
 @Entity
@@ -33,21 +36,12 @@ public class Contest {
             inverseJoinColumns = @JoinColumn(name = "judge_id"))
     private List<User> judges;
 
-
     @OneToOne
     @JoinColumn(name = "winner_id")
     private PhotoPost winner;
 
     @OneToMany
     private List<PhotoPost> photoPosts;
-
-    @Temporal(TemporalType.DATE)
-    @Column(name = "start_date")
-    private Date startDate;
-
-    @Temporal(TemporalType.DATE)
-    @Column(name = "end_date")
-    private Date endDate;
 
     @Enumerated(EnumType.STRING)
     private ContestStatus status;
@@ -62,4 +56,17 @@ public class Contest {
     @ManyToOne
     @JoinColumn(name = "creator_id")
     private User creator;
+
+
+    private LocalDate startDate;
+
+    private LocalDate endDate;
+
+    // New fields for phase start and end times
+    private LocalDate phaseIStartTime;
+    private LocalDate phaseIEndTime;
+
+    private LocalDate phaseIIStartTime;
+    private LocalDate phaseIIEndTime;
+
 }
