@@ -65,14 +65,4 @@ public class PhotoPost {
     public int getScore() {
         return votes.stream().mapToInt(Vote::getScore).sum();
     }
-
-//    @Column(nullable = false, updatable = false)
-//    private LocalDateTime createdDate;
-//
-//    @PrePersist
-//    protected void onCreate() {
-//        createdDate = LocalDateTime.now();
-//    }
-
-
 }
