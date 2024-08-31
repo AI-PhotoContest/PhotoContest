@@ -14,7 +14,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.example.photocontest.helpers.ContestHelpers.checkIfContestExists;
 
@@ -42,7 +44,7 @@ public class ContestServiceImpl implements ContestService {
 
     @Override
     public Contest createContest(Contest contest) {
-       return contestRepository.save(contest);
+        return contestRepository.save(contest);
     }
 
     @Override
@@ -53,8 +55,13 @@ public class ContestServiceImpl implements ContestService {
     }
 
     @Override
+    public List<Contest> getAllContests() {
+        return contestRepository.findAll();
+    }
+
+    @Override
     public Contest updateContest(Contest contest) {
-       return contestRepository.save(contest);
+        return contestRepository.save(contest);
     }
 
     @Override
@@ -88,7 +95,7 @@ public class ContestServiceImpl implements ContestService {
             List<User> judges = List.of(user);
             contest.setJudges(judges);
         }
-         contest.getJudges().add(user);
+        contest.getJudges().add(user);
     }
 
     @Override
@@ -98,18 +105,27 @@ public class ContestServiceImpl implements ContestService {
         }
     }
 
-        @Override
-        public Contest ratePhotoPost (Contest contest,int photoPostId, int rating){
-            return null;
-        }
+    @Override
+    public Contest ratePhotoPost(Contest contest, int photoPostId, int rating) {
+        return null;
+    }
 
-        @Override
-        public Contest switchContestPhase (Contest contest){
-            return null;
-        }
+    @Override
+    public Contest switchContestPhase(Contest contest) {
+        return null;
+    }
 
-        @Override
-        public Contest switchContestStatus (Contest contest){
-            return null;
-        }
+    @Override
+    public Contest switchContestStatus(Contest contest) {
+        return null;
+    }
+
+    @Override
+    public List<PhotoPost> findTop3ByContestId(int contestId) {
+        List<PhotoPost> allPosts = contestRepository.findAllPhotoPostsByContestId(contestId);
+        return allPosts.stream()
+                .sorted(Comparator.comparing(PhotoPost::getScore).reversed())
+                .limit(3)
+                .collect(Collectors.toList());
+    }
 }
