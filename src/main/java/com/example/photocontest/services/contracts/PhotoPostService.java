@@ -1,5 +1,6 @@
 package com.example.photocontest.services.contracts;
 
+import com.example.photocontest.filters.PhotoPostFilterOptions;
 import com.example.photocontest.models.PhotoPost;
 import com.example.photocontest.models.User;
 import org.springframework.data.domain.Page;
@@ -16,6 +17,8 @@ public interface PhotoPostService  {
     void createPhotoPost(PhotoPost photoPost);
 
     void deletePhotoPost(int id);
+
+    Page<PhotoPost> searchPhotoPosts(PhotoPostFilterOptions filterOptions, Pageable pageable);
 
     List<PhotoPost> findByCreatedBy(User user);
 

@@ -2,7 +2,8 @@ package com.example.photocontest.services;
 
 import com.example.photocontest.exceptions.AuthorizationException;
 import com.example.photocontest.exceptions.EntityNotFoundException;
-import com.example.photocontest.exceptions.UnauthorizedException;
+import com.example.photocontest.filters.PhotoPostFilterOptions;
+import com.example.photocontest.filters.specifications.PhotoPostSpecifications;
 import com.example.photocontest.mappers.TagMapper;
 import com.example.photocontest.models.PhotoPost;
 import com.example.photocontest.models.Tag;
@@ -21,8 +22,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.util.StringUtils;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.List;
 
 @Service
@@ -68,8 +67,23 @@ public class PhotoPostServiceImpl implements PhotoPostService {
     }
 
     @Override
+    public Page<PhotoPost> searchPhotoPosts(PhotoPostFilterOptions filterOptions, Pageable pageable) {
+        Specification<PhotoPost> specification = Specification.where(null);
+
+        if (filterOptions.getTitle() != null) {
+            specification = specification.and(PhotoPostSpecifications.hasTitle(filterOptions.getTitle()));
+        }
+
+        if (filterOptions.getContest() != null) {
+            specification = specification.and(PhotoPostSpecifications.belongsToContest(filterOptions.getContest()));
+        }
+
+        return photoPostRepository.findAll(specification, pageable);
+    }
+
+    @Override
     public List<PhotoPost> findByCreatedBy(User user) {
-        return photoPostRepository.findByCreatedBy(user);
+        return photoPostRepository.findByCreator(user);
     }
 
     @Override
