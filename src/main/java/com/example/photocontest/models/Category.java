@@ -18,7 +18,6 @@ public class Category {
 
     private String description;
 
-    @Lob
     private String image;
 
 
