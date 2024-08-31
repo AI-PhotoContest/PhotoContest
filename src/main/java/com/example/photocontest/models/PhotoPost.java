@@ -59,6 +59,13 @@ public class PhotoPost {
     )
     private Set<Tag> tags;
 
+    @OneToMany(mappedBy = "photoPost", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Vote> votes;
+
+    public int getScore() {
+        return votes.stream().mapToInt(Vote::getScore).sum();
+    }
+
 //    @Column(nullable = false, updatable = false)
 //    private LocalDateTime createdDate;
 //

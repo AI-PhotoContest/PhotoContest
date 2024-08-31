@@ -20,5 +20,7 @@ public interface PhotoPostRepository extends JpaRepository<PhotoPost, Integer>, 
 
     List<PhotoPost> findByCreator(User user);
 
+
+
 //    List<PhotoPost> getPhotoPostByContestId(int contestId);
 }
