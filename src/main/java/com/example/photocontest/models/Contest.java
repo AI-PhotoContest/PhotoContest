@@ -10,6 +10,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.Duration;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -58,15 +59,15 @@ public class Contest {
     private User creator;
 
 
-    private LocalDate startDate;
+    private LocalDateTime startDate;
 
-    private LocalDate endDate;
+    private LocalDateTime endDate;
 
     // New fields for phase start and end times
-    private LocalDate phaseIStartTime;
-    private LocalDate phaseIEndTime;
+    private LocalDateTime phaseIStartTime;
+    private LocalDateTime phaseIEndTime;
 
-    private LocalDate phaseIIStartTime;
-    private LocalDate phaseIIEndTime;
+    private LocalDateTime phaseIIStartTime;
+    private LocalDateTime phaseIIEndTime;
 
 }

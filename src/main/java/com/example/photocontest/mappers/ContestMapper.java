@@ -6,15 +6,12 @@ import com.example.photocontest.models.User;
 import com.example.photocontest.models.dto.ContestDto;
 import com.example.photocontest.models.enums.ContestPhase;
 import com.example.photocontest.repositories.CategoryRepository;
-import com.example.photocontest.services.CategoryServiceImpl;
 import com.example.photocontest.services.contracts.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.time.Duration;
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Component
 public class ContestMapper {
@@ -38,15 +35,15 @@ public class ContestMapper {
 
         contest.setCreator(creator);
 
-        contest.setStartDate(convertToLocalDate(contestDto.getStartDate()));
-        contest.setEndDate(convertToLocalDate(contestDto.getEndDate()));
+        contest.setStartDate(contestDto.getStartDate());
+        contest.setEndDate(contestDto.getEndDate());
         contest.setStatus(contestDto.getStatus());
         contest.setPhase(ContestPhase.PHASE1);
 
-        contest.setPhaseIStartTime(convertToLocalDate(contestDto.getPhaseIStartTime()));
-        contest.setPhaseIEndTime(convertToLocalDate(contestDto.getPhaseIEndTime()));
-        contest.setPhaseIIStartTime(convertToLocalDate(contestDto.getPhaseIIStartTime()));
-        contest.setPhaseIIEndTime(convertToLocalDate(contestDto.getPhaseIIEndTime()));
+        contest.setPhaseIStartTime(contestDto.getPhaseIStartTime());
+        contest.setPhaseIEndTime(contestDto.getPhaseIEndTime());
+        contest.setPhaseIIStartTime(contestDto.getPhaseIIStartTime());
+        contest.setPhaseIIEndTime(contestDto.getPhaseIIEndTime());
 
         Category category = categoryRepository.findByName(contestDto.getCategory());
         if (category == null) {
@@ -64,14 +61,14 @@ public class ContestMapper {
         contestDto.setDescription(contest.getDescription());
         contestDto.setPhotoUrl(contest.getPhotoUrl());
 
-        contestDto.setStartDate(convertToDate(contest.getStartDate()));
-        contestDto.setEndDate(convertToDate(contest.getEndDate()));
+        contestDto.setStartDate(contest.getStartDate());
+        contestDto.setEndDate(contest.getEndDate());
         contestDto.setStatus(contest.getStatus());
 
-        contestDto.setPhaseIStartTime(convertToDate(contest.getPhaseIStartTime()));
-        contestDto.setPhaseIEndTime(convertToDate(contest.getPhaseIEndTime()));
-        contestDto.setPhaseIIStartTime(convertToDate(contest.getPhaseIIStartTime()));
-        contestDto.setPhaseIIEndTime(convertToDate(contest.getPhaseIIEndTime()));
+        contestDto.setPhaseIStartTime(contest.getPhaseIStartTime());
+        contestDto.setPhaseIEndTime(contest.getPhaseIEndTime());
+        contestDto.setPhaseIIStartTime(contest.getPhaseIIStartTime());
+        contestDto.setPhaseIIEndTime(contest.getPhaseIIEndTime());
 
         contestDto.setCategory(contest.getCategory().getName());
 
@@ -85,14 +82,14 @@ public class ContestMapper {
         contest.setDescription(contestDto.getDescription());
         contest.setPhotoUrl(contestDto.getPhotoUrl());
 
-        contest.setStartDate(convertToLocalDate(contestDto.getStartDate()));
-        contest.setEndDate(convertToLocalDate(contestDto.getEndDate()));
+        contest.setStartDate(contestDto.getStartDate());
+        contest.setEndDate(contestDto.getEndDate());
         contest.setStatus(contestDto.getStatus());
 
-        contest.setPhaseIStartTime(convertToLocalDate(contestDto.getPhaseIStartTime()));
-        contest.setPhaseIEndTime(convertToLocalDate(contestDto.getPhaseIEndTime()));
-        contest.setPhaseIIStartTime(convertToLocalDate(contestDto.getPhaseIIStartTime()));
-        contest.setPhaseIIEndTime(convertToLocalDate(contestDto.getPhaseIIEndTime()));
+        contest.setPhaseIStartTime(contestDto.getPhaseIStartTime());
+        contest.setPhaseIEndTime(contestDto.getPhaseIEndTime());
+        contest.setPhaseIIStartTime(contestDto.getPhaseIIStartTime());
+        contest.setPhaseIIEndTime(contestDto.getPhaseIIEndTime());
 
         Category category = categoryRepository.findByName(contestDto.getCategory());
         contest.setCategory(category);
@@ -112,21 +109,11 @@ public class ContestMapper {
         }
     }
 
-    private long getDurationInDays(Date start, Date end) {
-        LocalDate startDate = convertToLocalDate(start);
-        LocalDate endDate = convertToLocalDate(end);
-        return Duration.between(startDate.atStartOfDay(), endDate.atStartOfDay()).toDays();
+    private long getDurationInDays(LocalDateTime start, LocalDateTime end) {
+        return Duration.between(start, end).toDays();
     }
 
-    private long getDurationInHours(Date start, Date end) {
-        return Duration.between(start.toInstant(), end.toInstant()).toHours();
-    }
-
-    private LocalDate convertToLocalDate(Date date) {
-        return date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-    }
-
-    private Date convertToDate(LocalDate localDate) {
-        return Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+    private long getDurationInHours(LocalDateTime start, LocalDateTime end) {
+        return Duration.between(start, end).toHours();
     }
 }
