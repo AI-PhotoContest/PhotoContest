@@ -3,6 +3,8 @@ package com.example.photocontest.repositories;
 import com.example.photocontest.models.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
@@ -12,4 +14,7 @@ public interface UserRepository extends JpaRepository<User, Integer>, JpaSpecifi
     User findById(int id);
 
     List<User> findListByUsername(String username);
+    //fetch only users that are votable=true
+    @Query("SELECT u FROM User u WHERE u.username = :username AND u.isVotable = true")
+    User findVotableUserByUsername(@Param("username") String username);
 }

@@ -9,6 +9,7 @@ import com.example.photocontest.models.Contest;
 import com.example.photocontest.models.PhotoPost;
 import com.example.photocontest.models.User;
 import com.example.photocontest.models.dto.ContestDto;
+import com.example.photocontest.repositories.UserRepository;
 import com.example.photocontest.services.contracts.ContestService;
 import com.example.photocontest.services.contracts.PhotoPostService;
 import com.example.photocontest.services.contracts.UserService;
@@ -37,15 +38,17 @@ public class ContestController {
     private final ContestMapper contestMapper;
     private final UserService userService;
     private final PhotoPostService photoPostService;
+    private final UserRepository userRepository;
 
     @Autowired
     public ContestController(ContestService contestService,
                              ContestMapper contestMapper,
-                             UserService userService, PhotoPostService photoPostService) {
+                             UserService userService, PhotoPostService photoPostService, UserRepository userRepository) {
         this.contestService = contestService;
         this.contestMapper = contestMapper;
         this.userService = userService;
         this.photoPostService = photoPostService;
+        this.userRepository = userRepository;
     }
 
 
@@ -110,8 +113,8 @@ public class ContestController {
      * "title": "Updated Contest Title",
      * "description": "Updated description",
      * "photoUrl": "http://example.com/newphoto.jpg",
-     * "startDate": "2024-10-01",
-     * "endDate": "2024-10-31",
+     * "startDate": "2024-10-01T00:00:00",
+     * "endDate": "2024-10-31T00:00:00",
      * "status": "INVITATIONAL",
      * "category": "Art"
      * }
@@ -235,7 +238,7 @@ public class ContestController {
 
         // Fetch the User objects based on the provided usernames
         List<User> judges = judgeUsernames.stream()
-                .map(userService::findUserByUsername)
+                .map(userRepository::findVotableUserByUsername)
                 .toList();
 
         // Add each judge to the contest
