@@ -9,11 +9,14 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Component
 public class ContestPhaseScheduler {
-
+    public static final String GREEN_COLOUR = "\u001B[32m";
+    public static final String CHECK_MESSAGE = GREEN_COLOUR + "Checking contests for phase advancement - ";
+    private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
     private final ContestService contestService;
 
     public ContestPhaseScheduler(ContestService contestService) {
@@ -23,21 +26,25 @@ public class ContestPhaseScheduler {
     @Scheduled(fixedRate = 60000) // Проверява на всеки 60 секунди
     public void checkAndAdvanceContestPhase() {
         List<Contest> contests = contestService.getAllContests();
-
+        LocalDateTime now = LocalDateTime.now();
+        System.out.println(CHECK_MESSAGE + now.format(DATE_TIME_FORMATTER));
         for (Contest contest : contests) {
-            LocalDateTime now = LocalDateTime.now();
 
             if (contest.getPhaseIEndTime().isBefore(now) && contest.getPhase() == ContestPhase.PHASE1) {
                 contest.setPhase(ContestPhase.PHASE2);
                 contestService.updateContest(contest);
+                System.out.println("Contest " + contest.getTitle() + " has advanced to phase 2 - " + LocalDateTime.now().format(DATE_TIME_FORMATTER));
             }
 
             if (contest.getPhaseIIEndTime().isBefore(now) && contest.getPhase() == ContestPhase.PHASE2) {
                 contest.setPhase(ContestPhase.FINISHED);
                 List<PhotoPost> winners = contestService.findTop3ByContestId(contest.getId());
-                contest.setWinner(winners.get(0));
-                promoteWinners(winners);
+                if (!winners.isEmpty()) {
+                    contest.setWinner(winners.get(0));
+                    promoteWinners(winners);
+                }
                 contestService.updateContest(contest);
+                System.out.println("Contest " + contest.getTitle() + " has finished - " + LocalDateTime.now().format(DATE_TIME_FORMATTER));
             }
 
 
@@ -46,36 +53,36 @@ public class ContestPhaseScheduler {
 
     private void promoteWinners(List<PhotoPost> winners) {
         if (winners.size() > 0) {
-            // Точки за първо място
+            // Points for the winners
             int firstPlacePoints = 50;
             int secondPlacePoints = 35;
             int thirdPlacePoints = 20;
 
-            // Проверка за изравнено първо място (shared 1st)
+            // Check for shared 1st place
             if (winners.size() > 1 && winners.get(0).getScore() == winners.get(1).getScore()) {
                 firstPlacePoints = 40;
             }
 
-            // Добавяне на точки за първо място
+            // Add points for 1st place
             winners.get(0).getCreator().getPoints().addPoints(firstPlacePoints);
 
-            // Проверка за двойно повече точки от второто място
+            // Check for double points for 1st place
             if (winners.size() > 1 && winners.get(0).getScore() >= 2 * winners.get(1).getScore()) {
                 winners.get(0).getCreator().getPoints().addPoints(75);
             }
 
-            // Добавяне на точки за второ място, ако има такова
+            // Add points for 2nd place if there is one
             if (winners.size() > 1) {
-                // Проверка за изравнено второ място (shared 2nd)
+                // Check for shared 2nd place
                 if (winners.size() > 2 && winners.get(1).getScore() == winners.get(2).getScore()) {
                     secondPlacePoints = 25;
                 }
                 winners.get(1).getCreator().getPoints().addPoints(secondPlacePoints);
             }
 
-            // Добавяне на точки за трето място, ако има такова
+            // Add points for 3rd place if there is one
             if (winners.size() > 2) {
-                // Проверка за изравнено трето място (shared 3rd)
+                // Check for shared 3rd place
                 if (winners.size() > 3 && winners.get(2).getScore() == winners.get(3).getScore()) {
                     thirdPlacePoints = 10;
                 }
