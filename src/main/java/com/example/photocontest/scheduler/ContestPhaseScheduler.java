@@ -8,6 +8,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Component
@@ -24,7 +25,7 @@ public class ContestPhaseScheduler {
         List<Contest> contests = contestService.getAllContests();
 
         for (Contest contest : contests) {
-            LocalDate now = LocalDate.now();
+            LocalDateTime now = LocalDateTime.now();
 
             if (contest.getPhaseIEndTime().isBefore(now) && contest.getPhase() == ContestPhase.PHASE1) {
                 contest.setPhase(ContestPhase.PHASE2);

@@ -8,6 +8,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Getter
@@ -23,10 +25,10 @@ public class ContestDto {
     private String photoUrl;
 
     @NotNull(message = "Start date is mandatory")
-    private Date startDate;
+    private LocalDateTime startDate;
 
     @NotNull(message = "End date is mandatory")
-    private Date endDate;
+    private LocalDateTime endDate;
 
     @NotNull(message = "Status is mandatory")
     private ContestStatus status;
@@ -35,14 +37,14 @@ public class ContestDto {
     private String category;
 
     @NotNull(message = "Phase I start time is required")
-    private Date phaseIStartTime;
+    private LocalDateTime phaseIStartTime;
 
     @NotNull(message = "Phase I end time is required")
-    private Date phaseIEndTime;
+    private LocalDateTime phaseIEndTime;
 
     @NotNull(message = "Phase II start time is required")
-    private Date phaseIIStartTime;
+    private LocalDateTime phaseIIStartTime;
 
     @NotNull(message = "Phase II end time is required")
-    private Date phaseIIEndTime;
+    private LocalDateTime phaseIIEndTime;
 }
