@@ -108,6 +108,11 @@ public class PhotoPostServiceImpl implements PhotoPostService {
         return photoPostRepository.findAll(filters, pageable);
     }
 
+    @Override
+    public PhotoPost updatePhotoPost(PhotoPost photoPost) {
+        return photoPostRepository.save(photoPost);
+    }
+
     public User getCurrentUser(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User currentUser = userRepository.findByUsername(authentication.getName());

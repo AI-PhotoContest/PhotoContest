@@ -69,4 +69,11 @@ public class PhotoPost {
     public int getScore() {
         return votes.stream().mapToInt(Vote::getScore).sum();
     }
+
+    public void addVote(Vote vote) {
+        if (votes == null) {
+            votes = List.of();
+        }
+        votes.add(vote);
+    }
 }
