@@ -53,5 +53,13 @@ public class AuthenticationHelpers {
         }
     }
 
+    public static boolean checkIfUserIsVotable(Principal principal) {
+        User user = userService.findUserByUsername(principal.getName());
+        if (user.isVotable()) {
+            return true;
+        }
+        throw new SecurityException("You do not have permission to perform this operation");
+    }
+
 
 }

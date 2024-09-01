@@ -5,10 +5,13 @@ import com.example.photocontest.exceptions.EntityNotFoundException;
 import com.example.photocontest.filters.ContestFilterOptions;
 import com.example.photocontest.filters.PhotoPostFilterOptions;
 import com.example.photocontest.mappers.ContestMapper;
+import com.example.photocontest.mappers.VoteMapper;
 import com.example.photocontest.models.Contest;
 import com.example.photocontest.models.PhotoPost;
 import com.example.photocontest.models.User;
+import com.example.photocontest.models.Vote;
 import com.example.photocontest.models.dto.ContestDto;
+import com.example.photocontest.models.dto.VoteDto;
 import com.example.photocontest.repositories.UserRepository;
 import com.example.photocontest.services.contracts.ContestService;
 import com.example.photocontest.services.contracts.PhotoPostService;
@@ -27,8 +30,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import static com.example.photocontest.helpers.AuthenticationHelpers.checkIfCurrentUserIsTheCreator;
-import static com.example.photocontest.helpers.AuthenticationHelpers.checkPermission;
+import static com.example.photocontest.helpers.AuthenticationHelpers.*;
 
 @RestController
 @RequestMapping("/api/contests")
@@ -39,16 +41,19 @@ public class ContestController {
     private final UserService userService;
     private final PhotoPostService photoPostService;
     private final UserRepository userRepository;
+    private final VoteMapper voteMapper;
 
     @Autowired
     public ContestController(ContestService contestService,
                              ContestMapper contestMapper,
-                             UserService userService, PhotoPostService photoPostService, UserRepository userRepository) {
+                             UserService userService, PhotoPostService photoPostService,
+                             UserRepository userRepository, VoteMapper voteMapper) {
         this.contestService = contestService;
         this.contestMapper = contestMapper;
         this.userService = userService;
         this.photoPostService = photoPostService;
         this.userRepository = userRepository;
+        this.voteMapper = voteMapper;
     }
 
 
@@ -334,6 +339,74 @@ public class ContestController {
             return contestService.removePhotoPostFromContest(contest, photoPostId);
         }
         throw new AuthorizationException("You are not authorized to remove this photo post from the contest");
+    }
+
+
+
+    /**
+     * This method allows a user to cast a vote for a specific photo post within a given contest.
+     * <p>
+     * The method performs several checks and operations to ensure that the vote is valid and correctly associated
+     * with the appropriate contest and photo post. It also adds the vote to the corresponding photo post and updates
+     * the photo post in the database.
+     * <p>
+     * Example usage with Postman:
+     * <p>
+     * To vote for a specific photo post within a contest:
+     * <p>
+     * - `contestId` (required): The ID of the contest to which the photo post belongs.
+     * - `photoPostId` (required): The ID of the photo post for which the vote is being cast.
+     * - `voteDto` (required): The vote data that includes the score, comment, and category mismatch information.
+     * <p>
+     * Example Postman request:
+     * <p>
+     * ```
+     * PUT http://localhost:8080/api/contests/{contestId}/photoPost/{photoPostId}/vote
+     * Content-Type: application/json
+     * Body: {
+     *   "score": 8,
+     *   "comment": "Great composition and lighting!",
+     *   "categoryMismatch": false
+     * }
+     * ```
+     * <p>
+     * This request will cast a vote for the specified photo post within the given contest.
+     * The `score` must be between 1 and 10, unless `categoryMismatch` is true, in which case the `score` is automatically set to 0.
+     * The `comment` field is mandatory and should provide feedback or justification for the score given.
+     * <p>
+     * Important Notes:
+     * - The user casting the vote must be authorized and have the `votable` status.
+     * - The photo post must be part of the specified contest.
+     * - The method checks whether the contest and photo post exist and are valid.
+     *
+     * @param contestId    the ID of the contest to which the photo post belongs
+     * @param photoPostId  the ID of the photo post being voted on
+     * @param voteDto      the data transfer object containing the vote details (score, comment, category mismatch)
+     * @param principal    the security principal representing the current authenticated user
+     * @return the updated PhotoPost object after the vote has been cast
+     * @throws EntityNotFoundException if the contest or photo post is not found
+     * @throws SecurityException if the user is not authorized to vote
+     */
+    @PutMapping("/{contestId}/photoPost/{photoPostId}/vote")
+    public PhotoPost vote(@PathVariable int contestId,
+                                      @PathVariable int photoPostId,
+                                      @RequestBody VoteDto voteDto,
+                                      Principal principal) {
+        checkIfUserIsVotable(principal);
+
+        // Проверка дали конкурсът съществува и е валиден
+        Contest contest = contestService.getContestById(contestId);
+        PhotoPost photoPost = photoPostService.getPhotoPostById(photoPostId);
+        //check if that photoPost is part of the contest
+        if (!contest.getPhotoPosts().contains(photoPost)) {
+            throw new EntityNotFoundException("PhotoPost", photoPostId);
+        }
+        User judgeUser = userService.findUserByUsername(principal.getName());
+        // Преобразуване на VoteDto в обект Vote
+        Vote vote = voteMapper.toEntity(voteDto, judgeUser ,photoPostId);
+        photoPost.addVote(vote);
+        // Актуализиране на съответния PhotoPost
+        return photoPostService.updatePhotoPost(photoPost);
     }
 
 

@@ -24,7 +24,7 @@ public class ImageGenerator {
                 .readTimeout(30, TimeUnit.SECONDS)
                 .build();
 
-        String prompt = "Generate an image representing the theme " + categoryName;
+        String prompt = "Generate an image, hyper-realistic and real photographic representing the theme " + categoryName;
 
         JSONObject json = new JSONObject();
         json.put("prompt", prompt);

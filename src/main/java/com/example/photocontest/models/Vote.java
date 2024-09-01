@@ -20,6 +20,8 @@ public class Vote {
     @JoinColumn(name = "user_id")
     private User user;
 
+    private boolean categoryMismatch;
+
     private int score;
 
     private String comment;
