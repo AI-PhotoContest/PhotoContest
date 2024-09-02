@@ -22,7 +22,7 @@ public class Tag {
     @NotBlank(message = "tag content is mandatory")
     private String name;
 
-    @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER,mappedBy = "tags")
+    @ManyToMany(mappedBy = "tags")
     @JsonBackReference
     private Set<PhotoPost> posts;
 }

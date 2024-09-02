@@ -27,9 +27,9 @@ public class CameraDetails {
     private String focalLength;
     private String iso;
 
-    @OneToOne
-    @JoinColumn(name = "photo_post_id")
-    private PhotoPost photoPost;
+//    @OneToOne
+//    @JoinColumn(name = "photo_post_id")
+//    private PhotoPost photoPost;
 
 
 }
