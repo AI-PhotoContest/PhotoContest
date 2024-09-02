@@ -320,12 +320,12 @@ public class ContestController {
     }
 
 
-    @PostMapping("/{id}/photo-posts")
-    public Contest addPhotoPostToContest(@PathVariable int id,
-                                         @RequestBody int photoPostId,
+    @PostMapping("/{contestId}/photo-posts/{photoPostId}")
+    public Contest addPhotoPostToContest(@PathVariable int contestId,
+                                         @PathVariable int photoPostId,
                                          Principal principal) {
         checkPermission(principal, "PHOTO_JUNKIE");
-        Contest contest = contestService.getContestById(id);
+        Contest contest = contestService.getContestById(contestId);
         return contestService.addPhotoPostToContest(contest, photoPostId);
     }
 
@@ -361,7 +361,7 @@ public class ContestController {
      * Example Postman request:
      * <p>
      * ```
-     * PUT http://localhost:8080/api/contests/{contestId}/photoPost/{photoPostId}/vote
+     * PUT http://localhost:8080/api/contests/{contestId}/photo-posts/{photoPostId}/vote
      * Content-Type: application/json
      * <p>
      * Body: {
@@ -388,7 +388,7 @@ public class ContestController {
      * @throws EntityNotFoundException if the contest or photo post is not found
      * @throws SecurityException if the user is not authorized to vote
      */
-    @PutMapping("/{contestId}/photoPost/{photoPostId}/vote")
+    @PutMapping("/{contestId}/photo-posts/{photoPostId}/vote")
     public PhotoPost vote(@PathVariable int contestId,
                                       @PathVariable int photoPostId,
                                       @RequestBody VoteDto voteDto,
@@ -404,7 +404,7 @@ public class ContestController {
         }
         User judgeUser = userService.findUserByUsername(principal.getName());
         // Create a new Vote entity from the VoteDto
-        Vote vote = voteMapper.toEntity(voteDto, judgeUser ,photoPostId);
+        Vote vote = voteMapper.toEntity(voteDto, judgeUser , photoPost);
         photoPost.addVote(vote);
         // Update the photo post with the new vote
         return photoPostService.updatePhotoPost(photoPost);

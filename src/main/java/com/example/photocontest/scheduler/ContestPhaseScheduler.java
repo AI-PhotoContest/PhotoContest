@@ -65,6 +65,7 @@ public class ContestPhaseScheduler {
 
             // Add points for 1st place
             winners.get(0).getCreator().getPoints().addPoints(firstPlacePoints);
+            System.out.println("User " + winners.get(0).getCreator().getUsername() + " has won " + firstPlacePoints + " points");
 
             // Check for double points for 1st place
             if (winners.size() > 1 && winners.get(0).getScore() >= 2 * winners.get(1).getScore()) {

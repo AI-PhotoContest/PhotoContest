@@ -41,7 +41,7 @@ public class Contest {
     @JoinColumn(name = "winner_id")
     private PhotoPost winner;
 
-    @OneToMany
+    @OneToMany(mappedBy = "contest", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<PhotoPost> photoPosts;
 
     @Enumerated(EnumType.STRING)
