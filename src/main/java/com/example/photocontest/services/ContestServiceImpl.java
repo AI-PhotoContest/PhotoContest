@@ -80,6 +80,9 @@ public class ContestServiceImpl implements ContestService {
         if (photoPost == null) {
             throw new IllegalArgumentException("Photo post with id " + photoPostId + " does not exist!");
         }
+        if (contest.getPhotoPosts().contains(photoPost)) {
+            throw new IllegalArgumentException("Photo post with id " + photoPostId + " is already in the contest!");
+        }
         contest.getPhotoPosts().add(photoPost);
         return contestRepository.save(contest);
     }

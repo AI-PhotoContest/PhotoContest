@@ -19,11 +19,8 @@ public class VoteMapper {
         this.photoPostRepository = photoPostRepository;
     }
 
-    public Vote toEntity(VoteDto voteDto, User user, int photoPostId) {
+    public Vote toEntity(VoteDto voteDto, User user, PhotoPost photoPost) {
         Vote vote = new Vote();
-
-        PhotoPost photoPost = photoPostRepository.findById(voteDto.getPhotoPostId())
-                .orElseThrow(() -> new IllegalArgumentException("PhotoPost not found"));
 
 
         vote.setPhotoPost(photoPost);
