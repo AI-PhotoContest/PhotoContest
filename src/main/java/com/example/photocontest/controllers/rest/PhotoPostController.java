@@ -91,22 +91,20 @@ public class PhotoPostController {
      * Example JSON request body:
      * <pre>
      * {
-     *   "title": "Sunset at the Beach",
-     *   "description": "A beautiful sunset captured at the beach with vibrant colors and peaceful waves.",
-     *   "photo": "https://example.com/photos/sunset-beach.jpg",
-     *   "tags": ["sunset", "beach", "nature"],
-     *   "cameraDetails": {
+     *     "title": "Sunset at the Beach",
+     *     "description": "A beautiful sunset captured at the beach with vibrant colors and peaceful waves.",
+     *     "photo": "https://example.com/photos/sunset-beach.jpg",
+     *     "tags": ["sunset", "beach", "nature"],
      *     "cameraModel": "Canon EOS 5D Mark IV",
      *     "lensMake": "Canon",
      *     "lensModel": "EF 24-70mm f/2.8L II USM",
      *     "shutterSpeed": "1/200",
      *     "aperture": "f/8.0",
      *     "focalLength": "70mm",
-     *     "iso": "100"
-     *   },
-     *   "location": "Malibu, CA",
-     *   "retouchingApplied": "Minimal retouching in Lightroom to enhance colors.",
-     *   "takenDate": "2023-08-15"
+     *     "iso": "100",
+     *     "location": "Malibu, CA",
+     *     "retouchingApplied": "Minimal retouching in Lightroom to enhance colors.",
+     *     "takenDate": "2023-08-15"
      * }
      * </pre>
      * <p>
