@@ -363,6 +363,7 @@ public class ContestController {
      * ```
      * PUT http://localhost:8080/api/contests/{contestId}/photoPost/{photoPostId}/vote
      * Content-Type: application/json
+     * <p>
      * Body: {
      *   "score": 8,
      *   "comment": "Great composition and lighting!",
@@ -394,7 +395,7 @@ public class ContestController {
                                       Principal principal) {
         checkIfUserIsVotable(principal);
 
-        // Проверка дали конкурсът съществува и е валиден
+        // Check if the contest and photo post exist
         Contest contest = contestService.getContestById(contestId);
         PhotoPost photoPost = photoPostService.getPhotoPostById(photoPostId);
         //check if that photoPost is part of the contest
@@ -402,10 +403,10 @@ public class ContestController {
             throw new EntityNotFoundException("PhotoPost", photoPostId);
         }
         User judgeUser = userService.findUserByUsername(principal.getName());
-        // Преобразуване на VoteDto в обект Vote
+        // Create a new Vote entity from the VoteDto
         Vote vote = voteMapper.toEntity(voteDto, judgeUser ,photoPostId);
         photoPost.addVote(vote);
-        // Актуализиране на съответния PhotoPost
+        // Update the photo post with the new vote
         return photoPostService.updatePhotoPost(photoPost);
     }
 

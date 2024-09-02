@@ -1,12 +1,17 @@
 package com.example.photocontest.models.dto;
 
+import com.example.photocontest.models.CameraDetails;
 import com.example.photocontest.models.Tag;
-import jakarta.persistence.Column;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.Set;
 
 @Getter
@@ -24,7 +29,22 @@ public class PhotoPostDto {
     @NotEmpty(message = "Photo cannot be empty!")
     private String photo;
 
-    private Set<Tag> tags;
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private LocalDate takenDate;
 
-    private String tagsInput;
+    private Set<String> tags; // вместо Set<Tag>
+
+    private String cameraModel;
+    private String lensMake;
+    private String lensModel;
+    private String shutterSpeed;
+    private String aperture;
+    private String focalLength;
+    private String iso;
+
+    private String location;
+
+    private String retouchingApplied;
+
+
 }

@@ -121,7 +121,7 @@ public class PhotoPostServiceImpl implements PhotoPostService {
 
     public void checkUserPermissions(int photoPostId) {
         User currentUser = getCurrentUser();
-        PhotoPost photoPost = photoPostRepository.getById(photoPostId);
+        PhotoPost photoPost = photoPostRepository.getPhotoPostById(photoPostId);
         if(!(photoPost.getCreator().equals(currentUser))){
             throw new AuthorizationException(MODIFY_POST_ERROR_MESSAGE);
         }

@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
@@ -33,24 +34,22 @@ public class PhotoPost {
     @JoinColumn(name = "creator_id")
     private User creator;
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "camera_details_id")
     private CameraDetails cameraDetails;
 
-    @Temporal(TemporalType.DATE)
     @Column(name = "upload_date")
-    private Date uploadDate;
+    private LocalDateTime uploadDate;
 
-    @Temporal(TemporalType.DATE)
     @Column(name = "taken_date")
-    private Date takenDate;
+    private LocalDate takenDate;
 
     @Column(name = "retouching_applied")
     private String retouchingApplied;
 
     private String location;
 
-    @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JsonManagedReference
     @JoinTable(
             name = "photo_post_tags",
