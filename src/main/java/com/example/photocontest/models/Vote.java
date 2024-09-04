@@ -22,7 +22,8 @@ public class Vote {
 
     private boolean categoryMismatch;
 
-    private int score;
+    //This is made, so we can have a default score if no one judges this photo post
+    private int score = 3;
 
     private String comment;
 
