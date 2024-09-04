@@ -1,10 +1,12 @@
 package com.example.photocontest.services;
 
+import com.example.photocontest.exceptions.InvalidContestPhaseException;
 import com.example.photocontest.filters.ContestFilterOptions;
 import com.example.photocontest.filters.specifications.ContestSpecifications;
 import com.example.photocontest.models.Contest;
 import com.example.photocontest.models.PhotoPost;
 import com.example.photocontest.models.User;
+import com.example.photocontest.models.enums.ContestPhase;
 import com.example.photocontest.repositories.ContestRepository;
 import com.example.photocontest.repositories.PhotoPostRepository;
 import com.example.photocontest.services.contracts.ContestService;
@@ -76,6 +78,7 @@ public class ContestServiceImpl implements ContestService {
 
     @Override
     public Contest addPhotoPostToContest(Contest contest, int photoPostId) {
+        checkStage(contest);
         PhotoPost photoPost = photoPostRepository.getPhotoPostById(photoPostId);
         if (photoPost == null) {
             throw new IllegalArgumentException("Photo post with id " + photoPostId + " does not exist!");
@@ -130,5 +133,11 @@ public class ContestServiceImpl implements ContestService {
                 .sorted(Comparator.comparing(PhotoPost::getScore).reversed())
                 .limit(3)
                 .collect(Collectors.toList());
+    }
+
+    private void checkStage(Contest contest){
+        if(contest.getPhase().equals(ContestPhase.PHASE2)){
+            throw new InvalidContestPhaseException("Cannot add photo post to contest. Contest is not in PHASE1.");
+        }
     }
 }

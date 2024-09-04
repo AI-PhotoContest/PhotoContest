@@ -2,6 +2,7 @@ package com.example.photocontest.controllers.rest;
 
 import com.example.photocontest.exceptions.AuthorizationException;
 import com.example.photocontest.exceptions.EntityNotFoundException;
+import com.example.photocontest.exceptions.InvalidContestPhaseException;
 import com.example.photocontest.filters.ContestFilterOptions;
 import com.example.photocontest.filters.PhotoPostFilterOptions;
 import com.example.photocontest.mappers.ContestMapper;
@@ -12,6 +13,7 @@ import com.example.photocontest.models.User;
 import com.example.photocontest.models.Vote;
 import com.example.photocontest.models.dto.ContestDto;
 import com.example.photocontest.models.dto.VoteDto;
+import com.example.photocontest.models.enums.ContestPhase;
 import com.example.photocontest.repositories.UserRepository;
 import com.example.photocontest.services.contracts.ContestService;
 import com.example.photocontest.services.contracts.PhotoPostService;
