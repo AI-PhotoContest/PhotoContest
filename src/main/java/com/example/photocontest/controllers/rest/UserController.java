@@ -86,7 +86,7 @@ public class UserController {
     }
 
     @PostMapping
-    public User registerUser(@Valid @RequestBody UserDto userDto) {
+    public User register(@Valid @RequestBody UserDto userDto) {
         User user = userService.createUser(userMapper.fromDto(userDto));
         emailService.sendSimpleEmail(user.getEmail(),user.getUsername());
         return user;
@@ -97,6 +97,9 @@ public class UserController {
         return userService.findUserById(id).getRoles();
     }
 
-
+    @DeleteMapping("/{id}")
+    public void deleteUser(@PathVariable int id) {
+        userService.deleteUser(id);
+    }
 
 }
