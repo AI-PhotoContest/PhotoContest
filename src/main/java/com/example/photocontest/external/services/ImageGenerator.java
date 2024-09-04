@@ -12,7 +12,7 @@ import java.net.URL;
 import java.util.concurrent.TimeUnit;
 
 public class ImageGenerator {
-
+    // The API key is a secret and should be stored securely, e.g., in an environment variable
     private static final String API_KEY = "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";
     private static final String API_URL = "https://api.openai.com/v1/images/generations";
     private static final String IMAGE_SAVE_PATH = "src/main/resources/static/AI_category_generated_images/";

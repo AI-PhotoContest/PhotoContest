@@ -33,7 +33,8 @@ public class EmailService {
                     + "<p>If you have any questions or need assistance, our support team is just an email away. Contact us at support@photocontestai.com, and we’ll be happy to help.</p>"
                     + "<p>Thank you for choosing PhotoContestAI. We can't wait to see the amazing photos you'll share with us!</p>"
                     + "<p>Happy shooting!</p>"
-                    + "<p>Best regards,<br>The PhotoContestAI Team<br>Alexander and Ivan</p>";
+                    + "<p>Best regards,<br>The PhotoContestAI Team<br>Alexander and Ivan</p>"
+                    + "<a href=\"http://localhost:8080\">PhotoContestAI</a>";
 
 
             helper.setFrom("photocontestai@hotmail.com");  // This should match the authenticated email in app.properties
