@@ -60,8 +60,8 @@ Ensure you have the following installed:
    ```
 
 2. **Set up the database**:
-    - The database is already configured in the application.properties file.
-	- AWS service is used for the database.
+  - The database is already configured in the application.properties file.
+  - AWS service is used for the database.
 
 
 3. **Build the project**:
