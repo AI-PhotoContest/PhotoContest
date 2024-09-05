@@ -60,13 +60,9 @@ Ensure you have the following installed:
    ```
 
 2. **Set up the database**:
-    - Run the database creation and data insertion scripts found in `src/main/resources/sql`.
-    - Update the `application.properties` file to include your database configuration:
-      ```properties
-      spring.datasource.url=jdbc:mysql://localhost:3306/photo_contest_db
-      spring.datasource.username=<your-username>
-      spring.datasource.password=<your-password>
-      ```
+    - The database is already configured in the application.properties file.
+	- AWS service is used for the database.
+
 
 3. **Build the project**:
    ```bash
