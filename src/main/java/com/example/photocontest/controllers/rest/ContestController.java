@@ -399,11 +399,16 @@ public class ContestController {
 
         // Check if the contest and photo post exist
         Contest contest = contestService.getContestById(contestId);
+        //check if the contest is in the voting phase
+        if (contest.getPhase() != ContestPhase.PHASE2) {
+            throw new InvalidContestPhaseException("Contest is not in the voting phase");
+        }
         PhotoPost photoPost = photoPostService.getPhotoPostById(photoPostId);
         //check if that photoPost is part of the contest
         if (!contest.getPhotoPosts().contains(photoPost)) {
             throw new EntityNotFoundException("PhotoPost", photoPostId);
         }
+
         User judgeUser = userService.findUserByUsername(principal.getName());
         // Create a new Vote entity from the VoteDto
         Vote vote = voteMapper.toEntity(voteDto, judgeUser , photoPost);
