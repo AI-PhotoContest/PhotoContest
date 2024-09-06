@@ -737,16 +737,16 @@ color: #fff; font-size:14px; font-style:normal; font-family: 'itc_lubalin_graph_
 .dreamweaver { width:100%; -moz-animation:dreamweaver 2s ease-out; -webkit-animation:dreamweaver 2s ease-out;  }
  
 @-moz-keyframes html5       { 0%  { width:0px;} 100%{ width:70%;}   }
-@-moz-keyframes css3        { 0%  { width:0px;} 100%{ width::90%;}  }
-@-moz-keyframes jquery      { 0%  { width:0px;} 100%{ width::50%;}  }
-@-moz-keyframes photoshop   { 0%  { width:0px;} 100%{ width::80%;}  }
-@-moz-keyframes dreamweaver { 0%  { width:0px;} 100%{ width::100%;} }
+@-moz-keyframes css3        { 0%  { width:0px;} 100%{ width:90%;}  }
+@-moz-keyframes jquery      { 0%  { width:0px;} 100%{ width:50%;}  }
+@-moz-keyframes photoshop   { 0%  { width:0px;} 100%{ width:80%;}  }
+@-moz-keyframes dreamweaver { 0%  { width:0px;} 100%{ width:100%;} }
  
 @-webkit-keyframes html5       { 0%  { width:0px;} 100%{ width:70%;}  }
-@-webkit-keyframes css3        { 0%  { width:0px;} 100%{ width::90%;} }
-@-webkit-keyframes jquery      { 0%  { width:0px;} 100%{ width::50%;} }
-@-webkit-keyframes photoshop   { 0%  { width:0px;} 100%{ width::80%;} }
-@-webkit-keyframes dreamweaver { 0%  { width:0px;} 100%{ width::100%;} }
+@-webkit-keyframes css3        { 0%  { width:0px;} 100%{ width:90%;} }
+@-webkit-keyframes jquery      { 0%  { width:0px;} 100%{ width:50%;} }
+@-webkit-keyframes photoshop   { 0%  { width:0px;} 100%{ width:80%;} }
+@-webkit-keyframes dreamweaver { 0%  { width:0px;} 100%{ width:100%;} }
 
 #content .right-sec .sub-tags{
 	margin:30px 0 0 0px;
