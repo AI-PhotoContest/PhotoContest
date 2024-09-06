@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Photo Feed</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Roboto', sans-serif;
+        }
+        .header {
+            background-color: #2b8c2e;
+            padding: 10px;
+            text-align: center;
+            color: white;
+            font-size: 24px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center;
+        }
+        .welcome {
+            color: white;
+            padding: 40px 0;
+            font-size: 32px;
+            font-weight: 500;
+        }
+        .subtext {
+            font-size: 18px;
+            margin-top: 10px;
+        }
+        .photographers {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 40px;
+        }
+        .photographer {
+            background-color: #fff;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            width: 28%;
+            text-align: center;
+        }
+        .photographer img {
+            border-radius: 50%;
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+        }
+        .photographer-name {
+            font-weight: 500;
+            margin-top: 10px;
+        }
+        .photos {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-gap: 5px;
+            margin-top: 15px;
+        }
+        .photos img {
+            width: 100%;
+            border-radius: 5px;
+        }
+        .follow-btn {
+            background-color: #2b8c2e;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<div class="header">Photocrowd</div>
+
+<div class="welcome">
+    <div>Welcome to your photo feed</div>
+    <div class="subtext">To get you started we've chosen some of the top Photocrowders for you to follow.</div>
+</div>
+
+<div class="container">
+    <div class="photographers">
+        <div class="photographer">
+            <img src="julien.jpg" alt="Julien Johnston">
+            <div class="photographer-name">Julien Johnston</div>
+            <div>1.2k photos • 760.1k views • 3.4k followers</div>
+            <div class="photos">
+                <img src="julien1.jpg" alt="Photo 1">
+                <img src="julien2.jpg" alt="Photo 2">
+                <img src="julien3.jpg" alt="Photo 3">
+            </div>
+        </div>
+        <div class="photographer">
+            <img src="neil.jpg" alt="Neil Gosling">
+            <div class="photographer-name">Neil Gosling</div>
+            <div>3.1k photos • 1.9m views • 15.4k followers</div>
+            <div class="photos">
+                <img src="neil1.jpg" alt="Photo 1">
+                <img src="neil2.jpg" alt="Photo 2">
+                <img src="neil3.jpg" alt="Photo 3">
+            </div>
+        </div>
+        <div class="photographer">
+            <img src="tanapong.jpg" alt="Tanapong Bhu">
+            <div class="photographer-name">Tanapong Bhu</div>
+            <div>604 photos • 422.2k views • 2.5k followers</div>
+            <div class="photos">
+                <img src="tanapong1.jpg" alt="Photo 1">
+                <img src="tanapong2.jpg" alt="Photo 2">
+                <img src="tanapong3.jpg" alt="Photo 3">
+            </div>
+        </div>
+    </div>
+    <button class="follow-btn">Continue and follow 30</button>
+</div>
+</body>
+</html>
