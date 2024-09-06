@@ -1,0 +1,24 @@
+@font-face {
+    font-family: 'SourceSansProLight';
+    src: url('SourceSansPro-Light-webfont.eot');
+    src: url('SourceSansPro-Light-webfont.eot?#iefix') format('embedded-opentype'),
+         url('SourceSansPro-Light-webfont.woff') format('woff'),
+         url('SourceSansPro-Light-webfont.ttf') format('truetype'),
+         url('SourceSansPro-Light-webfont.svg#SourceSansProLight') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+
+@font-face {
+    font-family: 'itc_lubalin_graph_stddemi';
+    src: url('lubalingraphstd-demi-webfont.eot');
+    src: url('lubalingraphstd-demi-webfont.eot?#iefix') format('embedded-opentype'),
+         url('lubalingraphstd-demi-webfont.woff') format('woff'),
+         url('lubalingraphstd-demi-webfont.ttf') format('truetype'),
+         url('lubalingraphstd-demi-webfont.svg#itc_lubalin_graph_stddemi') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}

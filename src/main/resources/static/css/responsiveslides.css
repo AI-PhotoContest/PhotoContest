@@ -1,0 +1,77 @@
+/*! http://responsiveslides.com v1.53 by @viljamis */
+
+.rslides {
+  position: relative;
+  list-style: none;
+  overflow: hidden;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  }
+
+.rslides li {
+  -webkit-backface-visibility: hidden;
+  position: absolute;
+  display: none;
+  width: 100%;
+  left: 0;
+  top: 0;
+  border:0 !important;
+  }
+  .rslides li {
+	  background:none !important;
+  }
+
+.rslides a {
+	
+	display:inline-block !important;
+  }
+
+.rslides li:first-child {
+  position: relative;
+  display: block;
+  float: left;
+  }
+
+.rslides img {
+  display: block;
+  height: auto;
+  float: left;
+  width: 100%;
+  border: 0;
+  margin-bottom:25px;
+  }
+.rslides li .caption{ font-size:16px; color:#fff;}
+.rslides li .caption strong{font-family: 'itc_lubalin_graph_stddemi'; font-size:18px; display:block; text-transform:uppercase;}
+
+.callbacks_nav {
+    background: url("themes/themes.gif") no-repeat scroll left top rgba(0, 0, 0, 0);
+    height: 31px;
+    margin-top: -45px;
+    opacity: 0.7;
+    overflow: hidden;
+    position: absolute;
+    text-decoration: none;
+    text-indent: -9999px;
+    top: 87%;
+    width: 34px;
+    z-index: 3;
+}
+#banner-slider{ margin:0 0 0 20px; width:570px;}
+.banner-slider{position: relative;
+width: 570px;
+float: left;}
+.banner-slider p.caption{ color:#333333 !important; margin:0px 0 18px 0 ;}
+
+.banner-slider .rslides li .caption strong{  margin:0px 0 10px 0 ;}
+.callbacks_nav.prev{ right:36px; background:url(../images/slider-nav-left.png) no-repeat;}
+.callbacks_nav.next{ right:0; background:url(../images/slider-nav-right.png) no-repeat;}
+
+.banner-slider .callbacks_nav.prev{  background:url(../images/slider-nav-left.png) no-repeat #000; right:516px; }
+.banner-slider .callbacks_nav{ top:28%;
+}
+.banner-slider .callbacks_nav.next {
+right: -20px;
+background: url(../images/slider-nav-right.png) #000 no-repeat;
+}
+

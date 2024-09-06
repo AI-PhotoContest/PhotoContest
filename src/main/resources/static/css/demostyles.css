@@ -1,0 +1,40 @@
+.tabs ul {
+	margin: 0;
+	padding: 0;
+	
+	overflow: hidden;
+}
+.tabs ul li {
+	list-style: none;
+	float: left;
+	margin-right: 4px;
+}
+.tabs ul li a {
+	font-family: 'itc_lubalin_graph_stddemi';
+	display: inline-block;
+	padding: 12px 26px;
+	color: #383838;
+	outline: 0;
+	font-size:16px;
+	text-decoration: none;
+	text-transform:uppercase;
+	background:none;
+}
+
+.tabs ul li a.current {
+	color: #383838;
+
+	background: #fff;
+}
+div.tabscontent > div {
+	background: #fff;
+}
+div.controls {
+	float: right;
+}
+div.controls a {
+	margin-left: 5px;
+}
+#tab-1{
+	background:#fff;
+}
