@@ -1,0 +1,178 @@
+/* General Styling */
+
+.outerWrapper {
+	text-align: left;
+	position:relative;
+	margin:30px auto 30px auto;
+
+}
+
+.item {
+	float:left;
+	margin-right:25px;
+	width:274px;
+
+}
+
+.item div {
+	
+	color:white;
+	color:#b3b3b3;
+}
+
+.right-nav-btn {
+	position:absolute;
+	width:36px;
+	height:70px;
+	top:132px !important;
+	cursor:pointer;
+	opacity: 0.8;
+	background:transparent url('../images/arrows.png') top left no-repeat;
+	-webkit-transition:opacity 0.2s linear;
+  	-moz-transition:opacity 0.2s linear;
+  	-o-transition:opacity 0.2s linear;
+  	transition:opacity 0.2s linear;
+}
+.left-nav-btn{
+	position:absolute;
+	width:36px;
+	height:70px;
+	top:132px;
+	cursor:pointer;
+	opacity: 0.8;
+	background:transparent url('../images/arrows.png') top left no-repeat;
+	-webkit-transition:opacity 0.2s linear;
+  	-moz-transition:opacity 0.2s linear;
+  	-o-transition:opacity 0.2s linear;
+  	transition:opacity 0.2s linear;
+}
+
+.left-nav-btn {
+	left:-1px;
+}
+
+.right-nav-btn {
+	right:-1px;
+	background-position: top right;
+
+}
+
+.left-nav-btn:hover, .right-nav-btn:hover {
+	opacity: 1;
+}
+
+/* Vertical Mode */
+
+.vert.outerWrapper {
+	margin:50px auto 60px auto;
+	width:204px;
+	height:456px;
+}
+
+.vert .item {
+	float:left;
+	margin-bottom:48px;
+	width:162px;
+}
+
+.vert .left-nav-btn, .vert .right-nav-btn {
+	position:absolute;
+	width:37px;
+	height:37px;
+	cursor:pointer;
+	left:82px;
+	background:transparent url('../images/arrows_vert.png') top left no-repeat;
+}
+
+.vert .left-nav-btn {
+	top:-60px;
+}
+
+.vert .right-nav-btn {
+	top:auto;
+	bottom:-60px;
+	background-position: bottom left;
+}
+
+.leftWrapper {
+	width:48%;
+	float:left;
+}
+
+.rightWrapper {
+	width:48%;
+	float:right;
+}
+
+.leftWrapper h2, .rightWrapper h2 {
+	width:100%;
+	text-align:center;
+}
+
+.outerWrapper2 .item {
+	margin-right:50px;
+	width:110px;
+	padding:20px;
+}
+
+/* Pager */
+
+.pager {
+	line-height: 100px;
+	text-align: center;
+}
+
+.pager > span {
+	cursor: pointer;
+	border-radius:8px;
+	display: inline-block;
+	width:16px;
+	height:16px;
+	background: #DDDDDD;
+	border:1px solid #B3B3B3;
+	margin:0 4px;
+	overflow: none;
+}
+
+.pager > span.active {
+	background: #B3B3B3;
+}
+
+.pager > span > span {
+	display: none;
+}
+
+/* Counter (See Example 7) */
+
+#counter {
+	margin-top:-30px;
+	font-weight: bold;
+	font-size: 18px;
+	text-align: center;
+	padding-bottom: 20px;
+}
+
+#clients{
+	background:#f4f3f3;
+	padding: 30px 60px;
+	height:53px;
+
+}
+#clients .innerWrapper{ width:1170px !important;}
+#clients .right-nav-btn{
+	top: 22px !important;
+}
+#clients .left-nav-btn{
+	top: 22px !important;
+}
+
+#clients .item{
+	width:122px;
+	margin-right: 60px;
+}
+
+
+
+
+
+
