@@ -36,6 +36,7 @@ public class ContestPhaseScheduler {
             }
 
             if (contest.getPhaseIIEndTime().isBefore(now) && contest.getPhase() == ContestPhase.PHASE2) {
+                contestService.setTheDefaultVotesIfNecessary(contest);
                 contest.setPhase(ContestPhase.FINISHED);
                 List<PhotoPost> winners = contestService.findTop3ByContestId(contest.getId());
                 if (!winners.isEmpty()) {

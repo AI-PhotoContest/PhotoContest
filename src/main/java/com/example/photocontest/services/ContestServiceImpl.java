@@ -6,6 +6,7 @@ import com.example.photocontest.filters.specifications.ContestSpecifications;
 import com.example.photocontest.models.Contest;
 import com.example.photocontest.models.PhotoPost;
 import com.example.photocontest.models.User;
+import com.example.photocontest.models.Vote;
 import com.example.photocontest.models.enums.ContestPhase;
 import com.example.photocontest.repositories.ContestRepository;
 import com.example.photocontest.repositories.PhotoPostRepository;
@@ -25,6 +26,8 @@ import static com.example.photocontest.helpers.ContestHelpers.checkIfContestExis
 @Service
 public class ContestServiceImpl implements ContestService {
 
+    public static final String DEFAULT_VOTE_COMMENT = "Photo is not reviewed, default score of 3 is given.";
+    public static final String CANNOT_ADD_PHOTO_TO_PHASE2_ERROR_MESSAGE = "Cannot add photo post to contest. Contest is not in PHASE1.";
     private final ContestRepository contestRepository;
     private final PhotoPostRepository photoPostRepository;
 
@@ -137,7 +140,19 @@ public class ContestServiceImpl implements ContestService {
 
     private void checkStage(Contest contest){
         if(contest.getPhase().equals(ContestPhase.PHASE2)){
-            throw new InvalidContestPhaseException("Cannot add photo post to contest. Contest is not in PHASE1.");
+            throw new InvalidContestPhaseException(CANNOT_ADD_PHOTO_TO_PHASE2_ERROR_MESSAGE);
         }
     }
+
+   public void setTheDefaultVotesIfNecessary(Contest contest) {
+       for (PhotoPost photoPost : contest.getPhotoPosts()) {
+           Vote defaultVote = new Vote();
+           defaultVote.setComment(DEFAULT_VOTE_COMMENT);
+           if (photoPost.getVotes() == null) {
+               photoPost.addVote(defaultVote);
+           }
+
+       }
+   }
+
 }
