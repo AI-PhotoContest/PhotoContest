@@ -1,100 +1,373 @@
 <!doctype html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>iMag99 | Login Page</title>
-  <link href="css/imag99.css" rel="stylesheet" type="text/css" />
-  <link href="css/camera.css" rel="stylesheet" type="text/css" />
-  <link href="fonts/stylesheet.css" rel="stylesheet" type="text/css" />
-  <link href="css/font-awesome.min.css" rel="stylesheet" type="text/css" />
-  <link href="css/drop-down.css" rel="stylesheet" type="text/css" />
-  <link href="css/demostyles.css" rel="stylesheet" type="text/css" />
-  <link type="text/css" href="css/styles.css" rel="stylesheet" />
-  <link type="text/css" href="css/responsive.css" rel="stylesheet" />
-  <link type="text/css" href="css/style.css" rel="stylesheet" />
+<head class="main-head" th:replace="~{/fragments/head.html :: main-head ('sign-in')}">
 
-  <script type="text/javascript" th:src="@{/js/jquery.js}"></script>
-  <script type="text/javascript" th:src="@{/js/waltzerjs.js}"></script>
-
-</head>
+  <title>sign-in</title></head>
 
 <body>
 <div id="wrap">
-
-  <header id="header">
-    <div class="container">
-      <a class="logo" th:href="@{/}" ><img th:src="@{/images/logo.jpg}" alt="" /></a>
-      <div class="menu">
-        <section class="main">
-          <div class="wrapper-demo">
-            <div id="dd" class="wrapper-dropdown-5" tabindex="1">
-              <ul class="dropdown">
-                <li><a th:href="@{/}">home</a></li>
-                <li><a th:href="@{/video}">videos</a></li>
-                <li><a th:href="@{/typography}">typography</a></li>
-                <li><a th:href="@{/login}">login</a></li>
-                <li><a th:href="@{/image-styles}">image styles</a></li>
-                <li><a th:href="@{/message-box}">message box</a></li>
-                <li><a th:href="@{/columns}">columns</a></li>
-                <li><a th:href="@{/tabs}">tabs</a></li>
-                <li class="last"><a class="last" th:href="@{/404}">404 error</a></li>
-              </ul>
-            </div>
-            ​</div>
-        </section>
-      </div>
-      <div class="search">
-        <input name="" type="text" onBlur="if(this.value == '') { this.value='Search Articles'}" onFocus="if (this.value == 'Search Articles') {this.value=''}" value="Search Articles">
-        <a class="search-icon" ><i class="fa fa-search"></i></a>
-      </div>
-    </div>
-  </header>
-
+  <div th:insert="~{/fragments/navbar.html :: navBarMenu}"></div>
+  <div class="clear"></div>
   <div class="container">
     <div id="content">
-      <div class="login-page">
+      <div class="sub-page"></div>
+      <div class="contact-us">
         <div class="heading">
-          <h2>Login</h2>
+          <h2>find us</h2>
         </div>
 
-        <div class="login-form">
-          <div class="form">
-            <!-- Добавяме Thymeleaf атрибути -->
-            <form th:action="@{/login}" method="post" th:object="${loginForm}" id="login_form">
-              <input name="username" th:field="*{username}" id="username" type="text" placeholder="Username*" value="" />
-              <input class="last" name="password" th:field="*{password}" id="password" type="password" placeholder="Password*" value="" />
-              <a href="#" class="submit" onClick="document.getElementById('login_form').submit();">Login</a>
-            </form>
+        <div id="map"></div>
+        <div class="clear"></div>
+
+        <div class="contact-form">
+
+
+
+          <div class="leave-comment">
+            <div class="heading">
+              <h2>LEAVE A COMMENT</h2>
+            </div>
+            <p>Nunc porta blandit massa quis tincidunt. Duis rutrum viverra libero, sed hendrerit ipsum interdum eu. Nullam suscipit lorem ut orci feugiat id facilisis eros
+              tempus. Maecenas dignissim bibendum nibh, nec convallis mi consectetur non. Nunc sed augue turpis, id varius elit. Integer vel ligula id arcu suscipit commodo.</p>
+
+            <div class="success" id="success" style="display:none"></div>
+            <div class="form">
+              <form name="contact_form" id="contact_form" method="post" onSubmit="return false;">
+                <input name="name" id="name" type="text" placeholder="Name*" value="">
+
+                <input class="last" name="email" id="email"  placeholder="Email Address*" type="text"  value="">
+
+                <input name="website" id="website" type="text" placeholder="Website" value="">
+
+                <input class="last" name="number" id="number" type="text"  placeholder="Phone No"  value="">
+
+                <textarea name="message" id="message" placeholder="Comment*"></textarea>
+              </form>
+              <a href="#." class="submit" onClick="submitform();">submit</a>
+
+            </div>
             <div class="clear"></div>
           </div>
+
         </div>
 
-        <div class="forgot-password">
-          <a th:href="@{/forgot-password}">Forgot your password?</a>
+
+        <div class="get-touch">
+          <div class="heading">
+            <h2>get in touch</h2>
+          </div>
+
+          <div class="touch">
+            <a href="#."><i class="fa fa-mobile"></i> 2-100-703-1191  or  2-100-703-1191</a><br/>
+            <a href="#."><i class="fa fa-envelope"></i> support@imag99.com</a><br/>
+            <a href="#."><i class="fa fa-globe"></i> https://www.imag99.com</a>
+          </div>
+
         </div>
 
-        <div class="register">
-          <p>Don't have an account? <a th:href="@{/register}">Register here</a></p>
+
+
+        <div class="get-social">
+          <div class="heading">
+            <h2>GET SOCIAL</h2>
+          </div>
+
+          <div class="social-icons">
+            <a href="#."><i class="fa fa-facebook"></i></a>
+            <a href="#."><i class="fa fa-twitter"></i></a>
+            <a href="#."><i class="fa fa-google-plus"></i></a>
+            <a href="#."><i class="fa fa-linkedin"></i></a>
+            <a href="#."><i class="fa fa-instagram"></i></a>
+            <a href="#."><i class="fa fa-pinterest"></i></a>
+            <a href="#."><i class="fa fa-linux"></i></a>
+            <a href="#."><i class="fa fa-apple"></i></a>
+            <a href="#."><i class="fa fa-skype"></i></a>
+            <a href="#."><i class="fa fa-xing"></i></a>
+            <a href="#."><i class="fa fa-youtube-play"></i></a>
+            <a href="#."><i class="fa fa-maxcdn"></i></a>
+            <a href="#."><i class="fa fa-dropbox"></i></a>
+            <a href="#."><i class="fa fa-css3"></i> </a>
+            <a href="#."><i class="fa fa-tumblr"></i></a>
+            <a href="#."><i class="fa fa-github"></i></a>
+            <a href="#."><i class="fa fa-dribbble"></i></a>
+
+          </div>
+
         </div>
+
       </div>
-    </div>
-  </div>
 
-  <footer id="footer">
-    <div class="container">
-      <div class="social">
-        <a class="fb" ><i class="fa fa-facebook"></i></a>
-        <a class="fb" ><i class="fa fa-twitter"></i></a>
-        <a class="fb" ><i class="fa fa-pinterest"></i></a>
-        <a class="fb" ><i class="fa fa-google-plus"></i></a>
-        <a class="fb" ><i class="fa fa-linkedin"></i></a>
+
+
+
+      <div class="clear"></div>
+
+
+
+
+
+
+    </div>
+
+    <div class="clear"></div>
+    <footer id="footer">
+
+      <div class="newsletter">
+        <div class="text">
+          <h1>Signup for our newsletter</h1>
+          <span>Never miss a deal, special discount offer and our new products</span>
+        </div>
+
+        <div class="email">
+
+          <input name="" type="text" onBlur="if(this.value == '') { this.value='Enter your email address'}"
+                 onfocus="if (this.value == 'Enter your email address') {this.value=''}" value="Enter your email address">
+          <a class="subscribe" href="#.">Subscribe</a>
+        </div>
         <div class="clear"></div>
       </div>
+      <div class="clear"></div>
+
+      <div class="foot-sec">
+        <div class="menu">
+          <span class="title">About mag</span>
+          <ul>
+            <li><a href="#.">Home</a></li>
+            <li><a href="#.">About Us</a></li>
+            <li><a href="#.">Location</a></li>
+            <li><a href="#.">Contact Us</a></li>
+          </ul>
+        </div>
+
+        <div class="menu menu2">
+          <span class="title">CATEGORIES</span>
+          <ul>
+            <li><a href="#.">Low Price Promise</a></li>
+            <li><a href="#.">Damages Policy</a></li>
+            <li><a href="#.">Terms and Conditions</a></li>
+            <li><a href="#.">Privacy Policy</a></li>
+          </ul>
+        </div>
+
+      </div>
+
+
+      <div class="foot-sec sec2">
+
+        <div class="share">
+          <span class="title">Share Buttons</span>
+          <img src="images/share-button.png" alt="" />
+        </div>
+
+        <div class="payment">
+          <span class="title">payment method</span>
+          <img src="images/payment.jpg" alt="" />
+        </div>
+
+      </div>
+
+      <div class="foot-sec sec3">
+
+        <div class="contact">
+          <span class="number">Product Questions: 111-111-0002 or 222-222-3705</span>
+          <span class="number">Installation Questions: 111-222-1017</span>
+          <img src="images/bbb.jpg" alt="" />
+        </div>
+
+
+
+      </div>
+
+
+
+    </footer>
+
+  </div>
+  <div class="clear"></div>
+
+  <div class="foot-bot">
+    <div class="container">
+      <div class="social">
+        <a href="#."><i class="fa fa-facebook"></i></a>
+        <a href="#."><i class="fa fa-twitter"></i></a>
+        <a href="#."><i class="fa fa-pinterest"></i></a>
+        <a href="#."><i class="fa fa-google-plus"></i></a>
+        <a href="#."><i class="fa fa-linkedin"></i></a>
+      </div>
       <p>Copyrights 2014 imag99. All rights reserved.</p>
+
     </div>
-  </footer>
+    <div class="clear"></div>
+  </div>
+
+
+
+
 </div>
+
+<script type="text/javascript">
+
+  function DropDown(el) {
+    this.dd = el;
+    this.initEvents();
+  }
+  DropDown.prototype = {
+    initEvents : function() {
+      var obj = this;
+
+      obj.dd.on('click', function(event){
+        $(this).toggleClass('active');
+        event.stopPropagation();
+      });
+    }
+  }
+
+  jQuery(function($) {
+
+    var dd = new DropDown( $('#dd, #dd2') );
+
+    $(document).click(function() {
+      // all dropdowns
+      $('.wrapper-dropdown-5').removeClass('active');
+    });
+
+  });
+
+</script>
+<script>
+  function checkcontact(input)
+  {
+    var pattern1=/^([a-zA-Z0-9_.-])+@([a-zA-Z0-9_.-])+\.([a-zA-Z])+([a-zA-Z])+/;
+    if(pattern1.test(input))
+    {
+      return true;
+    }
+    else{
+      return false;
+    }
+  }
+
+  function submitform()
+  {
+    var name = document.getElementById('name').value;
+    var email = document.getElementById('email').value;
+    var number = document.getElementById('number').value;
+    var text=document.getElementById('message').value;
+
+    if(name=="" || name== "Name"){
+      document.getElementById("name").className = "error";
+      document.getElementById('name').focus();
+    }
+    else if(email=="" || email== "Email")
+    {
+      document.getElementById("email").className = "last error";
+      document.getElementById('email').focus();
+
+    }else if(checkcontact(document.getElementById("email").value)==false){
+
+      document.getElementById("email").className = "last error";
+      document.getElementById('email').focus();
+    }
+    /*else if(number=="" || number== "Phone Number")
+    {
+        document.getElementById("number").className = "error";
+        document.getElementById('number').focus();
+
+    }else if(isNaN(number)== true){
+        document.getElementById("number").className = "error";
+        document.getElementById('number').focus();
+
+    }*/
+    else if(text == "")
+    {
+      document.getElementById("message").className = "error";
+      document.getElementById('message').focus();
+
+    }
+
+    else {
+
+
+      $.ajax({
+        type: "POST",
+        url: 'submit-contact-form.php',
+        data: $("#contact_form").serialize(),
+        success: function(msg)
+        {
+
+          document.getElementById('name').value="Name";
+          document.getElementById('email').value="Email";
+          document.getElementById('number').value="Phone Number";
+          document.getElementById('message').value="Message";
+
+          document.getElementById('name').className="";
+          document.getElementById('email').className="last";
+          document.getElementById('number').className="last";
+          document.getElementById('website').className="";
+          document.getElementById('message').className="";
+
+          document.getElementById("success").style.display="block";
+          document.getElementById("success").innerHTML=msg;
+          ///window.location.hash = '#success';
+
+          $('.success').fadeOut(8000);
+
+        }
+      });
+
+
+      return false;
+    }
+
+  }
+
+
+  function remove_class()
+  {
+
+    var name = document.getElementById('name').value;
+    var email = document.getElementById('email').value;
+    var number = document.getElementById('number').value;
+    var text=document.getElementById('message').value;
+
+    if(name!="" || name!= "Name"){
+      document.getElementById("name").className = "";
+
+    }
+    if(email!="" || email!= "Email")
+    {
+      document.getElementById("email").className = "";
+
+    }
+    if(checkcontact(document.getElementById("email").value)!=true){
+
+      document.getElementById("email").className = "";
+
+    }
+    /*if(number!="" || number!= "Phone Number")
+    {
+        document.getElementById("number").className = "";
+
+
+    } if(isNaN(number)== false){
+        document.getElementById("number").className = "";
+
+
+    }*/
+    if(text != "")
+    {
+      document.getElementById("message").className = "";
+
+    }
+
+
+
+
+  }
+</script>
+
+
+
 
 </body>
 </html>
