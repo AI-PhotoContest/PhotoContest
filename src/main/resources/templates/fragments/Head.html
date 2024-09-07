@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head  id="main-head" th:fragment="main-head (pageTitle)">
+  <!doctype html>
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>iMag99 | contact us</title>
+
+  <link href="../static/css/imag99.css" rel="stylesheet" type="text/css" th:href="@{/css/imag99.css}" />
+  <link href="../static/css/camera.css" rel="stylesheet" type="text/css" th:href="@{/css/camera.css}" />
+  <link href="../static/fonts/stylesheet.css" rel="stylesheet" type="text/css" th:href="@{/fonts/stylesheet.css}" />
+  <link href="../static/css/font-awesome.min.css" rel="stylesheet" type="text/css" th:href="@{/css/font-awesome.min.css}" />
+  <link href="../static/css/font-awesome.min.css" rel="stylesheet" type="text/css" th:href="@{/css/font-awesome.min.css}" />
+  <link rel="stylesheet" type="text/css" href="../static/css/drop-down.css" th:href="@{/css/drop-down.css}" />
+  <link href="../static/css/demostyles.css" rel="stylesheet" type="text/css" th:href="@{/css/demostyles.css}" />
+  <link type="text/css" href="../static/css/styles.css" rel="stylesheet" th:href="@{/css/styles.css}" />
+  <link type="text/css" href="../static/css/responsive.css" rel="stylesheet" th:href="@{/css/responsive.css}" />
+  <link type="text/css" href="../static/css/style.css" rel="stylesheet" th:href="@{/css/style.css}" />
+
+  <script type="text/javascript" src="../static/js/jquery.js" th:src="@{/js/jquery.js}"></script>
+  <script type="text/javascript" src="../static/js/waltzerjs.js" th:src="@{/js/waltzerjs.js}"></script>
+
+  <script type="text/javascript">
+    // Your inline JavaScript code here
+
+    //stickey header
+    jQuery(function($) {
+      $(window).scroll(function() {
+        var scroll = jQuery(window).scrollTop();
+        if (scroll >= 40) {
+          $("#wrap").addClass("smallheader");
+        }
+        else {
+          $("#wrap").removeClass("smallheader");
+        }
+      });
+    });
+    $(document).ready(function() {
+
+      $('#carousel').waltzer({scroll:1});
+      $('#clients').waltzer({scroll:1});
+
+    });
+
+  </script>
+
+
+
+  <script src="../static/js/jquery.tabbedcontent.min.js" th:src="@{/js/jquery.tabbedcontent.min.js}"></script>
+  <!--[if lt IE 9]>
+  <script src="../static/dist/html5shiv.js"></script>
+  <![endif]-->
+
+
+  <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyASm3CwaK9qtcZEWYa-iQwHaGi3gcosAJc&amp;sensor=false"></script>
+
+  <script type="text/javascript">
+    // When the window has finished loading create our google map below
+    google.maps.event.addDomListener(window, 'load', init);
+
+    function init() {
+      // Basic options for a simple Google Map
+      // For more options see: https://developers.google.com/maps/documentation/javascript/reference#MapOptions
+      var mapOptions = {
+        // How zoomed in you want the map to start at (always required)
+        zoom: 11,
+
+        // The latitude and longitude to center the map (always required)
+        center: new google.maps.LatLng(40.6700, -73.9400), // New York
+
+        // How you would like to style the map.
+        // This is where you would paste any style found on Snazzy Maps.
+        styles: [{stylers:[{saturation:-100},{gamma:1}]},{elementType:"labels.text.stroke",stylers:[{visibility:"off"}]},{featureType:"poi.business",elementType:"labels.text",stylers:[{visibility:"off"}]},{featureType:"poi.business",elementType:"labels.icon",stylers:[{visibility:"off"}]},{featureType:"poi.place_of_worship",elementType:"labels.text",stylers:[{visibility:"off"}]},{featureType:"poi.place_of_worship",elementType:"labels.icon",stylers:[{visibility:"off"}]},{featureType:"road",elementType:"geometry",stylers:[{visibility:"simplified"}]},{featureType:"water",stylers:[{visibility:"on"},{color:"#ebebeb"},{saturation:0},{gamma:0},{hue:"#50a5d1"}]},{featureType:"administrative.neighborhood",elementType:"labels.text.fill",stylers:[{color:"#333333"}]},{featureType:"road.local",elementType:"labels.text",stylers:[{weight:0.5},{color:"#333333"}]},{featureType:"transit.station",elementType:"labels.icon",stylers:[{gamma:1},{saturation:50}]}]
+      };
+
+      // Get the HTML DOM element that will contain your map
+      // We are using a div with id="map" seen below in the <body>
+      var mapElement = document.getElementById('map');
+
+      // Create the Google Map using out element and options defined above
+      var map = new google.maps.Map(mapElement, mapOptions);
+    }
+  </script>
+
+</head>
