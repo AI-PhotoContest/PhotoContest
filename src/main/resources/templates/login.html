@@ -1,0 +1,100 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>iMag99 | Login Page</title>
+  <link href="css/imag99.css" rel="stylesheet" type="text/css" />
+  <link href="css/camera.css" rel="stylesheet" type="text/css" />
+  <link href="fonts/stylesheet.css" rel="stylesheet" type="text/css" />
+  <link href="css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+  <link href="css/drop-down.css" rel="stylesheet" type="text/css" />
+  <link href="css/demostyles.css" rel="stylesheet" type="text/css" />
+  <link type="text/css" href="css/styles.css" rel="stylesheet" />
+  <link type="text/css" href="css/responsive.css" rel="stylesheet" />
+  <link type="text/css" href="css/style.css" rel="stylesheet" />
+
+  <script type="text/javascript" th:src="@{/js/jquery.js}"></script>
+  <script type="text/javascript" th:src="@{/js/waltzerjs.js}"></script>
+
+</head>
+
+<body>
+<div id="wrap">
+
+  <header id="header">
+    <div class="container">
+      <a class="logo" th:href="@{/}" ><img th:src="@{/images/logo.jpg}" alt="" /></a>
+      <div class="menu">
+        <section class="main">
+          <div class="wrapper-demo">
+            <div id="dd" class="wrapper-dropdown-5" tabindex="1">
+              <ul class="dropdown">
+                <li><a th:href="@{/}">home</a></li>
+                <li><a th:href="@{/video}">videos</a></li>
+                <li><a th:href="@{/typography}">typography</a></li>
+                <li><a th:href="@{/login}">login</a></li>
+                <li><a th:href="@{/image-styles}">image styles</a></li>
+                <li><a th:href="@{/message-box}">message box</a></li>
+                <li><a th:href="@{/columns}">columns</a></li>
+                <li><a th:href="@{/tabs}">tabs</a></li>
+                <li class="last"><a class="last" th:href="@{/404}">404 error</a></li>
+              </ul>
+            </div>
+            ​</div>
+        </section>
+      </div>
+      <div class="search">
+        <input name="" type="text" onBlur="if(this.value == '') { this.value='Search Articles'}" onFocus="if (this.value == 'Search Articles') {this.value=''}" value="Search Articles">
+        <a class="search-icon" ><i class="fa fa-search"></i></a>
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+    <div id="content">
+      <div class="login-page">
+        <div class="heading">
+          <h2>Login</h2>
+        </div>
+
+        <div class="login-form">
+          <div class="form">
+            <!-- Добавяме Thymeleaf атрибути -->
+            <form th:action="@{/login}" method="post" th:object="${loginForm}" id="login_form">
+              <input name="username" th:field="*{username}" id="username" type="text" placeholder="Username*" value="" />
+              <input class="last" name="password" th:field="*{password}" id="password" type="password" placeholder="Password*" value="" />
+              <a href="#" class="submit" onClick="document.getElementById('login_form').submit();">Login</a>
+            </form>
+            <div class="clear"></div>
+          </div>
+        </div>
+
+        <div class="forgot-password">
+          <a th:href="@{/forgot-password}">Forgot your password?</a>
+        </div>
+
+        <div class="register">
+          <p>Don't have an account? <a th:href="@{/register}">Register here</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer id="footer">
+    <div class="container">
+      <div class="social">
+        <a class="fb" ><i class="fa fa-facebook"></i></a>
+        <a class="fb" ><i class="fa fa-twitter"></i></a>
+        <a class="fb" ><i class="fa fa-pinterest"></i></a>
+        <a class="fb" ><i class="fa fa-google-plus"></i></a>
+        <a class="fb" ><i class="fa fa-linkedin"></i></a>
+        <div class="clear"></div>
+      </div>
+      <p>Copyrights 2014 imag99. All rights reserved.</p>
+    </div>
+  </footer>
+</div>
+
+</body>
+</html>
