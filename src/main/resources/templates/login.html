@@ -1,372 +1,428 @@
 <!doctype html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head class="main-head" th:replace="~{/fragments/head.html :: main-head ('sign-in')}">
+<html>
+<link href="../static/css/login.css" rel="stylesheet" type="text/css" th:href="@{/css/login.css}"/>
+<head th:replace="~{fragments/head.html :: main-head}">
 
-  <title>sign-in</title></head>
+    <title>sign-in</title>
+</head>
 
 <body>
 <div id="wrap">
-  <div th:insert="~{/fragments/navbar.html :: navBarMenu}"></div>
-  <div class="clear"></div>
-  <div class="container">
-    <div id="content">
-      <div class="sub-page"></div>
-      <div class="contact-us">
-        <div class="heading">
-          <h2>find us</h2>
-        </div>
 
-        <div id="map"></div>
-        <div class="clear"></div>
+    <header id="header">
+        <div id="searchBarAndLogo" th:replace="~{fragments/SearchBarAndLogo.html :: searchBarAndLogo}"></div>
+        <nav th:replace="~{fragments/Navbar.html :: navBarMenu (sign-in)}">
+        </nav>
 
-        <div class="contact-form">
-
-
-
-          <div class="leave-comment">
-            <div class="heading">
-              <h2>LEAVE A COMMENT</h2>
-            </div>
-            <p>Nunc porta blandit massa quis tincidunt. Duis rutrum viverra libero, sed hendrerit ipsum interdum eu. Nullam suscipit lorem ut orci feugiat id facilisis eros
-              tempus. Maecenas dignissim bibendum nibh, nec convallis mi consectetur non. Nunc sed augue turpis, id varius elit. Integer vel ligula id arcu suscipit commodo.</p>
-
-            <div class="success" id="success" style="display:none"></div>
-            <div class="form">
-              <form name="contact_form" id="contact_form" method="post" onSubmit="return false;">
-                <input name="name" id="name" type="text" placeholder="Name*" value="">
-
-                <input class="last" name="email" id="email"  placeholder="Email Address*" type="text"  value="">
-
-                <input name="website" id="website" type="text" placeholder="Website" value="">
-
-                <input class="last" name="number" id="number" type="text"  placeholder="Phone No"  value="">
-
-                <textarea name="message" id="message" placeholder="Comment*"></textarea>
-              </form>
-              <a href="#." class="submit" onClick="submitform();">submit</a>
-
-            </div>
-            <div class="clear"></div>
-          </div>
-
-        </div>
-
-
-        <div class="get-touch">
-          <div class="heading">
-            <h2>get in touch</h2>
-          </div>
-
-          <div class="touch">
-            <a href="#."><i class="fa fa-mobile"></i> 2-100-703-1191  or  2-100-703-1191</a><br/>
-            <a href="#."><i class="fa fa-envelope"></i> support@imag99.com</a><br/>
-            <a href="#."><i class="fa fa-globe"></i> https://www.imag99.com</a>
-          </div>
-
-        </div>
-
-
-
-        <div class="get-social">
-          <div class="heading">
-            <h2>GET SOCIAL</h2>
-          </div>
-
-          <div class="social-icons">
-            <a href="#."><i class="fa fa-facebook"></i></a>
-            <a href="#."><i class="fa fa-twitter"></i></a>
-            <a href="#."><i class="fa fa-google-plus"></i></a>
-            <a href="#."><i class="fa fa-linkedin"></i></a>
-            <a href="#."><i class="fa fa-instagram"></i></a>
-            <a href="#."><i class="fa fa-pinterest"></i></a>
-            <a href="#."><i class="fa fa-linux"></i></a>
-            <a href="#."><i class="fa fa-apple"></i></a>
-            <a href="#."><i class="fa fa-skype"></i></a>
-            <a href="#."><i class="fa fa-xing"></i></a>
-            <a href="#."><i class="fa fa-youtube-play"></i></a>
-            <a href="#."><i class="fa fa-maxcdn"></i></a>
-            <a href="#."><i class="fa fa-dropbox"></i></a>
-            <a href="#."><i class="fa fa-css3"></i> </a>
-            <a href="#."><i class="fa fa-tumblr"></i></a>
-            <a href="#."><i class="fa fa-github"></i></a>
-            <a href="#."><i class="fa fa-dribbble"></i></a>
-
-          </div>
-
-        </div>
-
-      </div>
-
-
-
-
-      <div class="clear"></div>
-
-
-
-
-
-
-    </div>
+    </header>
 
     <div class="clear"></div>
-    <footer id="footer">
-
-      <div class="newsletter">
-        <div class="text">
-          <h1>Signup for our newsletter</h1>
-          <span>Never miss a deal, special discount offer and our new products</span>
-        </div>
-
-        <div class="email">
-
-          <input name="" type="text" onBlur="if(this.value == '') { this.value='Enter your email address'}"
-                 onfocus="if (this.value == 'Enter your email address') {this.value=''}" value="Enter your email address">
-          <a class="subscribe" href="#.">Subscribe</a>
-        </div>
-        <div class="clear"></div>
-      </div>
-      <div class="clear"></div>
-
-      <div class="foot-sec">
-        <div class="menu">
-          <span class="title">About mag</span>
-          <ul>
-            <li><a href="#.">Home</a></li>
-            <li><a href="#.">About Us</a></li>
-            <li><a href="#.">Location</a></li>
-            <li><a href="#.">Contact Us</a></li>
-          </ul>
-        </div>
-
-        <div class="menu menu2">
-          <span class="title">CATEGORIES</span>
-          <ul>
-            <li><a href="#.">Low Price Promise</a></li>
-            <li><a href="#.">Damages Policy</a></li>
-            <li><a href="#.">Terms and Conditions</a></li>
-            <li><a href="#.">Privacy Policy</a></li>
-          </ul>
-        </div>
-
-      </div>
-
-
-      <div class="foot-sec sec2">
-
-        <div class="share">
-          <span class="title">Share Buttons</span>
-          <img src="images/share-button.png" alt="" />
-        </div>
-
-        <div class="payment">
-          <span class="title">payment method</span>
-          <img src="images/payment.jpg" alt="" />
-        </div>
-
-      </div>
-
-      <div class="foot-sec sec3">
-
-        <div class="contact">
-          <span class="number">Product Questions: 111-111-0002 or 222-222-3705</span>
-          <span class="number">Installation Questions: 111-222-1017</span>
-          <img src="images/bbb.jpg" alt="" />
-        </div>
-
-
-
-      </div>
-
-
-
-    </footer>
-
-  </div>
-  <div class="clear"></div>
-
-  <div class="foot-bot">
     <div class="container">
-      <div class="social">
-        <a href="#."><i class="fa fa-facebook"></i></a>
-        <a href="#."><i class="fa fa-twitter"></i></a>
-        <a href="#."><i class="fa fa-pinterest"></i></a>
-        <a href="#."><i class="fa fa-google-plus"></i></a>
-        <a href="#."><i class="fa fa-linkedin"></i></a>
-      </div>
-      <p>Copyrights 2014 imag99. All rights reserved.</p>
+        <div id="content">
+            <div class="sub-page"></div>
+            <div class="contact-us">
+                <div class="heading">
+                    <h2>LOGIN PAGE</h2>
+                </div>
+                <div class="success" id="success" style="display:none"></div>
+
+                <!-- login form -->
+                <div class="center" style="position: relative; left: 180px">
+                    <div class="form">
+
+                        <ul class="tab-group">
+                            <li class="tab active"><a href="#signup">Sign Up</a></li>
+                            <li class="tab"><a href="#login">Log In</a></li>
+                        </ul>
+
+                        <div class="tab-content">
+                            <div id="signup">
+                                <h1>Sign Up for Free</h1>
+
+                                <form action="/" method="post">
+
+                                    <div class="top-row">
+                                        <div class="field-wrap">
+                                            <label>
+                                                First Name<span class="req">*</span>
+                                            </label>
+                                            <input type="text" required autocomplete="off"/>
+                                        </div>
+
+                                        <div class="field-wrap">
+                                            <label>
+                                                Last Name<span class="req">*</span>
+                                            </label>
+                                            <input type="text" required autocomplete="off"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="field-wrap">
+                                        <label>
+                                            Email Address<span class="req">*</span>
+                                        </label>
+                                        <input type="email" required autocomplete="off"/>
+                                    </div>
+
+                                    <div class="field-wrap">
+                                        <label>
+                                            Set A Password<span class="req">*</span>
+                                        </label>
+                                        <input type="password" required autocomplete="off"/>
+                                    </div>
+
+                                    <!-- Fixed: Correct button HTML syntax -->
+                                    <button type="submit" class="button button-block">Get Started</button>
+
+                                </form>
+
+                            </div>
+
+                            <div id="login">
+                                <h1>Welcome Back!</h1>
+
+                                <form action="/" method="post">
+
+                                    <div class="field-wrap">
+                                        <label>
+                                            Email Address<span class="req">*</span>
+                                        </label>
+                                        <input type="email" required autocomplete="off"/>
+                                    </div>
+
+                                    <div class="field-wrap">
+                                        <label>
+                                            Password<span class="req">*</span>
+                                        </label>
+                                        <input type="password" required autocomplete="off"/>
+                                    </div>
+
+                                    <p class="forgot"><a href="#">Forgot Password?</a></p>
+
+                                    <!-- Fixed: Correct button HTML syntax -->
+                                    <button class="button button-block">Log In</button>
+
+                                </form>
+
+                            </div>
+
+                        </div><!-- tab-content -->
+                        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+                        <script>
+                            $(document).ready(function () {
+                                // Когато фокусираш полето
+                                $('input').on('focus', function () {
+                                    var label = $(this).prev('label'); // Намираме предишния елемент (label)
+                                    label.removeClass('reappear').addClass('disappear'); // Добавяме клас за разпадане
+                                });
+
+                                // Когато полето загуби фокус
+                                $('input').on('blur', function () {
+                                    var label = $(this).prev('label');
+
+                                    // Ако полето е празно, връщаме етикета обратно
+                                    if ($(this).val() === '') {
+                                        label.removeClass('disappear').addClass('reappear');
+                                    }
+                                });
+                            });
+                        </script>
+                    </div>
+                    <!-- /form -->
+
+                    <script>
+                        $(document).ready(function () {
+                            // Form behavior for label interaction
+                            $('.form').find('input, textarea').on('keyup blur focus', function (e) {
+                                var $this = $(this),
+                                    label = $this.prev('label');
+
+                                if (e.type === 'keyup') {
+                                    if ($this.val() === '') {
+                                        label.removeClass('active highlight');
+                                    } else {
+                                        label.addClass('active highlight');
+                                    }
+                                } else if (e.type === 'blur') {
+                                    if ($this.val() === '') {
+                                        label.removeClass('active highlight');
+                                    } else {
+                                        label.removeClass('highlight');
+                                    }
+                                } else if (e.type === 'focus') {
+                                    if ($this.val() === '') {
+                                        label.removeClass('highlight');
+                                    } else if ($this.val() !== '') {
+                                        label.addClass('highlight');
+                                    }
+                                }
+                            });
+
+                            // Tab behavior for switching between signup and login
+                            $('.tab a').on('click', function (e) {
+                                e.preventDefault();
+
+                                $(this).parent().addClass('active');
+                                $(this).parent().siblings().removeClass('active');
+
+                                var target = $(this).attr('href');
+
+                                $('.tab-content > div').hide();
+                                $(target).fadeIn(600);
+                            });
+
+                            // Initially hide the login tab
+                            $('#login').hide();
+                        });
+                    </script>
+                </div>
+                <!-- end of login form -->
+                <div class="clear"></div>
+
+
+                <div class="get-touch center">
+
+
+                </div>
+
+
+                <div class="get-social">
+
+                </div>
+
+            </div>
+
+
+            <div class="clear"></div>
+
+
+        </div>
+
+        <div class="clear"></div>
+        <footer id="footer">
+
+            <div class="clear"></div>
+
+            <div class="foot-sec">
+                <div class="menu">
+                    <span class="title">About mag</span>
+                    <ul>
+                        <li><a href="#.">Home</a></li>
+                        <li><a href="#.">About Us</a></li>
+                        <li><a href="#.">Location</a></li>
+                        <li><a href="#.">Contact Us</a></li>
+                    </ul>
+                </div>
+
+                <div class="menu menu2">
+                    <span class="title">CATEGORIES</span>
+                    <ul>
+                        <li><a href="#.">Low Price Promise</a></li>
+                        <li><a href="#.">Damages Policy</a></li>
+                        <li><a href="#.">Terms and Conditions</a></li>
+                        <li><a href="#.">Privacy Policy</a></li>
+                    </ul>
+                </div>
+
+            </div>
+
+
+            <div class="container foot-sec sec2 contact-us">
+                <div class="heading">
+                    <h2>get in touch</h2>
+                </div>
+
+                <div class="touch">
+                    <a href="#."><i class="fa fa-mobile"></i> 2-100-703-1191 or 2-100-703-1191</a><br/>
+                    <a href="#."><i class="fa fa-envelope"></i> support@imag99.com</a><br/>
+                    <a href="#."><i class="fa fa-globe"></i> https://www.imag99.com</a>
+                </div>
+
+
+            </div>
+
+            <div class="foot-sec sec3">
+
+                <div class="contact">
+                    <span class="number">Product Questions: 111-111-0002 or 222-222-3705</span>
+                    <span class="number">Installation Questions: 111-222-1017</span>
+                    <img src="images/bbb.jpg" alt=""/>
+                </div>
+
+
+            </div>
+
+
+        </footer>
 
     </div>
     <div class="clear"></div>
-  </div>
 
+    <div class="foot-bot">
+        <div class="container">
+            <div class="social">
+                <a href="#."><i class="fa fa-facebook"></i></a>
+                <a href="#."><i class="fa fa-twitter"></i></a>
+                <a href="#."><i class="fa fa-pinterest"></i></a>
+                <a href="#."><i class="fa fa-google-plus"></i></a>
+                <a href="#."><i class="fa fa-linkedin"></i></a>
+            </div>
+            <p>Copyrights 2014 imag99. All rights reserved.</p>
 
+        </div>
+        <div class="clear"></div>
+    </div>
 
 
 </div>
 
 <script type="text/javascript">
 
-  function DropDown(el) {
-    this.dd = el;
-    this.initEvents();
-  }
-  DropDown.prototype = {
-    initEvents : function() {
-      var obj = this;
-
-      obj.dd.on('click', function(event){
-        $(this).toggleClass('active');
-        event.stopPropagation();
-      });
+    function DropDown(el) {
+        this.dd = el;
+        this.initEvents();
     }
-  }
 
-  jQuery(function($) {
+    DropDown.prototype = {
+        initEvents: function () {
+            var obj = this;
 
-    var dd = new DropDown( $('#dd, #dd2') );
+            obj.dd.on('click', function (event) {
+                $(this).toggleClass('active');
+                event.stopPropagation();
+            });
+        }
+    }
 
-    $(document).click(function() {
-      // all dropdowns
-      $('.wrapper-dropdown-5').removeClass('active');
+    jQuery(function ($) {
+
+        var dd = new DropDown($('#dd, #dd2'));
+
+        $(document).click(function () {
+            // all dropdowns
+            $('.wrapper-dropdown-5').removeClass('active');
+        });
+
     });
-
-  });
 
 </script>
 <script>
-  function checkcontact(input)
-  {
-    var pattern1=/^([a-zA-Z0-9_.-])+@([a-zA-Z0-9_.-])+\.([a-zA-Z])+([a-zA-Z])+/;
-    if(pattern1.test(input))
-    {
-      return true;
-    }
-    else{
-      return false;
-    }
-  }
-
-  function submitform()
-  {
-    var name = document.getElementById('name').value;
-    var email = document.getElementById('email').value;
-    var number = document.getElementById('number').value;
-    var text=document.getElementById('message').value;
-
-    if(name=="" || name== "Name"){
-      document.getElementById("name").className = "error";
-      document.getElementById('name').focus();
-    }
-    else if(email=="" || email== "Email")
-    {
-      document.getElementById("email").className = "last error";
-      document.getElementById('email').focus();
-
-    }else if(checkcontact(document.getElementById("email").value)==false){
-
-      document.getElementById("email").className = "last error";
-      document.getElementById('email').focus();
-    }
-    /*else if(number=="" || number== "Phone Number")
-    {
-        document.getElementById("number").className = "error";
-        document.getElementById('number').focus();
-
-    }else if(isNaN(number)== true){
-        document.getElementById("number").className = "error";
-        document.getElementById('number').focus();
-
-    }*/
-    else if(text == "")
-    {
-      document.getElementById("message").className = "error";
-      document.getElementById('message').focus();
-
+    function checkcontact(input) {
+        var pattern1 = /^([a-zA-Z0-9_.-])+@([a-zA-Z0-9_.-])+\.([a-zA-Z])+([a-zA-Z])+/;
+        if (pattern1.test(input)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
-    else {
+    function submitform() {
+        var name = document.getElementById('name').value;
+        var email = document.getElementById('email').value;
+        var number = document.getElementById('number').value;
+        var text = document.getElementById('message').value;
 
+        if (name == "" || name == "Name") {
+            document.getElementById("name").className = "error";
+            document.getElementById('name').focus();
+        } else if (email == "" || email == "Email") {
+            document.getElementById("email").className = "last error";
+            document.getElementById('email').focus();
 
-      $.ajax({
-        type: "POST",
-        url: 'submit-contact-form.php',
-        data: $("#contact_form").serialize(),
-        success: function(msg)
+        } else if (checkcontact(document.getElementById("email").value) == false) {
+
+            document.getElementById("email").className = "last error";
+            document.getElementById('email').focus();
+        }
+        /*else if(number=="" || number== "Phone Number")
         {
+            document.getElementById("number").className = "error";
+            document.getElementById('number').focus();
 
-          document.getElementById('name').value="Name";
-          document.getElementById('email').value="Email";
-          document.getElementById('number').value="Phone Number";
-          document.getElementById('message').value="Message";
+        }else if(isNaN(number)== true){
+            document.getElementById("number").className = "error";
+            document.getElementById('number').focus();
 
-          document.getElementById('name').className="";
-          document.getElementById('email').className="last";
-          document.getElementById('number').className="last";
-          document.getElementById('website').className="";
-          document.getElementById('message').className="";
+        }*/
+        else if (text == "") {
+            document.getElementById("message").className = "error";
+            document.getElementById('message').focus();
 
-          document.getElementById("success").style.display="block";
-          document.getElementById("success").innerHTML=msg;
-          ///window.location.hash = '#success';
+        } else {
 
-          $('.success').fadeOut(8000);
+
+            $.ajax({
+                type: "POST",
+                url: 'submit-contact-form.php',
+                data: $("#contact_form").serialize(),
+                success: function (msg) {
+
+                    document.getElementById('name').value = "Name";
+                    document.getElementById('email').value = "Email";
+                    document.getElementById('number').value = "Phone Number";
+                    document.getElementById('message').value = "Message";
+
+                    document.getElementById('name').className = "";
+                    document.getElementById('email').className = "last";
+                    document.getElementById('number').className = "last";
+                    document.getElementById('website').className = "";
+                    document.getElementById('message').className = "";
+
+                    document.getElementById("success").style.display = "block";
+                    document.getElementById("success").innerHTML = msg;
+                    ///window.location.hash = '#success';
+
+                    $('.success').fadeOut(8000);
+
+                }
+            });
+
+
+            return false;
+        }
+
+    }
+
+
+    function remove_class() {
+
+        var name = document.getElementById('name').value;
+        var email = document.getElementById('email').value;
+        var number = document.getElementById('number').value;
+        var text = document.getElementById('message').value;
+
+        if (name != "" || name != "Name") {
+            document.getElementById("name").className = "";
 
         }
-      });
+        if (email != "" || email != "Email") {
+            document.getElementById("email").className = "";
+
+        }
+        if (checkcontact(document.getElementById("email").value) != true) {
+
+            document.getElementById("email").className = "";
+
+        }
+        /*if(number!="" || number!= "Phone Number")
+        {
+            document.getElementById("number").className = "";
 
 
-      return false;
-    }
-
-  }
+        } if(isNaN(number)== false){
+            document.getElementById("number").className = "";
 
 
-  function remove_class()
-  {
+        }*/
+        if (text != "") {
+            document.getElementById("message").className = "";
 
-    var name = document.getElementById('name').value;
-    var email = document.getElementById('email').value;
-    var number = document.getElementById('number').value;
-    var text=document.getElementById('message').value;
+        }
 
-    if(name!="" || name!= "Name"){
-      document.getElementById("name").className = "";
-
-    }
-    if(email!="" || email!= "Email")
-    {
-      document.getElementById("email").className = "";
-
-    }
-    if(checkcontact(document.getElementById("email").value)!=true){
-
-      document.getElementById("email").className = "";
 
     }
-    /*if(number!="" || number!= "Phone Number")
-    {
-        document.getElementById("number").className = "";
-
-
-    } if(isNaN(number)== false){
-        document.getElementById("number").className = "";
-
-
-    }*/
-    if(text != "")
-    {
-      document.getElementById("message").className = "";
-
-    }
-
-
-
-
-  }
 </script>
-
-
 
 
 </body>
