@@ -95,6 +95,12 @@ input {
     height: 100%; /* За да пасне на родителския контейнер */
 }
 
+.error-message {
+    color: #ff0000;
+    font-size: 20px;
+    margin-top: 5px;
+}
+
 input:focus {
     border-color: #1ab188;
     outline: none;

@@ -31,8 +31,8 @@
                     <div class="form">
 
                         <ul class="tab-group">
-                            <li class="tab active"><a href="#signup">Sign Up</a></li>
-                            <li class="tab"><a href="#login">Log In</a></li>
+                            <li class="tab"><a href="#signup">Sign Up</a></li>
+                            <li class="tab active"><a href="#login">Log In</a></li>
                         </ul>
 
                         <div class="tab-content">
@@ -78,23 +78,28 @@
 
                             </div>
 
+
                             <div id="login">
+                                <!-- Error Message -->
+                                <div th:if="${param.error}" class="error-message">
+                                    Invalid username or password. Please try again.
+                                </div>
                                 <h1>Welcome Back!</h1>
 
-                                <form action="/" method="post">
+                                <form action="/" th:action="@{/auth/login}" th:object="${login}" method="post">
 
                                     <div class="field-wrap">
                                         <label>
                                             Email Address<span class="req">*</span>
                                         </label>
-                                        <input type="email" required autocomplete="off"/>
+                                        <input type="text" name="username" required autocomplete="off"/>
                                     </div>
 
                                     <div class="field-wrap">
                                         <label>
                                             Password<span class="req">*</span>
                                         </label>
-                                        <input type="password" required autocomplete="off"/>
+                                        <input type="password" name="password" required autocomplete="off"/>
                                     </div>
 
                                     <p class="forgot"><a href="#">Forgot Password?</a></p>
@@ -173,7 +178,8 @@
                             });
 
                             // Initially hide the login tab
-                            $('#login').hide();
+                            $('#login').show();
+                            $('#signup').hide();
                         });
                     </script>
                 </div>
