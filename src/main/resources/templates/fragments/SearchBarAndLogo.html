@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div class="container" th:fragment="searchBarAndLogo">
+
+    <a class="logo" href="index.html"><img src="images/logo.jpg" alt="" /></a>
+    <div class="search">
+        <input name="" type="text" onBlur="if(this.value == '') { this.value='Search Articles'}" onFocus="if (this.value == 'Search Articles') {this.value=''}" value="Search Articles">
+        <a class="search-icon" href="#."><i class="fa fa-search"></i></a>
+    </div>
+
+</div>
+
+</html>
