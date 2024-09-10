@@ -1,8 +1,148 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+<nav id="navBar" class="nav-full-width" th:fragment="navBarMenu (pageTitle)">
+<div class="container">
+    <a href="#." class="logo-small"><img src="images/logo-small.png" alt=""></a>
+    <ul id="menu" class="nav-menu list-unstyled pull-left">
+        <li><a href="index.html">home</a>
+            <ul class="sub-menu">
+                <li><a href="index.html">Home Page Layout 1</a></li>
+                <li><a href="index2.html">Home Page Layout 2</a></li>
+                <li><a href="index-boxed.html">Home Page Layout 3</a></li>
+                <li><a href="index4.html">Home Page Layout 4</a></li>
+                <li><a href="index5.html">Home Page Layout 5</a></li>
+            </ul>
+        </li>
 
-<head class="main-head" th:replace="~{/fragments/head.html :: main-head}"></head>
-<body>
+        <li class="mega-dropdown "><a href="#.">fashion</a>
+            <div class="mega-menu">
+                <div class="mega-menu-inner">
 
-</body>
+                    <div class="subnav">
+                        <a class="subnavi img-effect" href="fashion.html">
+                            <img src="images/fashion-nav1.jpg" alt="" />
+                        </a>
+                        <span class="title">latest fashion</span>
+                        <p>It looks like slowly but surely Google's Nexus devices are returning back to stock in the.</p>
+
+                    </div>
+
+                    <div class="subnav">
+                        <a class="subnavi img-effect" href="photography.html">
+                            <img src="images/fashion-nav2.jpg" alt="" />
+                        </a>
+                        <span class="title">latest full width</span>
+                        <p>It looks like slowly but surely Google's Nexus devices are returning back to stock in the.</p>
+
+                    </div>
+
+                    <div class="subnav last">
+                        <a class="subnavi img-effect" href="travel.html">
+                            <img src="images/fashion-nav3.jpg" alt="" />
+                        </a>
+                        <span class="title">classic fashion</span>
+                        <p>It looks like slowly but surely Google's Nexus devices are returning back to stock in the.</p>
+
+                    </div>
+
+
+
+
+                    <div class="clear"></div>
+                </div>
+                <div class="clear"></div>
+            </div>
+        </li>
+
+        <li class="mega-dropdown "><a href="#.">photography</a>
+            <div class="mega-menu">
+                <div class="mega-menu-inner">
+
+                    <div class="subnav">
+                        <a class="subnavi img-effect" href="people.html">
+                            <img src="images/photography-nav1.jpg" alt="" />
+                        </a>
+                        <span class="title">latest fashion</span>
+                        <p>It looks like slowly but surely Google's Nexus devices are returning back to stock in the.</p>
+
+                    </div>
+
+                    <div class="subnav">
+                        <a class="subnavi img-effect" href="video-detail.html">
+                            <img src="images/photography-nav2.jpg" alt="" />
+                        </a>
+                        <span class="title">latest full width</span>
+                        <p>It looks like slowly but surely Google's Nexus devices are returning back to stock in the.</p>
+
+                    </div>
+
+                    <div class="subnav last">
+                        <a class="subnavi img-effect" href="travel.html">
+                            <img src="images/photography-nav3.jpg" alt="" />
+                        </a>
+                        <span class="title">classic fashion</span>
+                        <p>It looks like slowly but surely Google's Nexus devices are returning back to stock in the.</p>
+
+                    </div>
+
+
+
+
+                    <div class="clear"></div>
+                </div>
+                <div class="clear"></div>
+            </div>
+        </li>
+
+        <li class="mega-dropdown "><a href="video.html">videos</a></li>
+
+        <li ><a href="#.">shortcodes</a>
+            <ul class="sub-menu">
+                <li><a href="typography.html">typography</a></li>
+                <li><a href="image-styles.html">image styles</a></li>
+                <li><a href="message-box.html">message box</a></li>
+                <li><a href="columns.html">columns</a></li>
+                <li><a href="tabs.html">tabs & toggles</a></li>
+                <li><a href="404.html">404 error</a></li>
+            </ul>
+        </li>
+
+        <li class="sel"><a th:href="@{/auth/login}">Login</a></li>
+
+
+
+
+    </ul>
+    <div class="menu">
+        <section class="main">
+            <div class="wrapper-demo">
+                <div tabindex="1" class="wrapper-dropdown-5" id="dd2">
+                    <ul class="dropdown">
+                        <li><a href="index.html">home</a></li>
+                        <li><a href="video.html">videos</a></li>
+                        <li><a href="typography.html">typography</a></li>
+                        <li><a href="contact-us.html">contact us</a></li>
+                        <li><a href="image-styles.html">image styles</a></li>
+                        <li><a href="message-box.html">message box</a></li>
+                        <li><a href="columns.html">columns</a></li>
+                        <li><a href="tabs.html">tabs</a></li>
+                        <li class="last"><a href="404.html" class="last">404 error</a></li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+<div class="container">
+    <div class="social">
+        <a class="fb" href="#."><i class="fa fa-facebook"></i></a>
+        <a class="fb" href="#."><i class="fa fa-twitter"></i></a>
+        <a class="fb" href="#."><i class="fa fa-pinterest"></i></a>
+        <a class="fb" href="#."><i class="fa fa-google-plus"></i></a>
+        <a class="fb" href="#."><i class="fa fa-linkedin"></i></a>
+        <div class="clear"></div>
+    </div>
+</div>
+<div class="clear"></div>
+</nav>
 </html>
