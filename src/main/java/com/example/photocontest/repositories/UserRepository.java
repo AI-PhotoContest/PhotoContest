@@ -17,4 +17,7 @@ public interface UserRepository extends JpaRepository<User, Integer>, JpaSpecifi
     //fetch only users that are votable=true
     @Query("SELECT u FROM User u WHERE u.username = :username AND u.isVotable = true")
     User findVotableUserByUsername(@Param("username") String username);
+
+    List<User> findListByEmail(String email);
+
 }

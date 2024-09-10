@@ -1,6 +1,8 @@
 package com.example.photocontest.config;
 
 //import com.example.photocontest.services.CustomOAuth2UserService;
+import com.example.photocontest.security.CustomOAuth2User;
+import com.example.photocontest.services.CustomOAuth2UserService;
 import com.example.photocontest.services.contracts.UserService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -18,6 +20,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 
 import java.io.IOException;
 
@@ -27,13 +30,13 @@ import static org.springframework.security.config.Customizer.withDefaults;
 @EnableWebSecurity
 public class SecurityConfig {
     public static final int BCRYPT_STRENGTH = 11;
-//    private final CustomOAuth2UserService oauthUserService;
-//    private final UserService userService;
-//
-//    public SecurityConfig(CustomOAuth2UserService oauthUserService, @Lazy UserService userService) {
-//        this.oauthUserService = oauthUserService;
-//        this.userService = userService;
-//    }
+    private final CustomOAuth2UserService oauthUserService;
+    private final UserService userService;
+
+    public SecurityConfig(CustomOAuth2UserService oauthUserService, @Lazy UserService userService) {
+        this.oauthUserService = oauthUserService;
+        this.userService = userService;
+    }
 
 
     @Bean
@@ -65,17 +68,17 @@ public class SecurityConfig {
                         .defaultSuccessUrl("/home")
                         .failureUrl("/auth/login?error=true")
                         .permitAll())
-//                .oauth2Login(oauth -> oauth
-//                        .loginPage("/auth/login")
-//                        .userInfoEndpoint(info -> info.userService(oauthUserService))
-//                        .successHandler(new AuthenticationSuccessHandler() {
-//                            @Override
-//                            public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
-//                                CustomOAuth2User oauthUser = (CustomOAuth2User) authentication.getPrincipal();
-//                                userService.processOAuthPostLogin(oauthUser.getEmail(), oauthUser.getAttribute("name"));
-//                                response.sendRedirect("/home");
-//                            }
-//                        }))
+                .oauth2Login(oauth -> oauth
+                        .loginPage("/auth/login")
+                        .userInfoEndpoint(info -> info.userService(oauthUserService))
+                        .successHandler(new AuthenticationSuccessHandler() {
+                            @Override
+                            public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
+                                CustomOAuth2User oauthUser = (CustomOAuth2User) authentication.getPrincipal();
+                                userService.processOAuthPostLogin(oauthUser.getEmail());
+                                response.sendRedirect("/home");
+                            }
+                        }))
                 .logout(logout ->
                         logout
                                 .logoutUrl("/auth/logout") // URL за логаут

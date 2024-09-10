@@ -5,12 +5,15 @@ import com.example.photocontest.models.User;
 import com.example.photocontest.services.contracts.PhotoPostService;
 import com.example.photocontest.services.contracts.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import java.security.Principal;
 import java.util.List;
+
+import static com.example.photocontest.helpers.AuthenticationHelpers.extractUserFromProvider;
 
 @Controller
 public class HomeController {
@@ -32,10 +35,11 @@ public class HomeController {
     }
 
     @GetMapping("/home")
-    public String home(Model model, Principal principal, PhotoPost photoPost) {
+    public String home(Model model, Authentication authentication, PhotoPost photoPost) {
         List<PhotoPost> posts = postService.getAllPhotoPosts();
-        if (principal != null) {
-            User user = userService.findUserByUsername(principal.getName());
+        if (authentication != null) {
+            User user = extractUserFromProvider(authentication);
+            model.addAttribute("user", user);
         }
         model.addAttribute("active", "home");
         model.addAttribute("posts", posts);
