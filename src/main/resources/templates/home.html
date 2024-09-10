@@ -85,10 +85,11 @@
                 height: 'auto',
                 loader: 'bar',
                 pagination: false,
-                thumbnails: true,
+                thumbnails: false,
                 hover: false,
                 opacityOnGrid: false,
-                imagePath: '../images/'
+                imagePath: '../images/',
+                time: 2000
             });
 
         })(jQuery);
@@ -108,44 +109,21 @@
     </header>
     <div class="fluid_container">
 
-        <div class="camera_wrap camera_emboss pattern_1" id="camera_wrap_4">
-            <div data-thumb="images/slide/thumbs/img1.jpg" data-src="images/slide/img1.jpg">
-                <div class="container">
-                    <div class="banner-detail fadeFromBottom ">
-                        <h1>Freedom Studios</h1>
-                        <p>It looks like slowly but surely Google’s Nexus devices are returning back to stock in the Google Play Store. Well, the Nexus 10 tablet is at least. [...]</p>
-                        <a href="photography.html" class="more">read more</a>
+
+            <div class="camera_wrap camera_emboss pattern_1" id="camera_wrap_4">
+                <div th:each="photoPost : ${randomPhotoPosts}"
+                     th:data-thumb="'/photo-posts-images/' + ${photoPost.getImage()}"
+                     th:data-src="'/photo-posts-images/' + ${photoPost.getImage()}">
+                    <div class="container">
+                        <div class="banner-detail fadeFromBottom">
+                            <h1 th:text="${photoPost.title}">Photo Title</h1>
+                            <p th:text="${photoPost.description}">Photo Description</p>
+                            <a class="more">read more</a>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div data-thumb="images/slide/thumbs/img2.jpg" data-src="images/slide/img2.jpg">
-                <div class="container">
-                    <div class="banner-detail fadeFromBottom">
-                        <h1>nature beauty</h1>
-                        <p>It looks like slowly but surely Google’s Nexus devices are returning back to stock in the Google Play Store. Well, the Nexus 10 tablet is at least. [...]</p>
-                        <a href="fashion.html" class="more">read more</a>
-                    </div>
-                </div>
-            </div>
-            <div data-thumb="images/slide/thumbs/img3.jpg" data-src="images/slide/img3.jpg">
-                <div class="container">
-                    <div class="banner-detail fadeFromBottom">
-                        <h1>railway line</h1>
-                        <p>It looks like slowly but surely Google’s Nexus devices are returning back to stock in the Google Play Store. Well, the Nexus 10 tablet is at least. [...]</p>
-                        <a href="travel.html" class="more">read more</a>
-                    </div>
-                </div>
-            </div>
-            <div data-thumb="images/slide/thumbs/img4.jpg" data-src="images/slide/img4.jpg">
-                <div class="container">
-                    <div class="banner-detail fadeFromBottom">
-                        <h1>books</h1>
-                        <p>It looks like slowly but surely Google’s Nexus devices are returning back to stock in the Google Play Store. Well, the Nexus 10 tablet is at least. [...]</p>
-                        <a href="travel.html" class="more">read more</a>
-                    </div>
-                </div>
-            </div>
-        </div><!-- #camera_wrap_3 -->
+
 
     </div>
     <div class="clear"></div>

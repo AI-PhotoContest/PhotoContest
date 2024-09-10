@@ -12,7 +12,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import java.security.Principal;
+import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 import static com.example.photocontest.helpers.AuthenticationHelpers.extractUserFromProvider;
 
@@ -42,6 +44,16 @@ public class HomeController {
             User user = extractUserFromProvider(authentication);
             model.addAttribute("user", user);
         }
+        Collections.shuffle(posts);
+
+        // Избиране на първите 4 поста, ако списъкът е по-голям от 4
+        List<PhotoPost> randomPhotoPosts;
+        if (posts.size() > 4) {
+            randomPhotoPosts = posts.subList(0, 4);
+        } else {
+            randomPhotoPosts = posts;  // Ако има по-малко от 4 поста, вземи всички
+        }
+        model.addAttribute("randomPhotoPosts", randomPhotoPosts);
         model.addAttribute("active", "home");
         model.addAttribute("posts", posts);
         model.addAttribute("post", photoPost);
