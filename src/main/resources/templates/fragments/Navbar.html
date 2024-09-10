@@ -100,7 +100,13 @@
             </ul>
         </li>
 
-        <li th:classappend="${active == 'login'} ? 'sel' : ''" ><a th:href="@{/auth/login}">Login</a></li>
+        <li th:if="${loggedInUser == null}" th:classappend="${active == 'login'} ? 'sel' : ''">
+            <a th:href="@{/auth/login}" style="color: #1ab188;">Login</a>
+        </li>
+
+        <li th:if="${loggedInUser != null}">
+            <a th:href="@{/auth/logout}" style="color: #1ab188;">Logout</a>
+        </li>
 
 
 
