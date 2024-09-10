@@ -118,7 +118,7 @@
                         <div class="banner-detail fadeFromBottom">
                             <h1 th:text="${photoPost.title}">Photo Title</h1>
                             <p th:text="${photoPost.description}">Photo Description</p>
-                            <a class="more">read more</a>
+                            <a class="more" th:href="@{'/photo-posts/' + ${photoPost.id}}">View Photo Post</a>
                         </div>
                     </div>
                 </div>
@@ -510,7 +510,7 @@
                 <a href="#."><i class="fa fa-google-plus"></i></a>
                 <a href="#."><i class="fa fa-linkedin"></i></a>
             </div>
-            <p>Copyrights 2014 imag99. All rights reserved.</p>
+            <p>Copyrights 2024 AI Photo Contest. All rights reserved.</p>
 
         </div>
         <div class="clear"></div>
