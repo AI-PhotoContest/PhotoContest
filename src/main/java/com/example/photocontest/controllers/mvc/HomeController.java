@@ -19,7 +19,7 @@ import java.util.Random;
 import static com.example.photocontest.helpers.AuthenticationHelpers.extractUserFromProvider;
 
 @Controller
-public class HomeController {
+public class HomeController extends BaseController {
 
 
     private final PhotoPostService postService;
@@ -60,5 +60,7 @@ public class HomeController {
         model.addAttribute("httpServletRequest", request);
         return "home";
     }
+
+
 
 }
