@@ -194,3 +194,27 @@ label.reappear {
     left: 20px;
 }
 
+.auth-btn-wrapper {
+    display: flex;
+    justify-content: center; /* Centers the button horizontally */
+    margin-top: 20px; /* Add some spacing from the top */
+}
+
+.btn-google {
+    background-color: #1ab188; /* Google's color */
+    color: white;
+    padding: 10px 24px;
+    font-size: 18px; /* Increase font size for a larger button */
+    border: none;
+    border-radius: 4px;
+    display: flex;
+    align-items: center; /* Align the icon and text vertically */
+}
+
+.btn-google img {
+    margin-right: 8px; /* Space between icon and text */
+}
+
+.btn-google:hover {
+    background-color: #179b77; /* Darken on hover */
+}

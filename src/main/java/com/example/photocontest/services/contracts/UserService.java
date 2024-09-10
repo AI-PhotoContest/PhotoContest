@@ -42,7 +42,7 @@ public interface UserService {
 
     Role getRoleByName(String name);
 
-    void processOAuthPostLogin(String email,String Username);
+    void processOAuthPostLogin(String email);
 
     User setRole(User user, String role);
     User removeRole(User user, String role);

@@ -121,6 +121,28 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public void processOAuthPostLogin(String email) {
+        User existUser = userRepository.findByEmail(email);
+
+        if (existUser == null) {
+            User newUser = new User();
+            newUser.setEmail(email);
+            newUser.setUsername("TEST");
+            newUser.setBanned(false);
+            newUser.setBlocked(false);
+            try {
+                checkUsernameUnique(newUser);
+            } catch (EntityDuplicateException e) {
+                String uniqueUsername = setUserNameUnique("TEST");
+                newUser.setUsername(uniqueUsername);
+            }
+            Role role = roleRepository.findByName(RoleType.PHOTO_JUNKIE);
+            newUser.setRoles(List.of(role));
+            userRepository.save(newUser);
+        }
+    }
+
+    @Override
     public User blockUser(User user) {
         user.setBlocked(true);
         return userRepository.save(user);
@@ -199,10 +221,6 @@ public class UserServiceImpl implements UserService {
         return null;
     }
 
-    @Override
-    public void processOAuthPostLogin(String email, String Username) {
-
-    }
 
 
     private void checkEmailUnique(User user) {
@@ -215,6 +233,16 @@ public class UserServiceImpl implements UserService {
         if (userRepository.findByUsername(user.getUsername()) != null) {
             throw new EntityDuplicateException("User", "username", user.getUsername());
         }
+    }
+
+    private String setUserNameUnique(String username) {
+        String newUsername = username;
+        int i = 1;
+        while (userRepository.findByUsername(newUsername) != null) {
+            newUsername = username + i;
+            i++;
+        }
+        return newUsername;
     }
 
 }

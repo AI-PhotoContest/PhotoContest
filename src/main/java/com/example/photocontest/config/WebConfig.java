@@ -14,6 +14,7 @@ public class WebConfig implements WebMvcConfigurer {
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/images/**")
                 .addResourceLocations("file:forum-application/src/main/resources/static/images/")
+                .addResourceLocations("classpath:/static/images/")
                 .setCachePeriod(0); // Disable caching
     }
 
@@ -22,5 +23,7 @@ public class WebConfig implements WebMvcConfigurer {
         StringHttpMessageConverter converter = new StringHttpMessageConverter(StandardCharsets.UTF_8);
         return converter;
     }
+
+
 
 }
