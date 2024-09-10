@@ -42,12 +42,6 @@ dependencies {
     implementation 'com.squareup.okhttp3:okhttp:4.9.3'
     implementation 'org.json:json:20220320'
 
-    // Cucumber Dependencies
-//    testImplementation 'io.cucumber:cucumber-java:7.0.0'
-//    testImplementation 'io.cucumber:cucumber-spring:7.0.0'
-//    testImplementation 'io.cucumber:cucumber-junit:7.0.0'
-//    testImplementation 'org.springframework.boot:spring-boot-starter-test'
-
     //for UI tests
     testImplementation 'org.seleniumhq.selenium:selenium-java:4.0.0'
 
@@ -57,6 +51,9 @@ dependencies {
     runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
     annotationProcessor 'jakarta.validation:jakarta.validation-api'
     testImplementation 'org.springframework.security:spring-security-test'
+
+
+    compileOnly 'javax.servlet:javax.servlet-api:4.0.1'
 
 
 

@@ -3,15 +3,8 @@
 <nav id="navBar" class="nav-full-width" th:fragment="navBarMenu (pageTitle)">
 <div class="container">
     <a href="#." class="logo-small"><img src="images/logo-small.png" alt=""></a>
-    <ul id="menu" class="nav-menu list-unstyled pull-left">
-        <li><a href="index.html">home</a>
-            <ul class="sub-menu">
-                <li><a href="index.html">Home Page Layout 1</a></li>
-                <li><a href="index2.html">Home Page Layout 2</a></li>
-                <li><a href="index-boxed.html">Home Page Layout 3</a></li>
-                <li><a href="index4.html">Home Page Layout 4</a></li>
-                <li><a href="index5.html">Home Page Layout 5</a></li>
-            </ul>
+    <ul id="menu" class="nav-menu list-unstyled pull-left sel">
+        <li th:classappend="${active == 'home'} ? 'sel' : ''" ><a th:href="@{/home}">home</a>
         </li>
 
         <li class="mega-dropdown "><a href="#.">fashion</a>
@@ -107,7 +100,7 @@
             </ul>
         </li>
 
-        <li class="sel"><a th:href="@{/auth/login}">Login</a></li>
+        <li th:classappend="${active == 'login'} ? 'sel' : ''" ><a th:href="@{/auth/login}">Login</a></li>
 
 
 
