@@ -78,7 +78,7 @@ public class AuthenticationHelpers {
                 // Standard login authentication
                 String email = authentication.getName();
 
-                User user = userService.findUserByEmail(email);
+                User user = userService.findUserByUsername(email);
                 return user;
             }
         }
