@@ -70,18 +70,5 @@ public class GlobalExceptionHandler {
         return errorMap;
     }
 
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    @ExceptionHandler(Exception.class)
-    public String handleNotFound(Exception exception, Model model) {
-        model.addAttribute("message", exception.getMessage());
-        return "redirect:/error";
-    }
-
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    @ExceptionHandler(Throwable.class)
-    public String handleServerError(Throwable throwable, Model model) {
-        model.addAttribute("message", throwable.getMessage());
-        return "error";
-    }
 
 }

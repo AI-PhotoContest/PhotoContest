@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <nav id="navBar" class="nav-full-width" th:fragment="navBarMenu (pageTitle)">
 <div class="container">
-    <a href="#." class="logo-small"><img src="images/logo-small.png" alt=""></a>
+    <a href="#." class="logo-small"></a>
     <ul id="menu" class="nav-menu list-unstyled pull-left sel">
         <li th:classappend="${active == 'home'} ? 'sel' : ''" ><a th:href="@{/home}">home</a>
         </li>
