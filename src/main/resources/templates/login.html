@@ -11,7 +11,7 @@
 
     <header id="header">
         <div id="searchBarAndLogo" th:replace="~{fragments/SearchBarAndLogo.html :: searchBarAndLogo}"></div>
-        <nav th:replace="~{fragments/Navbar.html :: navBarMenu (sign-in)}">
+        <nav th:replace="~{fragments/Navbar.html :: navBarMenu (login)}">
         </nav>
 
     </header>
@@ -71,6 +71,13 @@
                                         <input type="password" required autocomplete="off"/>
                                     </div>
 
+                                    <div class="field-wrap">
+                                        <label>
+                                            Confirm Password<span class="req">*</span>
+                                        </label>
+                                        <input type="password" required autocomplete="off"/>
+                                    </div>
+
                                     <!-- Fixed: Correct button HTML syntax -->
                                     <button type="submit" class="button button-block">Get Started</button>
 
@@ -106,7 +113,15 @@
 
                                     <!-- Fixed: Correct button HTML syntax -->
                                     <button class="button button-block">Log In</button>
-
+                                    <div class="btn-wrapper my-4 text-center">
+                                        <a href="#" th:href="@{/oauth2/authorization/google}">
+                                            <button class="btn btn-primary btn-icon-only text-google mr-2" type="button"
+                                                    aria-label="google button" title="google button">
+                                                <img src="/images/google-icon.png" alt="Icon" style="width: 24px; height: 24px;">
+                                                <span aria-hidden="true" class="fab "></span>
+                                            </button>
+                                        </a>
+                                    </div>
                                 </form>
 
                             </div>

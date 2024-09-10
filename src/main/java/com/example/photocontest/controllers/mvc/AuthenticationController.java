@@ -26,7 +26,7 @@ public class AuthenticationController {
 
     @GetMapping("/login")
     public String login(Model model) {
-        model.addAttribute("active", "sign-in");
+        model.addAttribute("active", "login");
         return "login";
     }
 
