@@ -4,6 +4,7 @@ import com.example.photocontest.models.PhotoPost;
 import com.example.photocontest.models.User;
 import com.example.photocontest.services.contracts.PhotoPostService;
 import com.example.photocontest.services.contracts.UserService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -35,7 +36,7 @@ public class HomeController {
     }
 
     @GetMapping("/home")
-    public String home(Model model, Authentication authentication, PhotoPost photoPost) {
+    public String home(Model model, Authentication authentication, PhotoPost photoPost, HttpServletRequest request) {
         List<PhotoPost> posts = postService.getAllPhotoPosts();
         if (authentication != null) {
             User user = extractUserFromProvider(authentication);
@@ -44,6 +45,7 @@ public class HomeController {
         model.addAttribute("active", "home");
         model.addAttribute("posts", posts);
         model.addAttribute("post", photoPost);
+        model.addAttribute("httpServletRequest", request);
         return "home";
     }
 

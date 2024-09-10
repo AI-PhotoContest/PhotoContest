@@ -1,0 +1,208 @@
+<!doctype html>
+<html>
+<head th:replace="~{fragments/head.html :: main-head}">
+
+    <title>sign-in</title>
+</head>
+
+<body>
+<div id="wrap">
+
+    <header id="header">
+        <div id="searchBarAndLogo" th:replace="~{fragments/SearchBarAndLogo.html :: searchBarAndLogo}"></div>
+        <nav th:replace="~{fragments/Navbar.html :: navBarMenu (home)}">
+        </nav>
+
+    </header>
+    <div class="clear"></div>
+
+
+
+
+    <div class="clear"></div>
+    <div class="container">
+        <div id="content">
+            <div class="sub-page"></div>
+            <div class="error">
+                <div class="text">
+                    <h1>Ooops... Error 404</h1>
+                    <span>Sorry, but the page you are looking for does not exists.</span>
+                    <a class="read-more" href="#.">go to the Homepage</a>
+                </div>
+
+                <div class="clear"></div>
+
+                <div class="item">
+                    <img src="/images/article-img1.jpg" alt="">
+                    <div class="art-detail">
+                        <h3>jigsaw Travertine Tile</h3>
+                        <p>proceeded to lean on his horn drowning </p>
+                        <a href="#." class="read-more">read more</a>
+                    </div>
+                </div>
+
+                <div class="item">
+                    <img src="/images/article-img2.jpg" alt="">
+                    <div class="art-detail">
+                        <h3>jigsaw Travertine Tile</h3>
+                        <p>proceeded to lean on his horn drowning </p>
+                        <a href="#." class="read-more">read more</a>
+                    </div>
+                </div>
+
+                <div class="item">
+                    <img src="/images/article-img3.jpg" alt="">
+                    <div class="art-detail">
+                        <h3>jigsaw Travertine Tile</h3>
+                        <p>proceeded to lean on his horn drowning </p>
+                        <a href="#." class="read-more">read more</a>
+                    </div>
+                </div>
+
+                <div class="item last">
+                    <img src="/images/article-img4.jpg" alt="">
+                    <div class="art-detail">
+                        <h3>jigsaw Travertine Tile</h3>
+                        <p>proceeded to lean on his horn drowning </p>
+                        <a href="#." class="read-more">read more</a>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="clear"></div>
+
+        </div>
+
+        <div class="clear"></div>
+
+    </div>
+</div>
+</body>
+        <footer id="footer">
+
+            <div class="newsletter">
+                <div class="text">
+                    <h1>Signup for our newsletter</h1>
+                    <span>Never miss a deal, special discount offer and our new products</span>
+                </div>
+
+                <div class="email">
+
+                    <input name="" type="text" onblur="if(this.value == '') { this.value='Enter your email address'}"
+                           onfocus="if (this.value == 'Enter your email address') {this.value=''}" value="Enter your email address">
+                    <a class="subscribe" href="#.">Subscribe</a>
+                </div>
+                <div class="clear"></div>
+            </div>
+            <div class="clear"></div>
+
+            <div class="foot-sec">
+                <div class="menu">
+                    <span class="title">About mag</span>
+                    <ul>
+                        <li><a href="#.">Home</a></li>
+                        <li><a href="#.">About Us</a></li>
+                        <li><a href="#.">Location</a></li>
+                        <li><a href="#.">Contact Us</a></li>
+                    </ul>
+                </div>
+
+                <div class="menu menu2">
+                    <span class="title">CATEGORIES</span>
+                    <ul>
+                        <li><a href="#.">Low Price Promise</a></li>
+                        <li><a href="#.">Damages Policy</a></li>
+                        <li><a href="#.">Terms and Conditions</a></li>
+                        <li><a href="#.">Privacy Policy</a></li>
+                    </ul>
+                </div>
+
+            </div>
+
+
+            <div class="foot-sec sec2">
+
+                <div class="share">
+                    <span class="title">Share Buttons</span>
+                    <img src="/images/share-button.png" alt="" />
+                </div>
+
+                <div class="payment">
+                    <span class="title">payment method</span>
+                    <img src="/images/payment.jpg" alt="" />
+                </div>
+
+            </div>
+
+            <div class="foot-sec sec3">
+
+                <div class="contact">
+                    <span class="number">Product Questions: 111-111-0002 or 222-222-3705</span>
+                    <span class="number">Installation Questions: 111-222-1017</span>
+                    <img src="/images/bbb.jpg" alt="" />
+                </div>
+
+
+
+            </div>
+
+    <div class="clear"></div>
+
+    <div class="foot-bot">
+        <div class="container">
+            <div class="social">
+                <a href="#."><i class="fa fa-facebook"></i></a>
+                <a href="#."><i class="fa fa-twitter"></i></a>
+                <a href="#."><i class="fa fa-pinterest"></i></a>
+                <a href="#."><i class="fa fa-google-plus"></i></a>
+                <a href="#."><i class="fa fa-linkedin"></i></a>
+            </div>
+            <p>Copyrights 2014 imag99. All rights reserved.</p>
+
+        </div>
+        <div class="clear"></div>
+    </div>
+
+
+
+</footer>
+</div>
+
+
+
+<script type="text/javascript">
+
+    function DropDown(el) {
+        this.dd = el;
+        this.initEvents();
+    }
+    DropDown.prototype = {
+        initEvents : function() {
+            var obj = this;
+
+            obj.dd.on('click', function(event){
+                $(this).toggleClass('active');
+                event.stopPropagation();
+            });
+        }
+    }
+
+    jQuery(function($) {
+
+        var dd = new DropDown( $('#dd, #dd2') );
+
+        $(document).click(function() {
+            // all dropdowns
+            $('.wrapper-dropdown-5').removeClass('active');
+        });
+
+    })(jQuery);
+
+</script>
+
+
+
+
+
+</html>

@@ -5,8 +5,11 @@ import com.example.photocontest.exceptions.AuthorizationException;
 import com.example.photocontest.exceptions.EntityDuplicateException;
 import com.example.photocontest.exceptions.EntityNotFoundException;
 import com.example.photocontest.exceptions.UnauthorizedException;
+import org.springframework.http.HttpStatus;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.util.HashMap;
@@ -65,6 +68,20 @@ public class GlobalExceptionHandler {
         Map<String, String> errorMap = new HashMap<>();
         errorMap.put("error message ", exception.getMessage());
         return errorMap;
+    }
+
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler(Exception.class)
+    public String handleNotFound(Exception exception, Model model) {
+        model.addAttribute("message", exception.getMessage());
+        return "redirect:/error";
+    }
+
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ExceptionHandler(Throwable.class)
+    public String handleServerError(Throwable throwable, Model model) {
+        model.addAttribute("message", throwable.getMessage());
+        return "error";
     }
 
 }
