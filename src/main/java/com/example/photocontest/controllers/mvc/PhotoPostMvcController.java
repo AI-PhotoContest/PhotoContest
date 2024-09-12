@@ -33,4 +33,6 @@ public class PhotoPostMvcController {
         return "photo-post";
     }
 
+
+
 }

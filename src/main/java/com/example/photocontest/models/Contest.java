@@ -50,7 +50,7 @@ public class Contest {
     @Enumerated(EnumType.STRING)
     private ContestPhase phase;
 
-    @OneToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "category_id")
     private Category category;
 

@@ -7,7 +7,7 @@
         <li th:classappend="${active == 'home'} ? 'sel' : ''" ><a th:href="@{/home}">home</a>
         </li>
 
-        <li class="mega-dropdown "><a href="#.">contests</a>
+        <li class="mega-dropdown " th:classappend="${active == 'contests'} ? 'sel' : ''"><a th:href="@{/contests}">contests</a>
             <div class="mega-menu">
                 <div class="mega-menu-inner">
 

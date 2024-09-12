@@ -1,0 +1,72 @@
+.card-image-wrapper {
+    position: relative;
+}
+
+.overlay-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 2rem; /* По-голям текст */
+    font-weight: bold;
+    text-align: center;
+    z-index: 2; /* Позициониране на текста над лентата */
+    display: inline-block;
+    white-space: wrap; /* Текстът няма да се пренася на нов ред */
+}
+
+.overlay-background {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 30%;
+    background-color: rgba(0, 0, 0, 0.5); /* Черна лента с 50% прозрачност за по-добър контраст */
+    z-index: 1;
+}
+
+.animated-text span {
+    display: inline-block;
+    animation: bounce 1.5s ease-in-out infinite;
+    font-size: 3rem; /* По-голям текст */
+    font-weight: bold;
+}
+
+/* Анимация за всяка буква */
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px); /* Подскачаща анимация */
+    }
+}
+
+/* Задържане на анимацията за всяка буква */
+.animated-text span:nth-child(1) { animation-delay: 0s; }
+.animated-text span:nth-child(2) { animation-delay: 0.1s; }
+.animated-text span:nth-child(3) { animation-delay: 0.2s; }
+.animated-text span:nth-child(4) { animation-delay: 0.3s; }
+/* Можеш да добавиш повече nth-child за по-дълги текстове */
+
+.gallery-track {
+    position: fixed;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.25rem;
+    padding: 0.25rem;
+    will-change: transform;
+}
+
+.card {
+    height: 400px;
+    overflow: hidden;
+}
+
+.card-image-wrapper img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}

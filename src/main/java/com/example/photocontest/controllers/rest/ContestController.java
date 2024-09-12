@@ -25,6 +25,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
@@ -180,12 +181,12 @@ public class ContestController {
      * The sorting is managed through the `Sort` object passed to the `findAll` method, allowing for dynamic and flexible query execution.
      */
     @GetMapping
-    public Page<Contest> getAllContests(
+    public String getAllContests(
             @RequestParam(value = "title", required = false) String title,
             @RequestParam(value = "category", required = false) String category,
             @RequestParam(value = "type", required = false) String type,
             @RequestParam(value = "phase", required = false) String phase,
-            Pageable pageable) {
+            Pageable pageable, Model model) {
 
         ContestFilterOptions filterOptions = new ContestFilterOptions();
         filterOptions.setTitle(title);
@@ -193,7 +194,8 @@ public class ContestController {
         filterOptions.setType(type);
         filterOptions.setPhase(phase);
 
-        return contestService.searchContests(filterOptions, pageable);
+//        return contestService.searchContests(filterOptions, pageable);
+        return "contests-page";
     }
 
     @GetMapping("/{id}")
