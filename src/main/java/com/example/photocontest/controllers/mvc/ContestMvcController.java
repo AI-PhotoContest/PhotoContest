@@ -4,10 +4,13 @@ import com.example.photocontest.filters.ContestFilterOptions;
 import com.example.photocontest.mappers.ContestMapper;
 import com.example.photocontest.mappers.VoteMapper;
 import com.example.photocontest.models.Contest;
+import com.example.photocontest.models.User;
+import com.example.photocontest.models.dto.ContestDto;
 import com.example.photocontest.repositories.UserRepository;
 import com.example.photocontest.services.contracts.ContestService;
 import com.example.photocontest.services.contracts.PhotoPostService;
 import com.example.photocontest.services.contracts.UserService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -15,8 +18,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.Arrays;
 import java.util.List;
+
+import static com.example.photocontest.helpers.AuthenticationHelpers.checkPermission;
 
 @Controller
 @RequestMapping("/contests")
@@ -75,6 +81,16 @@ public class ContestMvcController {
     public String getContestById(@PathVariable int id, Model model) {
         Contest contest = contestService.getContestById(id);
         model.addAttribute("contest", contest);
+        return "contest-details";
+    }
+
+    @GetMapping("/create")
+    public String createContest() {
+//        checkPermission(principal, "ORGANIZER");
+
+//        User loggedUser = userService.findUserByUsername(principal.getName());
+//        Contest contest = contestMapper.fromDto(contestDto, loggedUser);
+
         return "contest-create";
     }
 
