@@ -13,10 +13,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
 import java.util.List;
@@ -72,6 +69,13 @@ public class ContestMvcController {
 //        model.addAttribute("pageSize", pageable.getPageSize());
 
         return "contests-page";
+    }
+
+    @GetMapping("/{id}")
+    public String getContestById(@PathVariable int id, Model model) {
+        Contest contest = contestService.getContestById(id);
+        model.addAttribute("contest", contest);
+        return "contest-create";
     }
 
 }

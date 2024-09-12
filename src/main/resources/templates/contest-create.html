@@ -1,0 +1,69 @@
+<!doctype html>
+<html>
+<link rel="stylesheet" href="../static/css/contest.css" th:href="@{/css/contest.css}">
+<head th:replace="~{fragments/head.html :: main-head}">
+
+    <title>sign-in</title>
+</head>
+
+<body>
+<div id="wrap">
+
+    <header id="header">
+        <div id="searchBarAndLogo" th:replace="~{fragments/SearchBarAndLogo.html :: searchBarAndLogo}"></div>
+        <nav th:replace="~{fragments/Navbar.html :: navBarMenu ('login')}">
+        </nav>
+
+    </header>
+<div class="contest-header" style="background-image: url('https://picsum.photos/500/700?random=4-1')">
+    <h1>Street Portraiture</h1>
+    <p>In association with Photocrowd</p>
+</div>
+
+<div class="contest-container">
+    <div class="contest-details">
+        <div class="tabs">
+            <button class="active-tab">Open</button>
+            <button>Judging</button>
+            <button>Results</button>
+        </div>
+
+        <div class="contest-brief">
+            <h2>Brief</h2>
+            <p>Street portraits are fascinating peeks into the worlds of those who we pass every day as we go about our business. We’re defining a street portrait as an outdoor portrait in a built environment where the subject knows you are photographing them. You may or may not know the subject. In terms of stepping outside your comfort zone, approaching a stranger and asking if you can take their picture can be a big challenge for many. The sense of satisfaction and achievement that can spring from this is great, so if you’ve not done it before then now’s your chance!</p>
+
+            <div class="premium-info">
+                <div class="ranking-badge">RANKING 3x</div>
+                <p>This <strong>Premium Contest</strong> is worth 3x the standard points towards your <a href="#">Leaderboard</a> ranking. It’s Expert-judged, but with no Crowd vote. Find out more about ranking points <a href="#">here</a>. Our Experts are some of the world’s finest photographers, who select the best images, and provide valuable feedback to help you improve.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="contest-summary">
+        <div class="summary-item">
+            <span class="icon">🕒</span>
+            <span>1 week, 2 days left to enter</span>
+        </div>
+        <div class="summary-item">
+            <span class="icon">📷</span>
+            <span>3,318 photos entered</span>
+        </div>
+        <div class="summary-item">
+            <span class="icon">👤</span>
+            <span>1,146 photographers</span>
+        </div>
+        <div class="summary-item">
+            <span class="icon">⚖️</span>
+            <span>3.0x Ranking points multiplier</span>
+        </div>
+        <div class="summary-item">
+            <span>Expert judge: <strong>Nick David</strong></span>
+        </div>
+        <div class="enter-button">
+            <button>Enter a photo</button>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
