@@ -1,69 +1,93 @@
 <!doctype html>
 <html>
-<link rel="stylesheet" href="../static/css/contest.css" th:href="@{/css/contest.css}">
+<link rel="stylesheet" href="../static/css/contest.css" th:href="@{/css/contest-create.css}">
 <head th:replace="~{fragments/head.html :: main-head}">
 
     <title>sign-in</title>
 </head>
 
 <body>
-<div id="wrap">
+< id="wrap">
 
-    <header id="header">
-        <div id="searchBarAndLogo" th:replace="~{fragments/SearchBarAndLogo.html :: searchBarAndLogo}"></div>
-        <nav th:replace="~{fragments/Navbar.html :: navBarMenu ('login')}">
-        </nav>
+<header id="header">
+    <div id="searchBarAndLogo" th:replace="~{fragments/SearchBarAndLogo.html :: searchBarAndLogo}"></div>
+    <nav th:replace="~{fragments/Navbar.html :: navBarMenu ('login')}">
+    </nav>
 
-    </header>
-<div class="contest-header" style="background-image: url('https://picsum.photos/500/700?random=4-1')">
-    <h1>Street Portraiture</h1>
-    <p>In association with Photocrowd</p>
-</div>
-
-<div class="contest-container">
-    <div class="contest-details">
-        <div class="tabs">
-            <button class="active-tab">Open</button>
-            <button>Judging</button>
-            <button>Results</button>
-        </div>
-
-        <div class="contest-brief">
-            <h2>Brief</h2>
-            <p>Street portraits are fascinating peeks into the worlds of those who we pass every day as we go about our business. We’re defining a street portrait as an outdoor portrait in a built environment where the subject knows you are photographing them. You may or may not know the subject. In terms of stepping outside your comfort zone, approaching a stranger and asking if you can take their picture can be a big challenge for many. The sense of satisfaction and achievement that can spring from this is great, so if you’ve not done it before then now’s your chance!</p>
-
-            <div class="premium-info">
-                <div class="ranking-badge">RANKING 3x</div>
-                <p>This <strong>Premium Contest</strong> is worth 3x the standard points towards your <a href="#">Leaderboard</a> ranking. It’s Expert-judged, but with no Crowd vote. Find out more about ranking points <a href="#">here</a>. Our Experts are some of the world’s finest photographers, who select the best images, and provide valuable feedback to help you improve.</p>
-            </div>
-        </div>
+</header>
+<div class="clear"></div>
+<div class="container">
+    <div id="content">
+    <div class="contest-header">
+        <h1>Create New Contest</h1>
     </div>
 
-    <div class="contest-summary">
-        <div class="summary-item">
-            <span class="icon">🕒</span>
-            <span>1 week, 2 days left to enter</span>
-        </div>
-        <div class="summary-item">
-            <span class="icon">📷</span>
-            <span>3,318 photos entered</span>
-        </div>
-        <div class="summary-item">
-            <span class="icon">👤</span>
-            <span>1,146 photographers</span>
-        </div>
-        <div class="summary-item">
-            <span class="icon">⚖️</span>
-            <span>3.0x Ranking points multiplier</span>
-        </div>
-        <div class="summary-item">
-            <span>Expert judge: <strong>Nick David</strong></span>
-        </div>
-        <div class="enter-button">
-            <button>Enter a photo</button>
+    <div class="contest-container">
+        <div class="contest-details">
+            <h2>Contest Information</h2>
+            <form action="/create-contest" method="POST" class="create-contest-form">
+
+                <!-- Title -->
+                <label for="title">Title:</label>
+                <input type="text" id="title" name="title" required placeholder="Enter contest title">
+
+                <!-- Description -->
+                <label for="description">Description:</label>
+                <textarea id="description" name="description" rows="4" required
+                          placeholder="Enter contest description"></textarea>
+
+                <!-- Photo URL -->
+                <label for="photoUrl">Photo URL:</label>
+                <input type="url" id="photoUrl" name="photoUrl" required placeholder="Enter contest photo URL">
+
+                <!-- Start Date -->
+                <label for="startDate">Start Date:</label>
+                <input type="datetime-local" id="startDate" name="startDate" required>
+
+                <!-- End Date -->
+                <label for="endDate">End Date:</label>
+                <input type="datetime-local" id="endDate" name="endDate" required>
+
+                <!-- Status -->
+                <label for="status">Status:</label>
+                <select id="status" name="status" required>
+                    <option value="OPEN">Open</option>
+                    <option value="CLOSED">Closed</option>
+                    <option value="PENDING">Pending</option>
+                </select>
+
+                <!-- Category -->
+                <label for="category">Category:</label>
+                <input type="text" id="category" name="category" required placeholder="Enter contest category">
+
+                <h3>Phase I</h3>
+
+                <!-- Phase I Start Time -->
+                <label for="phaseIStartTime">Phase I Start Time:</label>
+                <input type="datetime-local" id="phaseIStartTime" name="phaseIStartTime" required>
+
+                <!-- Phase I End Time -->
+                <label for="phaseIEndTime">Phase I End Time:</label>
+                <input type="datetime-local" id="phaseIEndTime" name="phaseIEndTime" required>
+
+                <h3>Phase II</h3>
+
+                <!-- Phase II Start Time -->
+                <label for="phaseIIStartTime">Phase II Start Time:</label>
+                <input type="datetime-local" id="phaseIIStartTime" name="phaseIIStartTime" required>
+
+                <!-- Phase II End Time -->
+                <label for="phaseIIEndTime">Phase II End Time:</label>
+                <input type="datetime-local" id="phaseIIEndTime" name="phaseIIEndTime" required>
+
+                <!-- Submit Button -->
+                <div class="submit-button">
+                    <button type="submit">Create Contest</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
-
+</div>  
 </body>
 </html>

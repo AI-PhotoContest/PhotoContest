@@ -1,0 +1,112 @@
+ /* Основен стил за формата */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+.contest-header {
+    background-image: url('https://picsum.photos/500/700?random=4-1');
+    background-size: cover;
+    background-position: center;
+    padding: 60px 20px;
+    text-align: center;
+    color: white;
+}
+
+.contest-header h1 {
+    font-size: 3rem;
+    font-weight: 700;
+}
+
+.contest-container {
+    max-width: 900px;
+    margin: 30px auto;
+    display: flex;
+    justify-content: center;
+}
+
+.contest-details {
+    width: 100%;
+    background-color: white;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.contest-details h2, .contest-details h3 {
+    color: #333;
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+}
+
+.create-contest-form label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: 600;
+    color: #555;
+}
+
+.create-contest-form input,
+.create-contest-form textarea,
+.create-contest-form select {
+    width: 100%;
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    transition: all 0.3s ease;
+}
+
+.create-contest-form input:focus,
+.create-contest-form textarea:focus,
+.create-contest-form select:focus {
+    outline: none;
+    border-color: #4CAF50;
+    background-color: #fff;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.submit-button {
+    text-align: right;
+}
+
+.submit-button button {
+    padding: 15px 30px;
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.submit-button button:hover {
+    background-color: #45a049;
+}
+
+/* Mobile стилове */
+@media (max-width: 600px) {
+    .contest-details {
+        padding: 20px;
+    }
+
+    .contest-header h1 {
+        font-size: 2rem;
+    }
+
+    .create-contest-form input,
+    .create-contest-form textarea,
+    .create-contest-form select {
+        padding: 10px;
+    }
+
+    .submit-button button {
+        padding: 10px 20px;
+        font-size: 1rem;
+    }
+}
