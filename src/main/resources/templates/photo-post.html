@@ -1,10 +1,414 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+<!doctype html>
+<html>
+<link href="../static/css/login.css" rel="stylesheet" type="text/css" th:href="@{/css/login.css}"/>
+<head th:replace="~{fragments/head.html :: main-head}">
+
+    <title>sign-in</title>
 </head>
+
 <body>
+<div id="wrap">
+
+    <header id="header">
+        <div id="searchBarAndLogo" th:replace="~{fragments/SearchBarAndLogo.html :: searchBarAndLogo}"></div>
+        <nav th:replace="~{fragments/Navbar.html :: navBarMenu ('contests')}">
+        </nav>
+
+    </header>
+
+    <div class="clear"></div>
+
+    <div class="container">
+        <div id="content">
+
+            <div class="sub-page"></div>
+            <div class="left-sec">
+                <div class="recent-post">
+                    <div class="heading">
+                        <h2>fashion POSTS</h2>
+                        <div class="clear"></div>
+                    </div>
+
+                    <div class="recent-sec">
+                        <a class="img-effect" href="people.html"><img src="images/fashionpost-img1.jpg" alt="" /></a>
+                        <h3>Beautifull babies photo</h3>
+                        <span>Posted On January 12, 2014 | <span class="comments">3 Comments</span></span>
+                        <p>It looks like slowly but surely Google’s Nexus devices are returning back to stock in the Google Play Store. Well, the Nexus 10 tablet is at least. The Nexus
+                            4 is still hard to catch, power </p>
+                        <a href="people.html" class="read-more">read more</a>
+                    </div>
+
+                    <div class="recent-sec right">
+                        <a class="img-effect" href="video-detail.html"><img src="images/fashionpost-img2.jpg" alt="" /></a>
+                        <h3>Beautifull babies photo</h3>
+                        <span>Posted On January 12, 2014 | <span class="comments">3 Comments</span></span>
+                        <p>It looks like slowly but surely Google’s Nexus devices are returning back to stock in the Google Play Store. Well, the Nexus 10 tablet is at least. The Nexus 4 is
+                            still hard to catch, power of graphic design although it arrived earlier proceeded to lean on his horn drowning this week at Best. [...]</p>
+                        <a href="video-detail.html" class="read-more">read more</a>
+                    </div>
+
+                    <div class="recent-sec">
+                        <a class="img-effect" href="people.html"><img src="images/fashionpost-img3.jpg" alt="" /></a>
+                        <h3>Beautifull babies photo</h3>
+                        <span>Posted On January 12, 2014 | <span class="comments">3 Comments</span></span>
+                        <p>It looks like slowly but surely Google’s Nexus devices are returning back to stock in the Google Play Store. Well, the Nexus 10 tablet is at least.
+                            The Nexus 4 is still hard to catch, power of graphic design although it arrived earlier proceeded to lean on his horn drowning this week at Best. [...]</p>
+                        <a href="people.html" class="read-more">read more</a>
+                    </div>
+
+                    <div class="recent-sec right">
+                        <a class="img-effect" href="people.html"><img src="images/fashionpost-img4.jpg" alt="" /></a>
+                        <h3>Beautifull babies photo</h3>
+                        <span>Posted On January 12, 2014 | <span class="comments">3 Comments</span></span>
+                        <p>It looks like slowly but surely Google’s Nexus devices are returning back to stock in the Google Play Store. Well, the Nexus 10 tablet is at least.
+                            It looks like slowly but surely Google’s Nexus devices are returning back to stock in the Google Play Store. Well, the Nexus 10 tablet is at least. [...]</p>
+                        <a href="people.html" class="read-more">read more</a>
+                    </div>
+
+                    <div class="recent-sec">
+                        <a class="img-effect" href="video-detail.html"><img src="images/fashionpost-img5.jpg" alt="" /></a>
+                        <h3>Beautifull babies photo</h3>
+                        <span>Posted On January 12, 2014 | <span class="comments">3 Comments</span></span>
+                        <p>It looks like slowly but surely Google’s Nexus devices are returning back to stock in the Google Play Store. Well, the Nexus 10 tablet is at least.
+                            The Nexus 4 is still hard to catch, power of graphic design although it arrived earlier proceeded to lean on his horn drowning this week at Best.
+                            It looks like slowly but surely Google’s Nexus devices are returning back to stock in the Google Play Store. Well, the Nexus 10 tablet is at least.
+                            The Nexus 4 is still hard to catch, It looks like slowly but surely Google’s Nexus devices are returning. [...]</p>
+                        <a href="video-detail.html" class="read-more">read more</a>
+                    </div>
+
+                    <div class="recent-sec right">
+                        <a class="img-effect" href="people.html"><img src="images/fashionpost-img6.jpg" alt="" /></a>
+                        <h3>Beautifull babies photo</h3>
+                        <span>Posted On January 12, 2014 | <span class="comments">3 Comments</span></span>
+                        <p>It looks like slowly but surely Google’s Nexus devices are returning back to stock in the Google Play Store. Well, the Nexus 10 tablet is at least.
+                            Google’s Nexus devices are returning back to stock in the Google Play Store. Well, the Nexus 10 tablet is at least.
+                            The Nexus 4 is still hard to catch, power of graphic design although it arrived earlier proceeded to lean on his horn drowning this week at Best. [...]</p>
+                        <a href="people.html" class="read-more">read more</a>
+                    </div>
+
+
+
+                </div>
+            </div>
+
+
+            <div class="right-sec">
+                <div class="tabs">
+
+                    <ul>
+                        <li><a href="#tab-1">POPULAR</a></li>
+                        <li><a href="#tab-2">recent</a></li>
+                        <li><a href="#tab-3">tags</a></li>
+
+                    </ul>
+                    <div class="tabscontent">
+                        <div id="tab-1">
+
+                            <div class="popular">
+                                <div class="bw pic"><a href="people.html"><img src="images/popular-img2.jpg" alt="" /></a></div>
+                                <div class="detail">
+                                    <a href="people.html"><h4>Server and network</h4></a>
+                                    <p>It looks like power slowly but surely...</p>
+                                    <span>January 12, 2014</span>
+                                </div>
+
+                            </div>
+
+                            <div class="popular">
+                                <div class="bw pic"><a href="photography.html"><img src="images/popular-img3.jpg" alt="" /></a></div>
+                                <div class="detail">
+                                    <a href="photography.html"><h4>Server and network</h4></a>
+                                    <p>It looks like power slowly but surely...</p>
+                                    <span>January 12, 2014</span>
+                                </div>
+
+                            </div>
+
+                            <div class="popular">
+                                <div class="bw pic"><a href="video.html"><img src="images/popular-img4.jpg" alt="" /></a></div>
+                                <div class="detail">
+                                    <a href="people.html"><h4>Server and network</h4></a>
+                                    <p>It looks like power slowly but surely looks like power slowly but surely...</p>
+                                    <span>January 12, 2014</span>
+                                </div>
+
+                            </div>
+
+                            <div class="popular">
+                                <div class="bw pic"><a href="video.html"><img src="images/popular-img1.jpg" alt="" /></a></div>
+                                <div class="detail">
+                                    <a href="people.html"><h4>Server and network</h4></a>
+                                    <p>It looks like power slowly but surely...</p>
+                                    <span>January 12, 2014</span>
+                                </div>
+
+                            </div>
+                            <div class="clear"></div>
+
+                        </div>
+                        <div id="tab-2">
+                            <div class="popular">
+                                <div class="bw pic"><a href="video.html"><img src="images/popular-img4.jpg" alt="" /></a></div>
+                                <div class="detail">
+                                    <a href="people.html"><h4>Server and network</h4></a>
+                                    <p>It looks like power slowly but surely...</p>
+                                    <span>January 12, 2014</span>
+                                </div>
+
+                            </div>
+
+                            <div class="popular">
+                                <div class="bw pic"><a href="video.html"><img src="images/popular-img3.jpg" alt="" /></a></div>
+                                <div class="detail">
+                                    <a href="people.html"><h4>Server and network</h4></a>
+                                    <p>It looks like power slowly but surely...</p>
+                                    <span>January 12, 2014</span>
+                                </div>
+
+                            </div>
+
+                            <div class="popular">
+                                <div class="bw pic"><a href="video.html"><img src="images/popular-img2.jpg" alt="" /></a></div>
+                                <div class="detail">
+                                    <a href="people.html"><h4>Server and network</h4></a>
+                                    <p>It looks like power slowly but surely looks like power slowly but surely...</p>
+                                    <span>January 12, 2014</span>
+                                </div>
+
+                            </div>
+
+                            <div class="popular">
+                                <div class="bw pic"><a href="video.html"><img src="images/popular-img1.jpg" alt="" /></a></div>
+                                <div class="detail">
+                                    <a href="people.html"><h4>Server and network</h4></a>
+                                    <p>It looks like power slowly but surely...</p>
+                                    <span>January 12, 2014</span>
+                                </div>
+
+                            </div>
+                            <div class="clear"></div>
+                        </div>
+                        <div id="tab-3">
+                            <div class="tags">
+                                <a href="#.">Business</a> <a href="#.">power</a> <a href="#.">wordpress</a> <a href="#.">photography</a> <a href="#.">graphi design</a>
+                                <a href="#.">html5 & css3</a> <a href="#.">mobile</a> <a href="#.">logo</a> <a href="#.">responsive</a> <a href="#.">animations</a>
+                                <a href="#.">Business</a> <a href="#.">art</a> <a href="#.">themeforest</a> <a href="#.">photography</a> <a href="#.">graphi design</a>
+                                <a href="#.">html5 & css3</a> <a href="#.">mobile</a> <a href="#.">logo</a> <a href="#.">responsive</a> <a href="#.">animations</a>
+                                <div class="clear"></div>
+                            </div>
+                            <div class="controls">
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="clear"></div>
+                <div class="reviews">
+                    <div class="heading">
+                        <h2>LATEST REVIEWS</h2>
+                        <div class="bar">
+                            <div class="skiller col">
+                                <ul id="skill">
+                                    <li><span class="expand html5"> <small>%70</small></span><em>HTML 5</em></li>
+                                    <li><span class="expand css3"> <small>%90</small></span><em>CSS 3</em></li>
+                                    <li><span class="expand jquery"> <small>%50</small></span><em>jQuery</em></li>
+                                    <li><span class="expand photoshop"> <small>%80</small></span><em>Photoshop</em></li>
+                                    <li><span class="expand dreamweaver"> <small>%100</small></span><em>Dreamweaver</em></li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="clear"></div>
+                        <div class="rating">
+                            <span>YOUR RATING : 4.35 ( 30 votes)</span><img src="images/star.jpg" alt="" />
+                            <div class="clear"></div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="authors">
+                    <div class="heading">
+                        <h2>OUR AUTHORS</h2>
+                    </div>
+
+                    <div class="people">
+                        <a href="#." class="img-effect"><img src="images/author1.jpg" alt="" /></a> <a href="#." class="img-effect"><img src="images/author2.jpg" alt="" /></a> <a href="#." class="img-effect"><img src="images/author3.jpg" alt="" /></a>
+                        <a href="#." class="img-effect"><img src="images/author4.jpg" alt="" /></a> <a href="#." class="img-effect"><img src="images/author5.jpg" alt="" /></a> <a href="#." class="img-effect"><img src="images/author1.jpg" alt="" /></a>
+                        <a href="#." class="img-effect"><img src="images/author2.jpg" alt="" /></a> <a href="#." class="img-effect"><img src="images/author3.jpg" alt="" /></a> <a href="#." class="img-effect"><img src="images/author5.jpg" alt="" /></a>
+                        <a href="#." class="img-effect"><img src="images/author1.jpg" alt="" /></a> <a href="#." class="img-effect"><img src="images/author3.jpg" alt="" /></a> <a href="#." class="img-effect"><img src="images/author4.jpg" alt="" /></a>
+                    </div>
+                </div>
+
+                <div class="clear"></div>
+
+                <div class="sub-tags">
+                    <div class="heading">
+                        <h2>TAGS CLOUD</h2>
+                    </div>
+
+                    <div class="all-tags">
+                        <a href="#.">Culture</a> <a href="#.">Business</a> <a href="#.">Wordpress</a> <a href="#.">logo</a> <a href="#.">Photoshop</a>
+                        <a href="#.">Web Design</a> <a href="#.">Travel Agency</a> <a href="#.">Server Cloud</a> <a href="#.">Graphic River</a> <a href="#.">Themes</a>
+                        <a href="#.">Culture</a> <a href="#.">Business</a> <a href="#.">Wordpress</a> <a href="#.">logo</a> <a href="#.">Photoshop</a>
+                        <a href="#.">Web Design</a> <a href="#.">Travel Agency</a>
+
+                    </div>
+
+                </div>
+
+                <div class="clear"></div>
+
+                <div class="photography">
+                    <div class="date">
+                        <span class="date-month">jan,10</span>
+                        <span class="year">2014</span>
+                    </div>
+                    <a class="img-effect" href="photography.html"><img src="images/photography.jpg" alt="" /></a>
+                    <h1>photography</h1>
+                    <p>Completely free. No Credit Card required</p>
+                    <a class="more-photos" href="photography.html">see more photos</a>
+                    <div class="clear"></div>
+                </div>
+
+            </div>
+            <div class="clear"></div>
+
+
+
+
+
+
+        </div>
+
+        <div class="clear"></div>
+        <footer id="footer">
+
+            <div class="newsletter">
+                <div class="text">
+                    <h1>Signup for our newsletter</h1>
+                    <span>Never miss a deal, special discount offer and our new products</span>
+                </div>
+
+                <div class="email">
+
+                    <input name="" type="text" onblur="if(this.value == '') { this.value='Enter your email address'}"
+                           onfocus="if (this.value == 'Enter your email address') {this.value=''}" value="Enter your email address">
+                    <a class="subscribe" href="#.">Subscribe</a>
+                </div>
+                <div class="clear"></div>
+            </div>
+            <div class="clear"></div>
+
+            <div class="foot-sec">
+                <div class="menu">
+                    <span class="title">About mag</span>
+                    <ul>
+                        <li><a href="#.">Home</a></li>
+                        <li><a href="#.">About Us</a></li>
+                        <li><a href="#.">Location</a></li>
+                        <li><a href="#.">Contact Us</a></li>
+                    </ul>
+                </div>
+
+                <div class="menu menu2">
+                    <span class="title">CATEGORIES</span>
+                    <ul>
+                        <li><a href="#.">Low Price Promise</a></li>
+                        <li><a href="#.">Damages Policy</a></li>
+                        <li><a href="#.">Terms and Conditions</a></li>
+                        <li><a href="#.">Privacy Policy</a></li>
+                    </ul>
+                </div>
+
+            </div>
+
+
+            <div class="foot-sec sec2">
+
+                <div class="share">
+                    <span class="title">Share Buttons</span>
+                    <img src="images/share-button.png" alt="" />
+                </div>
+
+                <div class="payment">
+                    <span class="title">payment method</span>
+                    <img src="images/payment.jpg" alt="" />
+                </div>
+
+            </div>
+
+            <div class="foot-sec sec3">
+
+                <div class="contact">
+                    <span class="number">Product Questions: 111-111-0002 or 222-222-3705</span>
+                    <span class="number">Installation Questions: 111-222-1017</span>
+                    <img src="images/bbb.jpg" alt="" />
+                </div>
+
+
+
+            </div>
+
+
+
+        </footer>
+
+    </div>
+    <div class="clear"></div>
+
+    <div class="foot-bot">
+        <div class="container">
+            <div class="social">
+                <a href="#."><i class="fa fa-facebook"></i></a>
+                <a href="#."><i class="fa fa-twitter"></i></a>
+                <a href="#."><i class="fa fa-pinterest"></i></a>
+                <a href="#."><i class="fa fa-google-plus"></i></a>
+                <a href="#."><i class="fa fa-linkedin"></i></a>
+            </div>
+            <p>Copyrights 2014 imag99. All rights reserved.</p>
+
+        </div>
+        <div class="clear"></div>
+    </div>
+
+
+
+
+</div>
+
+
+
+<script type="text/javascript">
+
+    function DropDown(el) {
+        this.dd = el;
+        this.initEvents();
+    }
+    DropDown.prototype = {
+        initEvents : function() {
+            var obj = this;
+
+            obj.dd.on('click', function(event){
+                $(this).toggleClass('active');
+                event.stopPropagation();
+            });
+        }
+    }
+
+    jQuery(function($) {
+
+        var dd = new DropDown( $('#dd, #dd2') );
+
+        $(document).click(function() {
+            // all dropdowns
+            $('.wrapper-dropdown-5').removeClass('active');
+        });
+
+    })(jQuery);
+
+</script>
 
 </body>
 </html>
