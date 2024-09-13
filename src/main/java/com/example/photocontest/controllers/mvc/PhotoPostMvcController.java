@@ -30,7 +30,7 @@ public class PhotoPostMvcController {
     public String getPhotoPostById(@PathVariable int id) {
         PhotoPost photoPost = photoPostService.getPhotoPostById(id);
 
-        return "photo-post";
+        return "photo-posts";
     }
 
 
