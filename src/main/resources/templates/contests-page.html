@@ -34,7 +34,7 @@
                         <div class="overlay-background"></div>
                         <div class="overlay-text animated-text">
                             <!-- Разделяне на буквите в span елементи за анимация -->
-                            <span th:each="letter, iterStat : ${#strings.arraySplit(contest.getCategory().name, '')}"
+                            <span th:each="letter, iterStat : ${#strings.arraySplit(contest.title, '')}"
                                   th:text="${letter}"
                                   th:attr="style='animation-delay:' + (${iterStat.index} * 0.1) + 's'"></span>
                         </div>
