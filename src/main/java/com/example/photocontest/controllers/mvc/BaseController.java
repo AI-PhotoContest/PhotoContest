@@ -51,4 +51,7 @@ public class BaseController {
         return user;
     }
 
+//    @ModelAttribute("categories")
+
+
 }

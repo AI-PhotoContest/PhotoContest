@@ -6,7 +6,7 @@
     <title>sign-in</title>
 </head>
 
-<body>
+<body style="scroll-padding-top: 100px">
 < id="wrap">
 
 <header id="header">
@@ -207,101 +207,173 @@
 
 <script>
     function setContestStartLimits() {
-        const contestStart = document.getElementById("contestStartTime").value;
-        const contestEnd = document.getElementById("contestEndTime").value;
+        const contestStart = document.getElementById("startDate").value;
+        const contestEnd = document.getElementById("endDate").value;
         const phaseIStart = document.getElementById("phaseIStartTime");
-        const phaseIEnd = document.getElementById("phaseIEndTime");
+
+        console.log("Contest Start:", contestStart); // Показваме началната дата на конкурса
+        console.log("Contest End:", contestEnd); // Показваме крайната дата на конкурса
 
         if (contestStart && contestEnd) {
             const contestStartDate = new Date(contestStart);
             const contestEndDate = new Date(contestEnd);
 
+            console.log("Parsed Contest Start Date:", contestStartDate); // Показваме парсираната начална дата
+            console.log("Parsed Contest End Date:", contestEndDate); // Показваме парсираната крайна дата
+
             // Минимално време за Phase I Start е 1 ден след Contest Start
             const minPhaseIStartTime = new Date(contestStartDate);
-            minPhaseIStartTime.setDate(minPhaseIStartTime.getDate() + 1);
+            minPhaseIStartTime.setDate(minPhaseIStartTime.getDate());
+            console.log("Min Phase I Start Time:", minPhaseIStartTime); // Показваме минималното време за старт на фаза I
 
-            // Максимално време за Phase I Start е 30 дни след Contest Start или Contest End минус 1 ден
+            // Максимално време за Phase I Start е 30 дни след Contest Start, но не по-късно от Contest End минус 1 ден
             const maxPhaseIStartTime = new Date(contestStartDate);
             maxPhaseIStartTime.setDate(maxPhaseIStartTime.getDate() + 30);
+            console.log("Max Phase I Start Time (Before Contest End Adjustment):", maxPhaseIStartTime); // Показваме максималното време за старт на фаза I
 
-            // Ако Contest End е преди максималното време за Phase I Start, то намаляме максимума до Contest End минус 1 ден
+            // Проверка дали максималното време не превишава края на конкурса
             if (maxPhaseIStartTime > contestEndDate) {
-                maxPhaseIStartTime.setDate(contestEndDate.getDate() - 1);
+                maxPhaseIStartTime.setTime(contestEndDate.getTime() - 24 * 60 * 60 * 1000); // Contest End минус 1 ден
+                console.log("Max Phase I Start Time Adjusted to Contest End - 1 Day:", maxPhaseIStartTime); // Коригирано максимално време
             }
 
+            // Задаване на минималните и максималните стойности за Phase I Start в HTML елемента
             phaseIStart.min = minPhaseIStartTime.toISOString().slice(0, 16);
-            phaseIStart.max = maxPhaseIStartTime.toISOString().slice(0, 16);
+            console.log("Phase I Start Min (HTML element):", phaseIStart.min);
 
-            phaseIStart.value = phaseIStart.min; // Задаваме начална стойност за Phase I Start
+            phaseIStart.max = maxPhaseIStartTime.toISOString().slice(0, 16);
+            console.log("Phase I Start Max (HTML element):", phaseIStart.max);
+
+            // Задаване на началната стойност за Phase I Start
+            phaseIStart.value = phaseIStart.min;
+            console.log("Phase I Start Initial Value Set:", phaseIStart.value);
+
             setPhaseIEndLimits(); // Актуализиране на ограничението за Phase I End
+        } else {
+            console.log("Contest Start or End date is missing.");
         }
     }
 
     function setPhaseIEndLimits() {
         const phaseIStart = document.getElementById("phaseIStartTime").value;
-        const contestEnd = document.getElementById("contestEndTime").value;
+        const contestEnd = document.getElementById("endDate").value;
         const phaseIEnd = document.getElementById("phaseIEndTime");
         const phaseIIStart = document.getElementById("phaseIIStartTime");
+
+        console.log("Phase I Start Time:", phaseIStart); // Показваме началното време на фаза I
+        console.log("Contest End Time:", contestEnd); // Показваме крайната дата на конкурса
 
         if (phaseIStart && contestEnd) {
             const phaseIStartDate = new Date(phaseIStart);
             const contestEndDate = new Date(contestEnd);
 
+            console.log("Parsed Phase I Start Date:", phaseIStartDate); // Показваме парсираната начална дата на фаза I
+            console.log("Parsed Contest End Date:", contestEndDate); // Показваме парсираната крайна дата на конкурса
+
             // Минимално време за Phase I End е 1 ден след Phase I Start
             const minPhaseIEndTime = new Date(phaseIStartDate);
             minPhaseIEndTime.setDate(minPhaseIEndTime.getDate() + 1);
+            console.log("Min Phase I End Time (1 day after start):", minPhaseIEndTime); // Показваме минималното време за край на фаза I
 
             // Максимално време за Phase I End е 30 дни след Phase I Start или Contest End минус 1 ден
             const maxPhaseIEndTime = new Date(phaseIStartDate);
             maxPhaseIEndTime.setDate(maxPhaseIEndTime.getDate() + 30);
+            console.log("Max Phase I End Time (Before Contest End Adjustment):", maxPhaseIEndTime); // Показваме максималното време за край на фаза I
 
+            // Проверка дали максималното време не превишава края на конкурса
             if (maxPhaseIEndTime > contestEndDate) {
-                maxPhaseIEndTime.setDate(contestEndDate.getDate() - 1);
+                maxPhaseIEndTime.setTime(contestEndDate.getTime() - 24 * 60 * 60 * 1000); // Contest End минус 1 ден
+                console.log("Max Phase I End Time Adjusted to Contest End - 1 Day:", maxPhaseIEndTime); // Коригирано максимално време
             }
 
+            // Задаване на минималните и максималните стойности за Phase I End в HTML елемента
             phaseIEnd.min = minPhaseIEndTime.toISOString().slice(0, 16);
-            phaseIEnd.max = maxPhaseIEndTime.toISOString().slice(0, 16);
+            console.log("Phase I End Min (HTML element):", phaseIEnd.min);
 
-            phaseIEnd.value = phaseIEnd.min; // Задаваме начална стойност за Phase I End
+            phaseIEnd.max = maxPhaseIEndTime.toISOString().slice(0, 16);
+            console.log("Phase I End Max (HTML element):", phaseIEnd.max);
+
+            // Задаване на началната стойност за Phase I End
+            phaseIEnd.value = phaseIEnd.min;
+            console.log("Phase I End Initial Value Set:", phaseIEnd.value);
 
             // Актуализиране на ограниченията за Phase II Start
-            phaseIIStart.min = phaseIEnd.min;
+            phaseIIStart.min = phaseIEnd.max;
+            phaseIIStart.value = phaseIEnd.value;
+            console.log("Phase II Start Min (HTML element set to Phase I End Max):", phaseIIStart.min);
+
             setPhaseIIEndLimits(); // Актуализиране на ограниченията за Phase II End
+        } else {
+            console.log("Phase I Start or Contest End date is missing.");
         }
     }
 
     function setPhaseIIEndLimits() {
+        // Вземаме стойността на началото на фаза II и края на конкурса от HTML елементите.
         const phaseIIStart = document.getElementById("phaseIIStartTime").value;
-        const contestEnd = document.getElementById("contestEndTime").value;
+        const contestEnd = document.getElementById("endDate").value;
         const phaseIIEnd = document.getElementById("phaseIIEndTime");
 
+        console.log("Phase II Start Time:", phaseIIStart); // Показваме началното време на Phase II
+        console.log("Contest End Time:", contestEnd); // Показваме крайната дата на конкурса
+
+        // Проверяваме дали има зададени стойности за началото на фаза II и края на конкурса.
         if (phaseIIStart && contestEnd) {
+            // Създаваме обекти от тип `Date` за началото на фаза II и края на конкурса
             const phaseIIStartDate = new Date(phaseIIStart);
             const contestEndDate = new Date(contestEnd);
 
-            // Минимално време за Phase II End е 1 час след Phase II Start
+            console.log("Parsed Phase II Start Date:", phaseIIStartDate); // Показваме парсираното начално време на фаза II
+            console.log("Parsed Contest End Date:", contestEndDate); // Показваме парсираната крайна дата на конкурса
+
+            // Минималното време за завършване на фаза II е 1 час след нейното начало.
             const minPhaseIIEndTime = new Date(phaseIIStartDate);
             minPhaseIIEndTime.setHours(minPhaseIIEndTime.getHours() + 1);
 
-            // Максимално време за Phase II End е 1 ден след Phase II Start или Contest End
+            console.log("Min Phase II End Time (1 hour after start):", minPhaseIIEndTime); // Показваме минималното време за край на фаза II
+
+            // Максималното време за фаза II е 1 ден след началото ѝ, или до края на конкурса, което е по-рано.
             const maxPhaseIIEndTime = new Date(phaseIIStartDate);
             maxPhaseIIEndTime.setDate(maxPhaseIIEndTime.getDate() + 1);
 
+            console.log("Max Phase II End Time Before Contest End Check (1 day after start):", maxPhaseIIEndTime);
+
+            // Ако краят на Phase II трябва да бъде преди края на конкурса, правим тази корекция.
             if (maxPhaseIIEndTime > contestEndDate) {
-                maxPhaseIIEndTime.setDate(contestEndDate.getDate());
+                maxPhaseIIEndTime.setTime(contestEndDate.getTime()); // Задаваме крайното време на фаза II като края на конкурса.
+                console.log("Max Phase II End Time Adjusted to Contest End:", maxPhaseIIEndTime);
             }
 
-            phaseIIEnd.min = minPhaseIIEndTime.toISOString().slice(0, 16);
-            phaseIIEnd.max = maxPhaseIIEndTime.toISOString().slice(0, 16);
+            // Задаваме минималното и максималното време за избиране на край на фаза II в HTML елемента.
+            phaseIIEnd.min = minPhaseIIEndTime.toISOString().slice(0, 16); // Взимаме само първите 16 символа (дата и час)
+            console.log("Phase II End Time Min (HTML element):", phaseIIEnd.min); // Показваме минималното време за край на фаза II
 
-            phaseIIEnd.value = phaseIIEnd.min; // Задаваме начална стойност за Phase II End
+            phaseIIEnd.max = maxPhaseIIEndTime.toISOString().slice(0, 16);
+            console.log("Phase II End Time Max (HTML element):", phaseIIEnd.max); // Показваме максималното време за край на фаза II
+
+            // Задаваме начална стойност за Phase II End, като стойността по подразбиране е минималната.
+            phaseIIEnd.value = phaseIIEnd.min;
+            console.log("Phase II End Initial Value Set:", phaseIIEnd.value); // Показваме стойността, която се задава по подразбиране за край на фаза II
+        } else {
+            console.log("Phase II Start or Contest End is missing."); // Ако няма стойности за началото на фаза II или края на конкурса
         }
     }
 
-    window.onload = function () {
-        setContestStartLimits();
-        setPhaseIEndLimits();
-        setPhaseIIEndLimits();
-    };
+    document.addEventListener('DOMContentLoaded', function () {
+        const startDate = document.getElementById('startDate');
+        const endDate = document.getElementById('endDate');
+
+
+        // Listen for changes in the text input
+        startDate.addEventListener('change', recalculatePhaseLimits);
+        endDate.addEventListener('change', recalculatePhaseLimits);
+
+
+        function recalculatePhaseLimits() {
+            setContestStartLimits();
+            setPhaseIEndLimits();
+            setPhaseIIEndLimits();
+        }
+    });
 </script>
 </html>
