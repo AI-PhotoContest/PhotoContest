@@ -29,7 +29,7 @@
                 <!-- Thymeleaf цикъл за зареждане на изображенията -->
                 <div class='card' th:each="contest : ${contests}">
                     <div class='card-image-wrapper'>
-                        <img th:src="'/AI_category_generated_images/' + ${contest.getCategory().image}"
+                        <img th:src="'/images/contest-images/' + ${contest.getPhotoUrl()}"
                              alt="Gallery image">
                         <div class="overlay-background"></div>
                         <div class="overlay-text animated-text">

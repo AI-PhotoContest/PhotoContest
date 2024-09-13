@@ -23,8 +23,13 @@ public class AuthenticationHelpers {
 
     public static final String USER_NOT_FOUND = "User not found";
 
+
     public static boolean checkPermission(Principal principal, String requestedRole) {
         User user = userService.findUserByUsername(principal.getName());
+        return checkPermission(user, requestedRole);
+    }
+
+    public static boolean checkPermission(User user, String requestedRole) {
         for (Role role : user.getRoles()) {
             if (role.getName().name().equalsIgnoreCase(requestedRole)) {
                 return true;
@@ -33,8 +38,12 @@ public class AuthenticationHelpers {
         throw new SecurityException("You do not have permission to perform this operation");
     }
 
-    public static boolean checkPermission(Principal principal , String requestedRole,String requestedRole2) {
+    public static boolean checkPermission(Principal principal , String requestedRole,String requestedRole2){
         User user = userService.findUserByUsername(principal.getName());
+        return checkPermission(user,requestedRole,requestedRole2);
+    }
+
+    public static boolean checkPermission(User user , String requestedRole,String requestedRole2) {
         for (Role role : user.getRoles()) {
             if (role.getName().name().equalsIgnoreCase(requestedRole) || role.getName().name().equalsIgnoreCase(requestedRole2)) {
                 return true;
