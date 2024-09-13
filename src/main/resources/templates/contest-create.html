@@ -18,76 +18,290 @@
 <div class="clear"></div>
 <div class="container">
     <div id="content">
-    <div class="contest-header">
-        <h1>Create New Contest</h1>
-    </div>
+        <div class="contest-header">
+            <h1>Create New Contest</h1>
+        </div>
 
-    <div class="contest-container">
-        <div class="contest-details">
-            <h2>Contest Information</h2>
-            <form action="/create-contest" method="POST" class="create-contest-form">
+        <div class="contest-container">
+            <div class="contest-details">
+                <h2>Contest Information</h2>
+                <form action="/contests/create" method="POST" enctype="multipart/form-data" class="create-contest-form">
 
-                <!-- Title -->
-                <label for="title">Title:</label>
-                <input type="text" id="title" name="title" required placeholder="Enter contest title">
+                    <!-- Title -->
+                    <label for="title">Title:</label>
+                    <input type="text" id="title" name="title" required placeholder="Enter contest title">
 
-                <!-- Description -->
-                <label for="description">Description:</label>
-                <textarea id="description" name="description" rows="4" required
-                          placeholder="Enter contest description"></textarea>
+                    <!-- Description -->
+                    <label for="description">Description:</label>
+                    <textarea id="description" name="description" rows="4" required
+                              placeholder="Enter contest description"></textarea>
 
-                <!-- Photo URL -->
-                <label for="photoUrl">Photo URL:</label>
-                <input type="url" id="photoUrl" name="photoUrl" required placeholder="Enter contest photo URL">
+                    <!-- Photo Upload -->
+                    <div class="upload-photo-wrapper">
+                        <label for="photo" class="upload-label">Upload Photo:</label>
+                        <input type="file" id="photo" name="photo" accept="image/*" required class="upload-input">
+                        <div class="upload-placeholder">
+                            <span id="file-name">No file chosen</span>
+                            <button type="button" class="upload-btn" onclick="document.getElementById('photo').click()">
+                                Choose File
+                            </button>
+                        </div>
+                    </div>
 
-                <!-- Start Date -->
-                <label for="startDate">Start Date:</label>
-                <input type="datetime-local" id="startDate" name="startDate" required>
+                    <!-- Preview Image Container -->
+                    <div class="image-preview-wrapper">
+                        <img id="image-preview" class="image-preview" alt="Image Preview" style="display: none;">
+                    </div>
 
-                <!-- End Date -->
-                <label for="endDate">End Date:</label>
-                <input type="datetime-local" id="endDate" name="endDate" required>
+                    <script>
+                        const photoInput = document.getElementById('photo');
+                        const fileNameDisplay = document.getElementById('file-name');
+                        const imagePreview = document.getElementById('image-preview');
 
-                <!-- Status -->
-                <label for="status">Status:</label>
-                <select id="status" name="status" required>
-                    <option value="OPEN">Open</option>
-                    <option value="CLOSED">Closed</option>
-                    <option value="PENDING">Pending</option>
-                </select>
+                        photoInput.addEventListener('change', function (event) {
+                            const file = event.target.files[0]; // Вземаме избрания файл
+                            if (file) {
+                                fileNameDisplay.textContent = file.name; // Показва името на файла
 
-                <!-- Category -->
-                <label for="category">Category:</label>
-                <input type="text" id="category" name="category" required placeholder="Enter contest category">
+                                // Проверка дали файлът е изображение
+                                if (file.type.startsWith('image/')) {
+                                    const reader = new FileReader();
+                                    reader.onload = function (e) {
+                                        imagePreview.src = e.target.result; // Задаваме src на избраното изображение
+                                        imagePreview.style.display = 'block'; // Показваме визуализираното изображение
+                                    };
+                                    reader.readAsDataURL(file); // Четем файла като Data URL
+                                } else {
+                                    alert('Please upload a valid image file.');
+                                    imagePreview.style.display = 'none'; // Скриваме изображението при невалиден файл
+                                }
+                            } else {
+                                fileNameDisplay.textContent = "No file chosen"; // Ако няма файл
+                                imagePreview.style.display = 'none'; // Скриваме изображението
+                            }
+                        });
+                    </script>
 
-                <h3>Phase I</h3>
 
-                <!-- Phase I Start Time -->
-                <label for="phaseIStartTime">Phase I Start Time:</label>
-                <input type="datetime-local" id="phaseIStartTime" name="phaseIStartTime" required>
+                    <!-- Contest Start Time -->
+                    <label for="startDate">Contest Start Time:</label>
+                    <input type="datetime-local" id="startDate" name="startDate" required onchange="setContestStartLimits()">
 
-                <!-- Phase I End Time -->
-                <label for="phaseIEndTime">Phase I End Time:</label>
-                <input type="datetime-local" id="phaseIEndTime" name="phaseIEndTime" required>
+                    <!-- Contest End Time -->
+                    <label for="endDate">Contest End Time:</label>
+                    <input type="datetime-local" id="endDate" name="endDate" required>
 
-                <h3>Phase II</h3>
+                    <!-- Status -->
+                    <label for="status">Status:</label>
+                    <select id="status" name="status" required>
+                        <option th:each="status : ${statuses}"
+                                th:value="${status.name}"
+                                th:text="${status.name}">
+                        </option>
+                    </select>
 
-                <!-- Phase II Start Time -->
-                <label for="phaseIIStartTime">Phase II Start Time:</label>
-                <input type="datetime-local" id="phaseIIStartTime" name="phaseIIStartTime" required>
+                    <!-- Category -->
+                    <label for="categorySelect">Category:</label>
+                    <select id="categorySelect" name="categorySelect" onchange="toggleCategoryInput()">
+                        <option value="" selected>Enter new category</option>
+                        <!-- Thymeleaf loop for categories -->
+                        <option th:each="category : ${categories}"
+                                th:value="${category.name}"
+                                th:text="${category.name}">
+                        </option>
+                    </select>
 
-                <!-- Phase II End Time -->
-                <label for="phaseIIEndTime">Phase II End Time:</label>
-                <input type="datetime-local" id="phaseIIEndTime" name="phaseIIEndTime" required>
+                    <!-- Category Input (скрито по подразбиране) -->
+                    <input type="text" id="categoryInput" placeholder="Enter contest category">
 
-                <!-- Submit Button -->
-                <div class="submit-button">
-                    <button type="submit">Create Contest</button>
-                </div>
-            </form>
+                    <!-- Скрито поле, което ще се изпраща с формата -->
+                    <input type="hidden" id="category" name="category">
+
+                    <h3>Phase I</h3>
+
+                    <!-- Phase I Start Time -->
+                    <label for="phaseIStartTime">Phase I Start Time:</label>
+                    <input type="datetime-local" id="phaseIStartTime" name="phaseIStartTime" required onchange="setPhaseIEndLimits()">
+
+                    <!-- Phase I End Time -->
+                    <label for="phaseIEndTime">Phase I End Time:</label>
+                    <input type="datetime-local" id="phaseIEndTime" name="phaseIEndTime" required>
+
+                    <!-- Phase II Start Time -->
+                    <label for="phaseIIStartTime">Phase II Start Time:</label>
+                    <input type="datetime-local" id="phaseIIStartTime" name="phaseIIStartTime" required onchange="setPhaseIIEndLimits()">
+
+                    <!-- Phase II End Time -->
+                    <label for="phaseIIEndTime">Phase II End Time:</label>
+                    <input type="datetime-local" id="phaseIIEndTime" name="phaseIIEndTime" required>
+
+                    <!-- Submit Button -->
+                    <div class="submit-button">
+                        <button type="submit">Create Contest</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 </div>
-</div>  
 </body>
+
+<script>
+    function toggleCategoryInput() {
+        const categorySelect = document.getElementById("categorySelect");
+        const categoryInput = document.getElementById("categoryInput");
+        const categoryHidden = document.getElementById("category");
+
+        if (categorySelect.value !== "") {
+            // Ако потребителят избере категория от списъка
+            categoryInput.style.display = "none";
+            categoryInput.required = false;
+            categoryInput.value = '';
+
+            // Задаваме стойността на скритото поле на избраната категория
+            categoryHidden.value = categorySelect.value;
+        } else {
+            // Ако потребителят иска да въведе нова категория
+            categoryInput.style.display = "block";
+            categoryInput.required = true;
+
+            // Зануляваме стойността на скритото поле, докато не бъде въведена нова категория
+            categoryHidden.value = categoryInput.value;
+        }
+    }
+
+    // При всяка промяна в ръчното поле за категория актуализираме стойността на скритото поле
+    document.getElementById("categoryInput").addEventListener('input', function () {
+        const categoryHidden = document.getElementById("category");
+        categoryHidden.value = this.value;
+    });
+
+    // Когато страницата се зареди, да изпълним функцията
+    window.onload = function () {
+        toggleCategoryInput();
+    };
+
+    // Валидация на формата преди изпращане
+    function validateForm() {
+        const categorySelect = document.getElementById("categorySelect");
+        const categoryInput = document.getElementById("categoryInput");
+
+        if (categorySelect.value === "" && categoryInput.value === "") {
+            alert("Please select a category or enter a new one.");
+            return false; // Блокиране на изпращането на формата
+        }
+
+        return true; // Разрешаване на изпращането на формата
+    }
+</script>
+<script>
+    const fileInput = document.getElementById('photo');
+    const fileName = document.getElementById('file-name');
+
+    fileInput.addEventListener('change', function () {
+        if (this.files && this.files.length > 0) {
+            fileName.textContent = this.files[0].name;
+        }
+    });
+</script>
+
+<script>
+    function setContestStartLimits() {
+        const contestStart = document.getElementById("contestStartTime").value;
+        const contestEnd = document.getElementById("contestEndTime").value;
+        const phaseIStart = document.getElementById("phaseIStartTime");
+        const phaseIEnd = document.getElementById("phaseIEndTime");
+
+        if (contestStart && contestEnd) {
+            const contestStartDate = new Date(contestStart);
+            const contestEndDate = new Date(contestEnd);
+
+            // Минимално време за Phase I Start е 1 ден след Contest Start
+            const minPhaseIStartTime = new Date(contestStartDate);
+            minPhaseIStartTime.setDate(minPhaseIStartTime.getDate() + 1);
+
+            // Максимално време за Phase I Start е 30 дни след Contest Start или Contest End минус 1 ден
+            const maxPhaseIStartTime = new Date(contestStartDate);
+            maxPhaseIStartTime.setDate(maxPhaseIStartTime.getDate() + 30);
+
+            // Ако Contest End е преди максималното време за Phase I Start, то намаляме максимума до Contest End минус 1 ден
+            if (maxPhaseIStartTime > contestEndDate) {
+                maxPhaseIStartTime.setDate(contestEndDate.getDate() - 1);
+            }
+
+            phaseIStart.min = minPhaseIStartTime.toISOString().slice(0, 16);
+            phaseIStart.max = maxPhaseIStartTime.toISOString().slice(0, 16);
+
+            phaseIStart.value = phaseIStart.min; // Задаваме начална стойност за Phase I Start
+            setPhaseIEndLimits(); // Актуализиране на ограничението за Phase I End
+        }
+    }
+
+    function setPhaseIEndLimits() {
+        const phaseIStart = document.getElementById("phaseIStartTime").value;
+        const contestEnd = document.getElementById("contestEndTime").value;
+        const phaseIEnd = document.getElementById("phaseIEndTime");
+        const phaseIIStart = document.getElementById("phaseIIStartTime");
+
+        if (phaseIStart && contestEnd) {
+            const phaseIStartDate = new Date(phaseIStart);
+            const contestEndDate = new Date(contestEnd);
+
+            // Минимално време за Phase I End е 1 ден след Phase I Start
+            const minPhaseIEndTime = new Date(phaseIStartDate);
+            minPhaseIEndTime.setDate(minPhaseIEndTime.getDate() + 1);
+
+            // Максимално време за Phase I End е 30 дни след Phase I Start или Contest End минус 1 ден
+            const maxPhaseIEndTime = new Date(phaseIStartDate);
+            maxPhaseIEndTime.setDate(maxPhaseIEndTime.getDate() + 30);
+
+            if (maxPhaseIEndTime > contestEndDate) {
+                maxPhaseIEndTime.setDate(contestEndDate.getDate() - 1);
+            }
+
+            phaseIEnd.min = minPhaseIEndTime.toISOString().slice(0, 16);
+            phaseIEnd.max = maxPhaseIEndTime.toISOString().slice(0, 16);
+
+            phaseIEnd.value = phaseIEnd.min; // Задаваме начална стойност за Phase I End
+
+            // Актуализиране на ограниченията за Phase II Start
+            phaseIIStart.min = phaseIEnd.min;
+            setPhaseIIEndLimits(); // Актуализиране на ограниченията за Phase II End
+        }
+    }
+
+    function setPhaseIIEndLimits() {
+        const phaseIIStart = document.getElementById("phaseIIStartTime").value;
+        const contestEnd = document.getElementById("contestEndTime").value;
+        const phaseIIEnd = document.getElementById("phaseIIEndTime");
+
+        if (phaseIIStart && contestEnd) {
+            const phaseIIStartDate = new Date(phaseIIStart);
+            const contestEndDate = new Date(contestEnd);
+
+            // Минимално време за Phase II End е 1 час след Phase II Start
+            const minPhaseIIEndTime = new Date(phaseIIStartDate);
+            minPhaseIIEndTime.setHours(minPhaseIIEndTime.getHours() + 1);
+
+            // Максимално време за Phase II End е 1 ден след Phase II Start или Contest End
+            const maxPhaseIIEndTime = new Date(phaseIIStartDate);
+            maxPhaseIIEndTime.setDate(maxPhaseIIEndTime.getDate() + 1);
+
+            if (maxPhaseIIEndTime > contestEndDate) {
+                maxPhaseIIEndTime.setDate(contestEndDate.getDate());
+            }
+
+            phaseIIEnd.min = minPhaseIIEndTime.toISOString().slice(0, 16);
+            phaseIIEnd.max = maxPhaseIIEndTime.toISOString().slice(0, 16);
+
+            phaseIIEnd.value = phaseIIEnd.min; // Задаваме начална стойност за Phase II End
+        }
+    }
+
+    window.onload = function () {
+        setContestStartLimits();
+        setPhaseIEndLimits();
+        setPhaseIIEndLimits();
+    };
+</script>
 </html>

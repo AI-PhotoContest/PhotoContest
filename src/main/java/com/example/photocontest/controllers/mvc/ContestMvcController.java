@@ -3,9 +3,12 @@ package com.example.photocontest.controllers.mvc;
 import com.example.photocontest.filters.ContestFilterOptions;
 import com.example.photocontest.mappers.ContestMapper;
 import com.example.photocontest.mappers.VoteMapper;
+import com.example.photocontest.models.Category;
 import com.example.photocontest.models.Contest;
 import com.example.photocontest.models.User;
 import com.example.photocontest.models.dto.ContestDto;
+import com.example.photocontest.models.enums.ContestStatus;
+import com.example.photocontest.repositories.CategoryRepository;
 import com.example.photocontest.repositories.UserRepository;
 import com.example.photocontest.services.contracts.ContestService;
 import com.example.photocontest.services.contracts.PhotoPostService;
@@ -14,21 +17,28 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.security.Principal;
 import java.util.Arrays;
 import java.util.List;
 
 import static com.example.photocontest.helpers.AuthenticationHelpers.checkPermission;
+import static com.example.photocontest.helpers.AuthenticationHelpers.extractUserFromProvider;
 
 @Controller
 @RequestMapping("/contests")
 public class ContestMvcController {
 
     private final ContestService contestService;
+    private final CategoryRepository categoryRepository;
     private final ContestMapper contestMapper;
     private final UserService userService;
     private final PhotoPostService photoPostService;
@@ -36,11 +46,12 @@ public class ContestMvcController {
     private final VoteMapper voteMapper;
 
     @Autowired
-    public ContestMvcController(ContestService contestService,
-                             ContestMapper contestMapper,
-                             UserService userService, PhotoPostService photoPostService,
-                             UserRepository userRepository, VoteMapper voteMapper) {
+    public ContestMvcController(ContestService contestService, CategoryRepository categoryRepository,
+                                ContestMapper contestMapper,
+                                UserService userService, PhotoPostService photoPostService,
+                                UserRepository userRepository, VoteMapper voteMapper) {
         this.contestService = contestService;
+        this.categoryRepository = categoryRepository;
         this.contestMapper = contestMapper;
         this.userService = userService;
         this.photoPostService = photoPostService;
@@ -85,13 +96,44 @@ public class ContestMvcController {
     }
 
     @GetMapping("/create")
-    public String createContest() {
-//        checkPermission(principal, "ORGANIZER");
+    public String createContest(Authentication authentication,Model model) {
+        User currentUser = extractUserFromProvider(authentication);
+        checkPermission(currentUser, "ORGANIZER");
+        List<Category> categories = categoryRepository.findAll();
 
-//        User loggedUser = userService.findUserByUsername(principal.getName());
-//        Contest contest = contestMapper.fromDto(contestDto, loggedUser);
+        model.addAttribute("contest", new ContestDto());
+        model.addAttribute("statuses", ContestStatus.values());
+        model.addAttribute("categories", categories);
+
 
         return "contest-create";
+    }
+
+    @PostMapping("/create")
+    public String createContest(
+            @Valid @ModelAttribute("contest") ContestDto contestDto,
+            @RequestParam("photo") MultipartFile photoFile,
+            Authentication authentication
+    ) throws IOException {
+        User currentUser = extractUserFromProvider(authentication);
+        checkPermission(currentUser, "ORGANIZER");
+
+        // Обработка на файла
+        if (!photoFile.isEmpty()) {
+            // Генериране на уникално име за файла
+            String filename = System.currentTimeMillis() + "_" + photoFile.getOriginalFilename();
+            String uploadDir = "src/main/resources/static/images/contest-images/";
+
+            Contest contest = contestMapper.fromDto(contestDto, currentUser);
+            // Запазване на файла в директорията
+            Files.copy(photoFile.getInputStream(), Paths.get(uploadDir + filename));
+
+            // Запазване на URL-то за снимката в DTO-то
+            contest.setPhotoUrl(filename);  // Сетва URL като String
+            contestService.createContest(contest);
+        }
+
+        return "redirect:/";
     }
 
 }

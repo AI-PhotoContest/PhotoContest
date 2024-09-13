@@ -45,9 +45,12 @@ public class ContestMapper {
         contest.setPhaseIIStartTime(contestDto.getPhaseIIStartTime());
         contest.setPhaseIIEndTime(contestDto.getPhaseIIEndTime());
 
-        Category category = categoryRepository.findByName(contestDto.getCategory());
+        String cleanedCategory = contestDto.getCategory().replace(",", "").trim();
+
+        Category category = categoryRepository.findByName(cleanedCategory);
         if (category == null) {
             categoryService.createCategory(contestDto.getCategory());
+            category = categoryRepository.findByName(cleanedCategory);
         }
 
         contest.setCategory(category);
