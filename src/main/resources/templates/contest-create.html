@@ -84,13 +84,12 @@
 
 
                     <!-- Contest Start Time -->
-                    <label for="contestStartTime">Contest Start Time:</label>
-                    <input type="datetime-local" id="contestStartTime" name="contestStartTime" required
-                           onchange="setContestStartLimits()">
+                    <label for="startDate">Contest Start Time:</label>
+                    <input type="datetime-local" id="startDate" name="startDate" required onchange="setContestStartLimits()">
 
                     <!-- Contest End Time -->
-                    <label for="contestEndTime">Contest End Time:</label>
-                    <input type="datetime-local" id="contestEndTime" name="contestEndTime" required>
+                    <label for="endDate">Contest End Time:</label>
+                    <input type="datetime-local" id="endDate" name="endDate" required>
 
                     <!-- Status -->
                     <label for="status">Status:</label>
@@ -113,7 +112,7 @@
                     </select>
 
                     <!-- Category Input (скрито по подразбиране) -->
-                    <input type="text" id="categoryInput" placeholder="Enter contest category" style="display: none;">
+                    <input type="text" id="categoryInput" placeholder="Enter contest category">
 
                     <!-- Скрито поле, което ще се изпраща с формата -->
                     <input type="hidden" id="category" name="category">
@@ -122,19 +121,15 @@
 
                     <!-- Phase I Start Time -->
                     <label for="phaseIStartTime">Phase I Start Time:</label>
-                    <input type="datetime-local" id="phaseIStartTime" name="phaseIStartTime" required
-                           onchange="setPhaseIEndLimits()">
+                    <input type="datetime-local" id="phaseIStartTime" name="phaseIStartTime" required onchange="setPhaseIEndLimits()">
 
                     <!-- Phase I End Time -->
                     <label for="phaseIEndTime">Phase I End Time:</label>
                     <input type="datetime-local" id="phaseIEndTime" name="phaseIEndTime" required>
 
-                    <h3>Phase II</h3>
-
                     <!-- Phase II Start Time -->
                     <label for="phaseIIStartTime">Phase II Start Time:</label>
-                    <input type="datetime-local" id="phaseIIStartTime" name="phaseIIStartTime" required
-                           onchange="setPhaseIIEndLimits()">
+                    <input type="datetime-local" id="phaseIIStartTime" name="phaseIIStartTime" required onchange="setPhaseIIEndLimits()">
 
                     <!-- Phase II End Time -->
                     <label for="phaseIIEndTime">Phase II End Time:</label>
