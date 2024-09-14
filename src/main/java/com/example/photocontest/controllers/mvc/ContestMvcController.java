@@ -61,29 +61,28 @@ public class ContestMvcController {
 
     @GetMapping
     public String getAllContests(
-//            @RequestParam(value = "title", required = false) String title,
-//            @RequestParam(value = "category", required = false) String category,
-//            @RequestParam(value = "type", required = false) String type,
-//            @RequestParam(value = "phase", required = false) String phase,
+            @RequestParam(value = "title", required = false) String title,
+            @RequestParam(value = "category", required = false) String category,
+            @RequestParam(value = "type", required = false) String type,
+            @RequestParam(value = "phase", required = false) String phase,
+            Pageable pageable,
             Model model) {
 
-//        ContestFilterOptions filterOptions = new ContestFilterOptions();
-//        filterOptions.setTitle(title);
-//        filterOptions.setCategory(category);
-//        filterOptions.setType(type);
-//        filterOptions.setPhase(phase);
+        ContestFilterOptions filterOptions = new ContestFilterOptions();
+        filterOptions.setTitle(title);
+        filterOptions.setCategory(category);
+        filterOptions.setType(type);
+        filterOptions.setPhase(phase);
 
-//        Page<Contest> contestsPage = contestService.searchContests(filterOptions, pageable);
+        Page<Contest> contestsPage = contestService.searchContests(filterOptions, pageable);
 
-        List<Contest> contests = contestService.getAllContests();
+//        List<Contest> contests = contestService.getAllContests();
 
-
-
-        model.addAttribute("contests", contests);
+        model.addAttribute("contests", contestsPage.getContent());
         model.addAttribute("active", "contests");
-//        model.addAttribute("currentPage", pageable.getPageNumber());
-//        model.addAttribute("totalPages", contests.getTotalPages());
-//        model.addAttribute("pageSize", pageable.getPageSize());
+        model.addAttribute("currentPage", pageable.getPageNumber());
+        model.addAttribute("totalPages", contestsPage.getTotalPages());
+        model.addAttribute("pageSize", pageable.getPageSize());
 
         return "contests-page";
     }

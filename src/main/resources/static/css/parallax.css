@@ -2,6 +2,46 @@
     position: relative;
 }
 
+.filter-bar {
+    background-color: #f9f9f9;
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.filter-group {
+    display: flex;
+    flex-direction: column;
+    margin: 0 10px;
+}
+
+.filter-group label {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.filter-group input, .filter-group select {
+    padding: 5px;
+    width: 200px;
+}
+
+.filter-group button {
+    padding: 10px 15px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 3px;
+}
+
+.filter-group button:hover {
+    background-color: #0056b3;
+}
+
 .overlay-text {
     position: absolute;
     top: 50%;
