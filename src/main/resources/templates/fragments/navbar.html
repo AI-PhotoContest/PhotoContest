@@ -1,145 +1,55 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <nav id="navBar" class="nav-full-width" th:fragment="navBarMenu (pageTitle)">
-<div class="container">
-    <a href="#." class="logo-small"></a>
-    <ul id="menu" class="nav-menu list-unstyled pull-left sel">
-        <li th:classappend="${active == 'home'} ? 'sel' : ''" ><a th:href="@{/home}">home</a>
-        </li>
+    <div class="container">
+        <a href="#." class="logo-small"></a>
+        <ul id="menu" class="nav-menu list-unstyled pull-left sel">
+            <!-- Home -->
+            <li th:classappend="${active == 'home'} ? 'sel' : ''"><a th:href="@{/home}">home</a></li>
 
-        <li class="mega-dropdown " th:classappend="${active == 'contests'} ? 'sel' : ''"><a th:href="@{/contests}">contests</a>
-            <div class="mega-menu">
-                <div class="mega-menu-inner">
+            <!-- Contests -->
+            <li th:classappend="${active == 'contests'} ? 'sel' : ''">
+                <a th:href="@{/contests}">Contests</a>
+                <ul class="sub-menu">
+                    <!-- Contests Submenu -->
+                    <li th:if="${loggedInUser != null}"><a th:href="@{/profile/edit}">Create Contest</a></li>
+                    <li><a th:href="@{/profile/stats}">Categories</a></li>
+                    <li><a th:href="@{/auth/logout}">Photo Posts</a></li>
+                </ul>
+            </li>
 
-                    <div class="subnav">
-                        <a class="subnavi img-effect" th:href="@{/contests}">
-                            <img src="https://picsum.photos/314/252?random=4-3" alt="" />
-                        </a>
-                        <span class="title">View all contests</span>
-                        <p>Here you can view all open contests available on our page</p>
+            <!-- My Posts -->
+            <li th:if="${loggedInUser != null}">
+                <a th:href="@{/profile/photo-posts}">My Photo Posts</a>
+            </li>
 
-                    </div>
+            <!-- Login / Profile -->
+            <li th:if="${loggedInUser == null}" th:classappend="${active == 'login'} ? 'sel' : ''">
+                <a th:href="@{/auth/login}" >Login</a>
+            </li>
 
-                    <div class="subnav last" th:if="${#authorization.expression('hasRole(''ROLE_ORGANIZER'')')}">
-                        <a class="subnavi img-effect" th:href="@{/contests/create}">
-                            <img src="https://picsum.photos/314/252?random=2-3" alt="" />
-                        </a>
-                        <span class="title">Create contest </span>
-                        <p style="color: red">(ORGANIZERS ONLY)</p>
-                        <p>Create a new challenge for photo junkies</p>
-
-                    </div>
-
-<!--                    <div class="subnav last">-->
-<!--                        <a class="subnavi img-effect" href="travel.html">-->
-<!--                            <img src="/images/fashion-nav3.jpg" alt="" />-->
-<!--                        </a>-->
-<!--                        <span class="title">classic fashion</span>-->
-<!--                        <p>It looks like slowly but surely Google's Nexus devices are returning back to stock in the.</p>-->
-
-<!--                    </div>-->
-
-
-
-
-                    <div class="clear"></div>
-                </div>
-                <div class="clear"></div>
-            </div>
-        </li>
-
-        <li class="mega-dropdown"><a href="#.">categories</a>
-            <div class="mega-menu">
-                <div class="mega-menu-inner">
-
-                    <div class="subnav">
-                        <a class="subnavi img-effect" href="people.html">
-                            <img src="/images/photography-nav1.jpg" alt="" />
-                        </a>
-                        <span class="title">latest fashion</span>
-                        <p>It looks like slowly but surely Google's Nexus devices are returning back to stock in the.</p>
-
-                    </div>
-
-                    <div class="subnav">
-                        <a class="subnavi img-effect" href="video-detail.html">
-                            <img src="/images/photography-nav2.jpg" alt="" />
-                        </a>
-                        <span class="title">latest full width</span>
-                        <p>It looks like slowly but surely Google's Nexus devices are returning back to stock in the.</p>
-
-                    </div>
-
-                    <div class="subnav last">
-                        <a class="subnavi img-effect" href="travel.html">
-                            <img src="/images/photography-nav3.jpg" alt="" />
-                        </a>
-                        <span class="title">classic fashion</span>
-                        <p>It looks like slowly but surely Google's Nexus devices are returning back to stock in the.</p>
-
-                    </div>
-
-                    <div class="clear"></div>
-                </div>
-                <div class="clear"></div>
-            </div>
-        </li>
-
-        <li class="mega-dropdown "><a href="video.html">videos</a></li>
-
-        <li ><a href="#.">shortcodes</a>
-            <ul class="sub-menu">
-                <li><a href="typography.html">typography</a></li>
-                <li><a href="image-styles.html">image styles</a></li>
-                <li><a href="message-box.html">message box</a></li>
-                <li><a href="columns.html">columns</a></li>
-                <li><a href="tabs.html">tabs & toggles</a></li>
-                <li><a href="404.html">404 error</a></li>
-            </ul>
-        </li>
-
-        <li th:if="${loggedInUser == null}" th:classappend="${active == 'login'} ? 'sel' : ''">
-            <a th:href="@{/auth/login}" style="color: #1ab188;">Login</a>
-        </li>
-
-        <li th:if="${loggedInUser != null}">
-            <a th:href="@{/auth/logout}" style="color: #1ab188;">Logout</a>
-        </li>
-
-
-
-
-    </ul>
-    <div class="menu">
-        <section class="main">
-            <div class="wrapper-demo">
-                <div tabindex="1" class="wrapper-dropdown-5" id="dd2">
-                    <ul class="dropdown">
-                        <li><a href="index.html">home</a></li>
-                        <li><a href="video.html">videos</a></li>
-                        <li><a href="typography.html">typography</a></li>
-                        <li><a href="contact-us.html">contact us</a></li>
-                        <li><a href="image-styles.html">image styles</a></li>
-                        <li><a href="message-box.html">message box</a></li>
-                        <li><a href="columns.html">columns</a></li>
-                        <li><a href="tabs.html">tabs</a></li>
-                        <li class="last"><a href="404.html" class="last">404 error</a></li>
-                    </ul>
-                </div>
-            </div>
-        </section>
+            <li th:if="${loggedInUser != null}">
+                <a th:href="@{/profile}" style="color: #1ab188;">Profile</a>
+                <ul class="sub-menu">
+                    <!-- Profile Submenu -->
+                    <li><a th:href="@{/profile/edit}">Edit Account</a></li>
+                    <li><a th:href="@{/profile/stats}">My Stats</a></li>
+                    <li><a th:href="@{/auth/logout}">Logout</a></li>
+                </ul>
+            </li>
+        </ul>
     </div>
-</div>
-<div class="container">
-    <div class="social">
-        <a class="fb" href="#."><i class="fa fa-facebook"></i></a>
-        <a class="fb" href="#."><i class="fa fa-twitter"></i></a>
-        <a class="fb" href="#."><i class="fa fa-pinterest"></i></a>
-        <a class="fb" href="#."><i class="fa fa-google-plus"></i></a>
-        <a class="fb" href="#."><i class="fa fa-linkedin"></i></a>
-        <div class="clear"></div>
+
+    <div class="container">
+        <div class="social">
+            <a class="fb" href="#."><i class="fa fa-facebook"></i></a>
+            <a class="fb" href="#."><i class="fa fa-twitter"></i></a>
+            <a class="fb" href="#."><i class="fa fa-pinterest"></i></a>
+            <a class="fb" href="#."><i class="fa fa-google-plus"></i></a>
+            <a class="fb" href="#."><i class="fa fa-linkedin"></i></a>
+            <div class="clear"></div>
+        </div>
     </div>
-</div>
-<div class="clear"></div>
+    <div class="clear"></div>
 </nav>
 </html>
