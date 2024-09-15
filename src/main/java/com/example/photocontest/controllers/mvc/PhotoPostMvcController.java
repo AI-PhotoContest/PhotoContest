@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("/photo-posts")
-public class PhotoPostMvcController {
+public class PhotoPostMvcController extends BaseController{
 
     private final PhotoPostService photoPostService;
     private final PhotoPostMapper mapper;

@@ -35,7 +35,7 @@ import static com.example.photocontest.helpers.AuthenticationHelpers.extractUser
 
 @Controller
 @RequestMapping("/contests")
-public class ContestMvcController {
+public class ContestMvcController extends BaseController {
 
     private final ContestService contestService;
     private final CategoryRepository categoryRepository;
