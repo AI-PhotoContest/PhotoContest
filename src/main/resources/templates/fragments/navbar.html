@@ -20,7 +20,7 @@
 
             <!-- My Posts -->
             <li th:if="${loggedInUser != null}">
-                <a th:href="@{/profile/photo-posts}">My Photo Posts</a>
+                <a th:href="@{/user/posts}">My Photo Posts</a>
             </li>
 
             <!-- Login / Profile -->
@@ -29,7 +29,7 @@
             </li>
 
             <li th:if="${loggedInUser != null}">
-                <a th:href="@{/profile}" style="color: #1ab188;">Profile</a>
+                <a th:href="@{/user/}" style="color: #1ab188;">Profile</a>
                 <ul class="sub-menu">
                     <!-- Profile Submenu -->
                     <li><a th:href="@{/profile/edit}">Edit Account</a></li>
