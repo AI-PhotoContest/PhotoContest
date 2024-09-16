@@ -32,7 +32,8 @@ public class PhotoPostDto {
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate takenDate;
 
-    private Set<String> tags; // вместо Set<Tag>
+    private Set<Tag> tags; // вместо Set<Tag>
+    private String tagsInput;
 
     private String cameraModel;
     private String lensMake;

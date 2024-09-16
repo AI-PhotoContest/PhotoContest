@@ -1,6 +1,5 @@
 package com.example.photocontest.controllers.mvc;
 
-import com.example.photocontest.mappers.PhotoPostMapper;
 import com.example.photocontest.models.PhotoPost;
 import com.example.photocontest.models.User;
 import com.example.photocontest.models.dto.UserDto;
@@ -53,7 +52,7 @@ public class UserMvcController extends BaseController{
         List<PhotoPost> userPosts = photoPostService.findByCreatedBy(user);
         model.addAttribute("user", user);
         model.addAttribute("photoPosts", userPosts);
-        return "my-photo-posts-page";
+        return "my-posts";
     }
 
 }

@@ -13,8 +13,7 @@
                 <ul class="sub-menu">
                     <!-- Contests Submenu -->
                     <li th:if="${loggedInUser != null}"><a th:href="@{/contests/create}">Create Contest</a></li>
-                    <li><a th:href="@{//photo-posts/categories}">Categories</a></li>
-                    <li><a th:href="@{/photo-posts}">Photo Posts</a></li>
+                    <li th:if="${loggedInUser != null}"><a th:href="@{/contests/judge}">Judge Contests</a></li>
                 </ul>
             </li>
 

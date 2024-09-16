@@ -1,0 +1,134 @@
+<!doctype html>
+<html>
+<link rel="stylesheet" href="../static/css/photo-post.css">
+<head th:replace="~{fragments/head.html :: main-head}">
+    <title>Create Photo Post</title>
+</head>
+
+<body style="padding-top: 136px;">
+<header id="header">
+    <div id="searchBarAndLogo" th:replace="~{fragments/SearchBarAndLogo.html :: searchBarAndLogo}"></div>
+    <nav th:replace="~{fragments/Navbar.html :: navBarMenu ('login')}"></nav>
+</header>
+<div class="clear"></div>
+<div class="container">
+    <div id="content">
+        <div class="photo-post-header">
+            <h1>Create New Photo Post</h1>
+        </div>
+
+        <div class="photo-post-container">
+            <div class="photo-post-details">
+                <h2>Photo Information</h2>
+                <form action="/photos/create" method="POST" enctype="multipart/form-data" class="create-photo-post-form">
+
+                    <!-- Title -->
+                    <label for="title">Title:</label>
+                    <input type="text" id="title" name="title" required minlength="3" maxlength="64" placeholder="Enter post title">
+
+                    <!-- Description -->
+                    <label for="description">Description:</label>
+                    <textarea id="description" name="description" rows="4" required minlength="32" maxlength="8192"
+                              placeholder="Enter description of the photo"></textarea>
+
+                    <!-- Photo Upload -->
+                    <div class="upload-photo-wrapper">
+                        <label for="photo" class="upload-label">Upload Photo:</label>
+                        <input type="file" id="photo" name="photo" accept="image/*" required class="upload-input">
+                        <div class="upload-placeholder">
+                            <span id="file-name">No file chosen</span>
+                            <button type="button" class="upload-btn" onclick="document.getElementById('photo').click()">Choose File</button>
+                        </div>
+                    </div>
+
+                    <!-- Preview Image Container -->
+                    <div class="image-preview-wrapper">
+                        <img id="image-preview" class="image-preview" alt="Image Preview" style="display: none;">
+                    </div>
+
+                    <!-- Taken Date -->
+                    <label for="takenDate">Date Taken:</label>
+                    <input type="date" id="takenDate" name="takenDate" required>
+
+                    <!-- Tags -->
+                    <label for="tags">Tags:</label>
+                    <input type="text" id="tags" name="tags" placeholder="Enter tags, separated by commas">
+
+                    <!-- Camera Details -->
+                    <h3>Camera Details</h3>
+
+                    <!-- Camera Model -->
+                    <label for="cameraModel">Camera Model:</label>
+                    <input type="text" id="cameraModel" name="cameraModel" placeholder="Enter camera model">
+
+                    <!-- Lens Make -->
+                    <label for="lensMake">Lens Make:</label>
+                    <input type="text" id="lensMake" name="lensMake" placeholder="Enter lens make">
+
+                    <!-- Lens Model -->
+                    <label for="lensModel">Lens Model:</label>
+                    <input type="text" id="lensModel" name="lensModel" placeholder="Enter lens model">
+
+                    <!-- Shutter Speed -->
+                    <label for="shutterSpeed">Shutter Speed:</label>
+                    <input type="text" id="shutterSpeed" name="shutterSpeed" placeholder="Enter shutter speed">
+
+                    <!-- Aperture -->
+                    <label for="aperture">Aperture:</label>
+                    <input type="text" id="aperture" name="aperture" placeholder="Enter aperture (e.g., f/2.8)">
+
+                    <!-- Focal Length -->
+                    <label for="focalLength">Focal Length:</label>
+                    <input type="text" id="focalLength" name="focalLength" placeholder="Enter focal length (e.g., 50mm)">
+
+                    <!-- ISO -->
+                    <label for="iso">ISO:</label>
+                    <input type="text" id="iso" name="iso" placeholder="Enter ISO value">
+
+                    <!-- Location -->
+                    <label for="location">Location:</label>
+                    <input type="text" id="location" name="location" placeholder="Enter photo location">
+
+                    <!-- Retouching Applied -->
+                    <label for="retouchingApplied">Retouching Applied:</label>
+                    <input type="text" id="retouchingApplied" name="retouchingApplied" placeholder="Enter retouching details, if any">
+
+                    <!-- Submit Button -->
+                    <div class="submit-button">
+                        <button type="submit">Create Photo Post</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const photoInput = document.getElementById('photo');
+    const fileNameDisplay = document.getElementById('file-name');
+    const imagePreview = document.getElementById('image-preview');
+
+    photoInput.addEventListener('change', function (event) {
+        const file = event.target.files[0];
+        if (file) {
+            fileNameDisplay.textContent = file.name;
+            if (file.type.startsWith('image/')) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    imagePreview.src = e.target.result;
+                    imagePreview.style.display = 'block';
+                };
+                reader.readAsDataURL(file);
+            } else {
+                alert('Please upload a valid image file.');
+                imagePreview.style.display = 'none';
+            }
+        } else {
+            fileNameDisplay.textContent = "No file chosen";
+            imagePreview.style.display = 'none';
+        }
+    });
+</script>
+
+</body>
+</html>
