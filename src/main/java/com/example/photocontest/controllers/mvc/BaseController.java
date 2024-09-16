@@ -1,7 +1,7 @@
 package com.example.photocontest.controllers.mvc;
 
 import com.example.photocontest.models.User;
-import com.example.photocontest.security.CustomOAuth2User;
+import com.example.photocontest.models.enums.RoleType;
 import com.example.photocontest.services.contracts.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
@@ -22,7 +22,6 @@ public class BaseController {
     public User getLoggedInUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-        // Проверка дали authentication е null, не е анонимен и е аутентициран
         if (authentication != null && !(authentication instanceof AnonymousAuthenticationToken) && authentication.isAuthenticated()) {
             if (authentication.getPrincipal() instanceof UserDetails) {
                 return convertToUser((UserDetails) authentication.getPrincipal());
@@ -30,28 +29,44 @@ public class BaseController {
                 return convertToUser(((OAuth2User) authentication.getPrincipal()).getAttribute("email").toString());
             }
         }
-        return null; // Връщаме null, ако не е логнат
+        return null;
+    }
+
+    @ModelAttribute("isOrganizer")
+    public boolean isOrganizer() {
+        User loggedInUser = getLoggedInUser();
+        if (loggedInUser != null) {
+            return loggedInUser.getRoles().stream()
+                    .anyMatch(role -> role.getName() == RoleType.ORGANIZER);
+        }
+        return false;
+    }
+
+    @ModelAttribute("isAdmin")
+    public boolean isAdmin() {
+        User loggedInUser = getLoggedInUser();
+        if (loggedInUser != null) {
+            return loggedInUser.getRoles().stream()
+                    .anyMatch(role -> role.getName() == RoleType.ADMIN);
+        }
+        return false;
     }
 
     private User convertToUser(UserDetails userDetails) {
-        // Създайте нов User и задайте необходимите полета на базата на UserDetails
+
         User user = new User();
         user = userService.findUserByUsername(userDetails.getUsername());
 
-        // Добавете другите полета, които са необходими
         return user;
     }
 
     private User convertToUser(String email) {
-        // Създайте нов User и задайте необходимите полета на базата на UserDetails
+
         User user = new User();
         user = userService.findUserByEmail(email);
 
-        // Добавете другите полета, които са необходими
         return user;
     }
-
-//    @ModelAttribute("categories")
 
 
 }

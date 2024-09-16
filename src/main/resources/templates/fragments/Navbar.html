@@ -12,7 +12,7 @@
                 <a>Contest</a>
                 <ul class="sub-menu">
                     <!-- Contests Submenu -->
-                    <li th:if="${loggedInUser != null}">
+                    <li th:if="${isOrganizer}">
                         <a th:href="@{/contests/create}">Create Contest</a>
                     </li>
                     <li>
