@@ -82,14 +82,14 @@ public class ContestMvcController extends BaseController {
         model.addAttribute("totalPages", contestsPage.getTotalPages());
         model.addAttribute("pageSize", pageable.getPageSize());
 
-        return "contests-page";
+        return "contest-pages/contests-page";
     }
 
     @GetMapping("/{id}")
     public String getContestById(@PathVariable int id, Model model) {
         Contest contest = contestService.getContestById(id);
         model.addAttribute("contest", contest);
-        return "contest-details";
+        return "contest-pages/contest-details";
     }
 
     @GetMapping("/create")
@@ -103,7 +103,7 @@ public class ContestMvcController extends BaseController {
         model.addAttribute("categories", categories);
 
 
-        return "contest-create";
+        return "contest-pages/contest-create";
     }
 
     @PostMapping("/create")

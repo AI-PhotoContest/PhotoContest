@@ -40,19 +40,19 @@ public class PhotoPostMvcController extends BaseController{
     @GetMapping("/{id}")
     public String getPhotoPostById(@PathVariable int id) {
         PhotoPost photoPost = photoPostService.getPhotoPostById(id);
-        return "photo-posts";
+        return "post-pages/photo-posts";
     }
 
     @GetMapping("/create")
     public String showPostCreatePage(Model model) {
         model.addAttribute("post", new PhotoPostDto());
-        return "photo-post-create";
+        return "post-pages/photo-post-create";
     }
 
     @PostMapping("/create")
     public String createPost(@Valid @ModelAttribute("post") PhotoPostDto photoPostDto, BindingResult result, Model model) {
         if (result.hasErrors()) {
-            return "photo-post-create";
+            return "post-pages/photo-post-create";
         }
         photoPostDto.setTags(convertStringToTags(photoPostDto.getTagsInput()));
 
@@ -63,7 +63,7 @@ public class PhotoPostMvcController extends BaseController{
         } catch (EntityNotFoundException e) {
             model.addAttribute("statusCode", HttpStatus.NOT_FOUND.getReasonPhrase());
             model.addAttribute("error", e.getMessage());
-            return "photo-post-create";
+            return "post-pages/photo-post-create";
         }
     }
 

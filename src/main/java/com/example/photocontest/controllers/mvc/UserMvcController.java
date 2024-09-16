@@ -43,7 +43,7 @@ public class UserMvcController extends BaseController{
         model.addAttribute("user", user);
         List<PhotoPost> userPosts = photoPostService.findByCreatedBy(user);
         model.addAttribute("userPostsSize", userPosts.size());
-        return "user-page";
+        return "user-pages/user-page";
     }
 
     @GetMapping("/user/posts")
@@ -52,7 +52,9 @@ public class UserMvcController extends BaseController{
         List<PhotoPost> userPosts = photoPostService.findByCreatedBy(user);
         model.addAttribute("user", user);
         model.addAttribute("photoPosts", userPosts);
-        return "my-posts";
+        return "post-pages/photo-posts";
     }
+
+    @GetMapping("")
 
 }

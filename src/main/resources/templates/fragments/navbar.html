@@ -12,14 +12,23 @@
                 <a th:href="@{/contests}">Contests</a>
                 <ul class="sub-menu">
                     <!-- Contests Submenu -->
-                    <li th:if="${loggedInUser != null}"><a th:href="@{/contests/create}">Create Contest</a></li>
-                    <li th:if="${loggedInUser != null}"><a th:href="@{/contests/judge}">Judge Contests</a></li>
+                    <li th:if="${loggedInUser != null}">
+                        <a th:href="@{/contests/create}">Create Contest</a>
+                    </li>
+                    <li th:if="${loggedInUser != null}"><
+                        a th:href="@{/contests/judge}">Judge Contests</a>
+                    </li>
                 </ul>
             </li>
 
             <!-- My Posts -->
             <li th:if="${loggedInUser != null}">
-                <a th:href="@{/user/posts}">My Photo Posts</a>
+                <a>Photo Posts</a>
+                <ul class="sub-menu">
+                    <li>
+                        <a th:href="@{/user/posts}">My Photo Posts</a>
+                    </li>
+                </ul>
             </li>
 
             <!-- Login / Profile -->
