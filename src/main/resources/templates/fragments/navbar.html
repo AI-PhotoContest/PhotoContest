@@ -5,18 +5,18 @@
         <a href="#." class="logo-small"></a>
         <ul id="menu" class="nav-menu list-unstyled pull-left sel">
             <!-- Home -->
-            <li th:classappend="${active == 'home'} ? 'sel' : ''"><a th:href="@{/home}">home</a></li>
+            <li th:classappend="${active == 'home'} ? 'sel' : ''"><a th:href="@{/home}">Home</a></li>
 
             <!-- Contests -->
             <li th:classappend="${active == 'contests'} ? 'sel' : ''">
-                <a th:href="@{/contests}">Contests</a>
+                <a>Contest</a>
                 <ul class="sub-menu">
                     <!-- Contests Submenu -->
                     <li th:if="${loggedInUser != null}">
                         <a th:href="@{/contests/create}">Create Contest</a>
                     </li>
-                    <li th:if="${loggedInUser != null}"><
-                        a th:href="@{/contests/judge}">Judge Contests</a>
+                    <li>
+                        <a th:href="@{/contests}">All Contests</a>
                     </li>
                 </ul>
             </li>
@@ -30,7 +30,8 @@
                     </li>
                 </ul>
             </li>
-
+        </ul>
+        <ul class="nav-menu list-unstyled pull-right sel">
             <!-- Login / Profile -->
             <li th:if="${loggedInUser == null}" th:classappend="${active == 'login'} ? 'sel' : ''">
                 <a th:href="@{/auth/login}" style="color: #1ab188;">Login</a>

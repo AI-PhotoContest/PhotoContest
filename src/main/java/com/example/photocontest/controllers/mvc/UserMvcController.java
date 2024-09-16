@@ -59,4 +59,9 @@ public class UserMvcController extends BaseController{
         return "user-pages/user-stats";
     }
 
+    @GetMapping("/judge")
+    public String getJudgePage() {
+        return "user-pages/judge-page";
+    }
+
 }
