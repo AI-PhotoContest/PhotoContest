@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Controller
 @RequestMapping("/auth")
-public class AuthenticationController {
+public class AuthenticationController extends BaseController {
 
     private final UserMapper mapper;
 

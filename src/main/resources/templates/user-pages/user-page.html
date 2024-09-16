@@ -1,10 +1,201 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>iMag99 | contact us</title>
+
+    <link href="../static/css/imag99.css" rel="stylesheet" type="text/css" th:href="@{/css/imag99.css}" />
+    <link href="../static/css/camera.css" rel="stylesheet" type="text/css" th:href="@{/css/camera.css}" />
+    <link href="../static/fonts/stylesheet.css" rel="stylesheet" type="text/css" th:href="@{/fonts/stylesheet.css}" />
+    <link href="../static/css/font-awesome.min.css" rel="stylesheet" type="text/css" th:href="@{/css/font-awesome.min.css}" />
+    <link href="../static/css/font-awesome.min.css" rel="stylesheet" type="text/css" th:href="@{/css/font-awesome.min.css}" />
+    <link rel="stylesheet" type="text/css" href="../static/css/drop-down.css" th:href="@{/css/drop-down.css}" />
+    <link href="../static/css/demostyles.css" rel="stylesheet" type="text/css" th:href="@{/css/demostyles.css}" />
+    <link type="text/css" href="../static/css/styles.css" rel="stylesheet" th:href="@{/css/styles.css}" />
+    <link type="text/css" href="../static/css/responsive.css" rel="stylesheet" th:href="@{/css/responsive.css}" />
+    <link type="text/css" href="../static/css/style.css" rel="stylesheet" th:href="@{/css/style.css}" />
+
+    <script type="text/javascript" src="../static/js/jquery.js" th:src="@{/js/jquery.js}"></script>
+    <script type="text/javascript" src="../static/js/waltzerjs.js" th:src="@{/js/waltzerjs.js}"></script>
+    <script type="text/javascript">
+        // Your inline JavaScript code here
+
+        //stickey header
+        jQuery(function($) {
+            $(window).scroll(function() {
+                var scroll = jQuery(window).scrollTop();
+                if (scroll >= 40) {
+                    $("#wrap").addClass("smallheader");
+                }
+                else {
+                    $("#wrap").removeClass("smallheader");
+                }
+            });
+        });
+        $(document).ready(function() {
+
+            $('#carousel').waltzer({scroll:1});
+            $('#clients').waltzer({scroll:1});
+
+        });
+
+    </script>
+    <script src="/js/jquery.tabbedcontent.min.js" th:src="@{/js/jquery.tabbedcontent.min.js}"></script>
+      <style>
+          * {
+              margin: 0;
+              padding: 0;
+              box-sizing: border-box;
+          }
+
+          body {
+              font-family: Arial, sans-serif;
+              background-color: #f4f4f4;
+              color: #333;
+              padding-top: 136px; /* Adjust this if the header height changes */
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              min-height: 100vh; /* Ensures vertical centering */
+          }
+
+          /* Profile Container */
+          .user-profile-container {
+              width: 80%;
+              max-width: 1200px;
+              margin: 30px auto; /* Center the container horizontally */
+              background: white;
+              padding: 20px;
+              border-radius: 8px;
+              box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+          }
+
+          /* Profile Header */
+          .profile-header {
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              margin-bottom: 20px;
+          }
+
+          .profile-header-content {
+              display: flex;
+              align-items: center;
+          }
+
+          .user-avatar {
+              margin-right: 20px;
+          }
+
+          .user-avatar img {
+              width: 150px;
+              height: 150px;
+              border-radius: 50%;
+              border: 3px solid #ccc;
+          }
+
+          .user-info h1 {
+              font-size: 28px;
+              margin-bottom: 10px;
+          }
+
+          .user-info .location {
+              font-size: 16px;
+              color: #777;
+              margin-bottom: 15px;
+          }
+
+          .stat-item span {
+              display: block;
+              font-size: 14px;
+              color: #777;
+          }
+
+          .stat-item strong {
+              font-size: 20px;
+              color: #333;
+          }
+
+          /* User Gallery Section */
+          .user-gallery-section {
+              margin-top: 30px;
+          }
+
+          .gallery-heading {
+              font-size: 24px;
+              margin-bottom: 20px;
+              border-bottom: 2px solid #e4e4e4;
+              padding-bottom: 10px;
+          }
+
+          .photo-grid {
+              display: grid;
+              grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+              gap: 20px;
+          }
+
+          .photo-item {
+              background-color: #eee;
+              padding: 10px;
+              border-radius: 8px;
+              transition: transform 0.3s ease;
+          }
+
+          .photo-item img {
+              width: 100%;
+              border-radius: 8px;
+          }
+
+          .photo-item:hover {
+              transform: scale(1.05);
+          }
+
+      </style>
+  </head>
+
+  <body>
+  <header id="header">
+      <div id="searchBarAndLogo" th:replace="~{fragments/searchBarAndLogo.html :: searchBarAndLogo}"></div>
+      <nav th:replace="~{fragments/navbar.html :: navBarMenu ('login')}"></nav>
+  </header>
+
+  <!-- Main User Profile Section -->
+<div class="user-profile-container">
+    <!-- Profile Header -->
+    <div class="profile-header">
+        <div class="profile-header-content">
+            <div class="user-avatar">
+                <img src="https://via.placeholder.com/150" alt="User Avatar" />
+            </div>
+            <div class="user-info">
+                <h1 th:text="${user.username}">Username</h1>
+                <div>
+                    <h2>Name</h2>
+                    <a th:text="${user.firstName + ' ' + user.lastName}">Full Name</a>
+                </div>
+                <div>
+                    <h2>Email</h2>
+                    <a th:href="'mailto:' + ${user.email}" th:text="${user.email}">user@example.com</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- User Gallery Section -->
+    <div class="user-gallery-section">
+        <h2 class="gallery-heading">John Doe's Photos</h2>
+        <div class="photo-grid">
+            <div class="photo-item">
+                <img src="https://via.placeholder.com/200" alt="User Photo" />
+            </div>
+            <div class="photo-item">
+                <img src="https://via.placeholder.com/200" alt="User Photo" />
+            </div>
+            <!-- Add more photos as needed -->
+        </div>
+    </div>
+</div>
 </body>
 </html>
