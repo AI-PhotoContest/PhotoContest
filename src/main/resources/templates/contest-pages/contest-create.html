@@ -7,142 +7,150 @@
 </head>
 
 <body style="padding-top: 136px;">
+<div id="wrap">
 
-<header id="header">
-    <div id="searchBarAndLogo" th:replace="~{fragments/SearchBarAndLogo.html :: searchBarAndLogo}"></div>
-    <nav th:replace="~{fragments/Navbar.html :: navBarMenu ('login')}">
-    </nav>
+    <header id="header">
+        <div id="searchBarAndLogo" th:replace="~{fragments/SearchBarAndLogo.html :: searchBarAndLogo}"></div>
+        <nav th:replace="~{fragments/Navbar.html :: navBarMenu ('login')}">
+        </nav>
 
-</header>
-<div class="clear"></div>
-<div class="container">
-    <div id="content">
-        <div class="contest-header">
-            <h1>Create New Contest</h1>
-        </div>
+    </header>
+    <div class="clear"></div>
+    <div class="container">
+        <div id="content">
+            <div class="contest-header">
+                <h1>Create New Contest</h1>
+            </div>
 
-        <div class="contest-container">
-            <div class="contest-details">
-                <h2>Contest Information</h2>
-                <form action="/contests/create" method="POST" enctype="multipart/form-data" class="create-contest-form">
+            <div class="contest-container">
+                <div class="contest-details">
+                    <h2>Contest Information</h2>
+                    <form action="/contests/create" method="POST" enctype="multipart/form-data"
+                          class="create-contest-form">
 
-                    <!-- Title -->
-                    <label for="title">Title:</label>
-                    <input type="text" id="title" name="title" required placeholder="Enter contest title">
+                        <!-- Title -->
+                        <label for="title">Title:</label>
+                        <input type="text" id="title" name="title" required placeholder="Enter contest title">
 
-                    <!-- Description -->
-                    <label for="description">Description:</label>
-                    <textarea id="description" name="description" rows="4" required
-                              placeholder="Enter contest description"></textarea>
+                        <!-- Description -->
+                        <label for="description">Description:</label>
+                        <textarea id="description" name="description" rows="4" required
+                                  placeholder="Enter contest description"></textarea>
 
-                    <!-- Photo Upload -->
-                    <div class="upload-photo-wrapper">
-                        <label for="photo" class="upload-label">Upload Photo:</label>
-                        <input type="file" id="photo" name="photo" accept="image/*" required class="upload-input">
-                        <div class="upload-placeholder">
-                            <span id="file-name">No file chosen</span>
-                            <button type="button" class="upload-btn" onclick="document.getElementById('photo').click()">
-                                Choose File
-                            </button>
+                        <!-- Photo Upload -->
+                        <div class="upload-photo-wrapper">
+                            <label for="photo" class="upload-label">Upload Photo:</label>
+                            <input type="file" id="photo" name="photo" accept="image/*" required class="upload-input">
+                            <div class="upload-placeholder">
+                                <span id="file-name">No file chosen</span>
+                                <button type="button" class="upload-btn"
+                                        onclick="document.getElementById('photo').click()">
+                                    Choose File
+                                </button>
+                            </div>
                         </div>
-                    </div>
 
-                    <!-- Preview Image Container -->
-                    <div class="image-preview-wrapper">
-                        <img id="image-preview" class="image-preview" alt="Image Preview" style="display: none;">
-                    </div>
+                        <!-- Preview Image Container -->
+                        <div class="image-preview-wrapper">
+                            <img id="image-preview" class="image-preview" alt="Image Preview" style="display: none;">
+                        </div>
 
-                    <script>
-                        const photoInput = document.getElementById('photo');
-                        const fileNameDisplay = document.getElementById('file-name');
-                        const imagePreview = document.getElementById('image-preview');
+                        <script>
+                            const photoInput = document.getElementById('photo');
+                            const fileNameDisplay = document.getElementById('file-name');
+                            const imagePreview = document.getElementById('image-preview');
 
-                        photoInput.addEventListener('change', function (event) {
-                            const file = event.target.files[0]; // Вземаме избрания файл
-                            if (file) {
-                                fileNameDisplay.textContent = file.name; // Показва името на файла
+                            photoInput.addEventListener('change', function (event) {
+                                const file = event.target.files[0]; // Вземаме избрания файл
+                                if (file) {
+                                    fileNameDisplay.textContent = file.name; // Показва името на файла
 
-                                // Проверка дали файлът е изображение
-                                if (file.type.startsWith('image/')) {
-                                    const reader = new FileReader();
-                                    reader.onload = function (e) {
-                                        imagePreview.src = e.target.result; // Задаваме src на избраното изображение
-                                        imagePreview.style.display = 'block'; // Показваме визуализираното изображение
-                                    };
-                                    reader.readAsDataURL(file); // Четем файла като Data URL
+                                    // Проверка дали файлът е изображение
+                                    if (file.type.startsWith('image/')) {
+                                        const reader = new FileReader();
+                                        reader.onload = function (e) {
+                                            imagePreview.src = e.target.result; // Задаваме src на избраното изображение
+                                            imagePreview.style.display = 'block'; // Показваме визуализираното изображение
+                                        };
+                                        reader.readAsDataURL(file); // Четем файла като Data URL
+                                    } else {
+                                        alert('Please upload a valid image file.');
+                                        imagePreview.style.display = 'none'; // Скриваме изображението при невалиден файл
+                                    }
                                 } else {
-                                    alert('Please upload a valid image file.');
-                                    imagePreview.style.display = 'none'; // Скриваме изображението при невалиден файл
+                                    fileNameDisplay.textContent = "No file chosen"; // Ако няма файл
+                                    imagePreview.style.display = 'none'; // Скриваме изображението
                                 }
-                            } else {
-                                fileNameDisplay.textContent = "No file chosen"; // Ако няма файл
-                                imagePreview.style.display = 'none'; // Скриваме изображението
-                            }
-                        });
-                    </script>
+                            });
+                        </script>
 
 
-                    <!-- Contest Start Time -->
-                    <label for="startDate">Contest Start Time:</label>
-                    <input type="datetime-local" id="startDate" name="startDate" required onchange="setContestStartLimits()">
+                        <!-- Contest Start Time -->
+                        <label for="startDate">Contest Start Time:</label>
+                        <input type="datetime-local" id="startDate" name="startDate" required
+                               onchange="setContestStartLimits()">
 
-                    <!-- Contest End Time -->
-                    <label for="endDate">Contest End Time:</label>
-                    <input type="datetime-local" id="endDate" name="endDate" required>
+                        <!-- Contest End Time -->
+                        <label for="endDate">Contest End Time:</label>
+                        <input type="datetime-local" id="endDate" name="endDate" required>
 
-                    <!-- Status -->
-                    <label for="status">Status:</label>
-                    <select id="status" name="status" required>
-                        <option th:each="status : ${statuses}"
-                                th:value="${status.name}"
-                                th:text="${status.name}">
-                        </option>
-                    </select>
+                        <!-- Status -->
+                        <label for="status">Status:</label>
+                        <select id="status" name="status" required>
+                            <option th:each="status : ${statuses}"
+                                    th:value="${status.name}"
+                                    th:text="${status.name}">
+                            </option>
+                        </select>
 
-                    <!-- Category -->
-                    <label for="categorySelect">Category:</label>
-                    <select id="categorySelect" name="categorySelect" onchange="toggleCategoryInput()">
-                        <option value="" selected>Enter new category</option>
-                        <!-- Thymeleaf loop for categories -->
-                        <option th:each="category : ${categories}"
-                                th:value="${category.name}"
-                                th:text="${category.name}">
-                        </option>
-                    </select>
+                        <!-- Category -->
+                        <label for="categorySelect">Category:</label>
+                        <select id="categorySelect" name="categorySelect" onchange="toggleCategoryInput()">
+                            <option value="" selected>Enter new category</option>
+                            <!-- Thymeleaf loop for categories -->
+                            <option th:each="category : ${categories}"
+                                    th:value="${category.name}"
+                                    th:text="${category.name}">
+                            </option>
+                        </select>
 
-                    <!-- Category Input (скрито по подразбиране) -->
-                    <input type="text" id="categoryInput" placeholder="Enter contest category">
+                        <!-- Category Input (скрито по подразбиране) -->
+                        <input type="text" id="categoryInput" placeholder="Enter contest category">
 
-                    <!-- Скрито поле, което ще се изпраща с формата -->
-                    <input type="hidden" id="category" name="category">
+                        <!-- Скрито поле, което ще се изпраща с формата -->
+                        <input type="hidden" id="category" name="category">
 
-                    <h3>Phase I</h3>
+                        <h3>Phase I</h3>
 
-                    <!-- Phase I Start Time -->
-                    <label for="phaseIStartTime">Phase I Start Time:</label>
-                    <input type="datetime-local" id="phaseIStartTime" name="phaseIStartTime" required onchange="setPhaseIEndLimits()">
+                        <!-- Phase I Start Time -->
+                        <label for="phaseIStartTime">Phase I Start Time:</label>
+                        <input type="datetime-local" id="phaseIStartTime" name="phaseIStartTime" required
+                               onchange="setPhaseIEndLimits()">
 
-                    <!-- Phase I End Time -->
-                    <label for="phaseIEndTime">Phase I End Time:</label>
-                    <input type="datetime-local" id="phaseIEndTime" name="phaseIEndTime" required>
+                        <!-- Phase I End Time -->
+                        <label for="phaseIEndTime">Phase I End Time:</label>
+                        <input type="datetime-local" id="phaseIEndTime" name="phaseIEndTime" required>
 
-                    <!-- Phase II Start Time -->
-                    <label for="phaseIIStartTime">Phase II Start Time:</label>
-                    <input type="datetime-local" id="phaseIIStartTime" name="phaseIIStartTime" required onchange="setPhaseIIEndLimits()">
+                        <!-- Phase II Start Time -->
+                        <label for="phaseIIStartTime">Phase II Start Time:</label>
+                        <input type="datetime-local" id="phaseIIStartTime" name="phaseIIStartTime" required
+                               onchange="setPhaseIIEndLimits()">
 
-                    <!-- Phase II End Time -->
-                    <label for="phaseIIEndTime">Phase II End Time:</label>
-                    <input type="datetime-local" id="phaseIIEndTime" name="phaseIIEndTime" required>
+                        <!-- Phase II End Time -->
+                        <label for="phaseIIEndTime">Phase II End Time:</label>
+                        <input type="datetime-local" id="phaseIIEndTime" name="phaseIIEndTime" required>
 
-                    <!-- Submit Button -->
-                    <div class="submit-button">
-                        <button type="submit">Create Contest</button>
-                    </div>
-                </form>
+                        <!-- Submit Button -->
+                        <div class="submit-button">
+                            <button type="submit">Create Contest</button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
 </div>
+<div class="clear"></div>
 </body>
 
 <script>
@@ -375,4 +383,5 @@
         }
     });
 </script>
+
 </html>
