@@ -43,8 +43,8 @@ public class ContestServiceImpl implements ContestService {
                 .and(ContestSpecifications.hasCategory(filterOptions.getCategory()))
                 .and(ContestSpecifications.hasType(filterOptions.getType()))
                 .and(ContestSpecifications.hasPhase(filterOptions.getPhase()));
-
-        return contestRepository.findAll(spec, pageable);
+            Page<Contest> contests = contestRepository.findAll(spec, pageable);
+        return contests;
     }
 
     @Override

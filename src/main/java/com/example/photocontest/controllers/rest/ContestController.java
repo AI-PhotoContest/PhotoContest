@@ -181,7 +181,7 @@ public class ContestController {
      * The sorting is managed through the `Sort` object passed to the `findAll` method, allowing for dynamic and flexible query execution.
      */
     @GetMapping
-    public String getAllContests(
+    public Page<Contest> getAllContests(
             @RequestParam(value = "title", required = false) String title,
             @RequestParam(value = "category", required = false) String category,
             @RequestParam(value = "type", required = false) String type,
@@ -194,8 +194,7 @@ public class ContestController {
         filterOptions.setType(type);
         filterOptions.setPhase(phase);
 
-//        return contestService.searchContests(filterOptions, pageable);
-        return "contests-page";
+        return contestService.searchContests(filterOptions, pageable);
     }
 
     @GetMapping("/{id}")

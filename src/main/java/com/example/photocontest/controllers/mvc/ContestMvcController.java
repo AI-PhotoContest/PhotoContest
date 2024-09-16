@@ -72,10 +72,13 @@ public class ContestMvcController extends BaseController {
         filterOptions.setType(type);
         filterOptions.setPhase(phase);
 
+        List<Category> categories = categoryRepository.findAll();
         Page<Contest> contestsPage = contestService.searchContests(filterOptions, pageable);
 
 //        List<Contest> contests = contestService.getAllContests();
 
+        model.addAttribute("category", category);
+        model.addAttribute("categories", categories);
         model.addAttribute("contests", contestsPage.getContent());
         model.addAttribute("active", "contests");
         model.addAttribute("currentPage", pageable.getPageNumber());
