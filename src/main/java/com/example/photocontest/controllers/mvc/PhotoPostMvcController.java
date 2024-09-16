@@ -4,7 +4,6 @@ import com.example.photocontest.exceptions.EntityNotFoundException;
 import com.example.photocontest.mappers.PhotoPostMapper;
 import com.example.photocontest.models.PhotoPost;
 import com.example.photocontest.models.Tag;
-import com.example.photocontest.models.User;
 import com.example.photocontest.models.dto.PhotoPostDto;
 import com.example.photocontest.services.contracts.PhotoPostService;
 import com.example.photocontest.services.contracts.UserService;
@@ -16,9 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import java.security.Principal;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -49,13 +46,13 @@ public class PhotoPostMvcController extends BaseController{
     @GetMapping("/create")
     public String showPostCreatePage(Model model) {
         model.addAttribute("post", new PhotoPostDto());
-        return "create-post-page";
+        return "photo-post-create";
     }
 
     @PostMapping("/create")
     public String createPost(@Valid @ModelAttribute("post") PhotoPostDto photoPostDto, BindingResult result, Model model) {
         if (result.hasErrors()) {
-            return "create-post-page";
+            return "photo-post-create";
         }
         photoPostDto.setTags(convertStringToTags(photoPostDto.getTagsInput()));
 
@@ -66,7 +63,7 @@ public class PhotoPostMvcController extends BaseController{
         } catch (EntityNotFoundException e) {
             model.addAttribute("statusCode", HttpStatus.NOT_FOUND.getReasonPhrase());
             model.addAttribute("error", e.getMessage());
-            return "create-post-page";
+            return "photo-post-create";
         }
     }
 

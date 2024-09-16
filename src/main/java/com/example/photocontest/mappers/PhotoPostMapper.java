@@ -4,6 +4,9 @@ import com.example.photocontest.models.CameraDetails;
 import com.example.photocontest.models.PhotoPost;
 import com.example.photocontest.models.Tag;
 import com.example.photocontest.models.dto.PhotoPostDto;
+import com.example.photocontest.services.contracts.PhotoPostService;
+import com.example.photocontest.services.contracts.TagService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
@@ -13,12 +16,22 @@ import java.util.stream.Collectors;
 @Component
 public class PhotoPostMapper {
 
+    private final PhotoPostService postService;
+    private final TagService tagService;
+
+    @Autowired
+    public PhotoPostMapper(PhotoPostService postService, TagService tagService) {
+
+        this.postService = postService;
+        this.tagService = tagService;
+    }
+
     public PhotoPostDto toDto(PhotoPost photoPost) {
         PhotoPostDto dto = new PhotoPostDto();
         dto.setTitle(photoPost.getTitle());
         dto.setDescription(photoPost.getDescription());
         dto.setPhoto(photoPost.getImage());
-        dto.setTags(photoPost.getTags().stream().map(Tag::getName).collect(Collectors.toSet())); // Преобразуване на таговете в Set от String
+       // dto.setTags(photoPost.getTags().stream().map(Tag::getName).collect(Collectors.toSet())); // Преобразуване на таговете в Set от String
         dto.setCameraModel(photoPost.getCameraDetails().getCameraModel());
         dto.setLensMake(photoPost.getCameraDetails().getLensMake());
         dto.setLensModel(photoPost.getCameraDetails().getLensModel());
@@ -37,7 +50,8 @@ public class PhotoPostMapper {
         photoPost.setTitle(dto.getTitle());
         photoPost.setDescription(dto.getDescription());
         photoPost.setImage(dto.getPhoto());
-        photoPost.setTags(mapTags(dto.getTags()));
+        Set<Tag> tags = tagService.findOrCreateTags(dto.getTags());
+        photoPost.setTags(tags);
         photoPost.setCameraDetails(mapCameraDetails(dto, photoPost));
         photoPost.setLocation(dto.getLocation());
         photoPost.setRetouchingApplied(dto.getRetouchingApplied());
