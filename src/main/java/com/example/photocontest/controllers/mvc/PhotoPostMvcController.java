@@ -31,6 +31,7 @@ public class PhotoPostMvcController extends BaseController{
     @Autowired
     public PhotoPostMvcController(PhotoPostService photoPostService, PhotoPostMapper mapper, UserService userService, PhotoPostMapper photoPostMapper) {
 
+        super();
         this.photoPostService = photoPostService;
         this.mapper = mapper;
         this.userService = userService;

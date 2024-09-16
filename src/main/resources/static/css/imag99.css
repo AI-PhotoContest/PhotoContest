@@ -181,6 +181,93 @@ a img {
 .nav-menu li:hover ul li:hover ul li ul{ display:none;}
 .nav-menu li:hover ul li:hover ul li:hover ul{ display:block;}
 
+/* Подменюто с категориите - цял екранен прозорец */
+.categories-menu {
+	display: none;
+	position: absolute;
+	top: 100%; /* Показване под навигацията */
+	left: 50%; /* Центриране спрямо ширината на страницата */
+	transform: translateX(-80%) scale(0.5); /* Намаляваме размера на 50% и центрираме по хоризонтала */
+	transform-origin: top center; /* Задаваме началната точка за трансформация да е центърът отгоре */
+	width: auto; /* Заема цялата ширина */
+	background-color: #f9f9f9;
+	padding: 20px;
+	box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+	z-index: 10;
+	grid-template-columns: repeat(5, 1fr); /* Винаги 10 категории на ред */
+	gap: 0; /* Премахваме разстоянието между елементите */
+	justify-content: center;
+	border-radius: 0; /* Без заоблени краища, за цял екранен ефект */
+	transition: all 0.3s ease-in-out;
+}
+
+/* Показване на подменюто при hover */
+.navigation-menu-item:hover .categories-menu {
+	display: grid;
+	opacity: 1;
+	visibility: visible;
+	transform: translateX(-50%) scale(1); /* Връщаме мащаба до 100% при ховър */
+	transform-origin: top center;
+}
+
+/* Категориите като единен блок */
+.categories-menu li {
+	list-style: none;
+	text-align: center;
+	border: 1px solid #e0e0e0; /* Лек контур между категориите */
+	transition: transform 0.3s ease;
+}
+
+.categories-menu li:hover {
+	transform: scale(1.05);
+	background-color: #fff;
+}
+
+/* Стилове за изображенията в категориите */
+.category-image {
+	width: 100%; /* Заема цялата ширина на елемента */
+	height: 120px;
+	object-fit: cover;
+	border-bottom: 1px solid #e0e0e0; /* Лек контур под изображението */
+	transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.category-image:hover {
+	transform: scale(1.05);
+	box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* Текстът под изображението */
+.categories-menu span {
+	display: block;
+	padding: 10px;
+	font-size: 1rem;
+	font-weight: bold;
+	color: #333;
+	background-color: #f0f0f0; /* Лек фон за контраст на текста */
+	transition: background-color 0.3s ease;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.categories-menu li:hover span {
+	background-color: #e0e0e0; /* По-тъмен фон при ховър */
+}
+
+/* Анимация при показване и скриване на подменюто */
+.categories-menu {
+	opacity: 0;
+	visibility: hidden;
+	transform: translateX(-50%) scale(0.5);
+	transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
+}
+
+.navigation-menu-item:hover .categories-menu {
+	opacity: 1;
+	visibility: visible;
+	transform: translateY(0);
+}
 
 .nav-full-width .social{background: none repeat scroll 0 0 #484848;float: right; padding: 15px 16px 10px;}
 .nav-full-width .social a.fb{ color:#fff; margin: 0 8px;

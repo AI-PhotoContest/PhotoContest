@@ -33,6 +33,21 @@
                     </li>
                 </ul>
             </li>
+            <li th:classappend="${active == 'categories'} ? 'sel' : ''" class="navigation-menu-item">
+                <a class="navigation-menu-trigger">
+                    Categories
+                    <span class="chevron-icon">▼</span>
+                </a>
+                <ul class="sub-menu categories-menu navigation-menu-content">
+                    <!-- Thymeleaf цикъл за показване на категориите и техните снимки -->
+                    <li th:each="category : ${categories}">
+                        <a th:href="@{/contests(category=${category.name})}">
+                            <img th:src="'/AI_category_generated_images/' + ${category.image}" alt="Category Image" class="category-image">
+                            <span th:text="${category.name}"></span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
         </ul>
         <ul class="nav-menu list-unstyled pull-right sel">
             <!-- Login / Profile -->
@@ -50,6 +65,7 @@
                 </ul>
             </li>
         </ul>
+
     </div>
 
     <div class="container">

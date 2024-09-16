@@ -1,7 +1,9 @@
 package com.example.photocontest.controllers.mvc;
 
+import com.example.photocontest.models.Category;
 import com.example.photocontest.models.User;
 import com.example.photocontest.models.enums.RoleType;
+import com.example.photocontest.services.contracts.CategoryService;
 import com.example.photocontest.services.contracts.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
@@ -12,11 +14,16 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
+import java.util.List;
+
 @Controller
 public class BaseController {
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private CategoryService categoryService;
+
 
     @ModelAttribute("loggedInUser")
     public User getLoggedInUser() {
@@ -51,6 +58,12 @@ public class BaseController {
         }
         return false;
     }
+
+    @ModelAttribute("categories")
+    public List<Category> getAllCategories() {
+        return categoryService.getAllCategories();
+    }
+
 
     private User convertToUser(UserDetails userDetails) {
 
