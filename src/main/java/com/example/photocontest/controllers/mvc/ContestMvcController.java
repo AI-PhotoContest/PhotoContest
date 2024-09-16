@@ -133,4 +133,9 @@ public class ContestMvcController extends BaseController {
         return "redirect:/";
     }
 
+    @GetMapping("/rewards")
+    public String getRewardsPage() {
+        return "contest-pages/rewards-page";
+    }
+
 }
