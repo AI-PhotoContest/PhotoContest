@@ -28,16 +28,15 @@ public class UserMvcController extends BaseController{
         this.photoPostService = photoPostService;
     }
 
-    @GetMapping("/users")
     public String getUsers(Model model, UserDto userDto) {
         List<User> users = userService.getAll();
         model.addAttribute("active", "users");
         model.addAttribute("users", users);
         model.addAttribute("user", userDto);
-        return "users-page";
+        return "user-pages/user-page";
     }
 
-    @GetMapping("/users/{id}")
+    @GetMapping("/{id}")
     public String getUser(Model model, @ModelAttribute("id") int id) {
         User user = userService.findUserById(id);
         model.addAttribute("user", user);
@@ -55,6 +54,9 @@ public class UserMvcController extends BaseController{
         return "post-pages/photo-posts";
     }
 
-    @GetMapping("")
+    @GetMapping("/stats")
+    public String getUserStats() {
+        return "user-pages/user-stats";
+    }
 
 }
