@@ -18,6 +18,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -145,11 +146,6 @@ public class ContestMvc extends BaseController {
         return "contest-pages/rewards-page";
     }
 
-    @GetMapping("/judge")
-    public String judgeContest() {
-        return "contest-pages/judge-page";
-    }
-
 
     @GetMapping("/{contestId}/add-photo-post")
     public String showPostCreatePage(@PathVariable int contestId,Model model) {
@@ -216,10 +212,25 @@ public class ContestMvc extends BaseController {
                 })
                 .collect(Collectors.toSet());
     }
-    //TODO judge
-//    @PostMapping("/judge")
-//    public String judgeContest(){
-//        return "contest-pages/judge-page";
-//    }
+
+    // View to display photo posts to be judged
+    @GetMapping("/{contestId}/judge-photo-post/{postId}")
+    public String judgePhotoPost(@PathVariable("contestId") int contestId,
+                                 @PathVariable("postId") int postId,
+                                 Model model) {
+        PhotoPost post = photoPostService.getPhotoPostById(postId);
+        model.addAttribute("post", post);
+        return "contest-pages/judge-page"; // Thymeleaf template for judging
+    }
+
+    // Method to handle rating submission
+    @PostMapping("/{contestId}/judge-photo-post/{postId}/rate")
+    public String ratePhotoPost(@PathVariable("contestId") int contestId,
+                                @PathVariable("postId") int postId,
+                                @RequestParam("score") int score,
+                                @AuthenticationPrincipal User judge) {
+        photoPostService.ratePhotoPost(postId, score, judge);
+        return "redirect:/contests/" + contestId;
+    }
 
 }

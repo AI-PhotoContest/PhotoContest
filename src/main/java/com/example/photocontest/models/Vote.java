@@ -2,9 +2,12 @@ package com.example.photocontest.models;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
-@Data
+@Setter
+@Getter
 @Table(name = "votes")
 public class Vote {
 
@@ -23,7 +26,7 @@ public class Vote {
     private boolean categoryMismatch;
 
     //This is made, so we can have a default score if no one judges this photo post
-    private int score = 3;
+    private int score;
 
     private String comment;
 

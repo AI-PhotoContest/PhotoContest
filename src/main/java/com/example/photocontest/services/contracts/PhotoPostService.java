@@ -31,4 +31,6 @@ public interface PhotoPostService  {
     List<PhotoPost> getRecentPosts();
 
     List<PhotoPost> findByContest(int id);
+
+    void ratePhotoPost(int postId, int score, User judge);
 }

@@ -75,4 +75,15 @@ public class PhotoPost {
         }
         votes.add(vote);
     }
+
+    // Method to calculate average score or set default score
+    public double getAverageScore() {
+        if (votes == null || votes.isEmpty()) {
+            return 3; // Default score if no ratings
+        }
+        return votes.stream()
+                .mapToInt(Vote::getScore)
+                .average()
+                .orElse(3);
+    }
 }
