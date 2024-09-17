@@ -29,4 +29,6 @@ public interface PhotoPostService  {
     PhotoPost updatePhotoPost(PhotoPost photoPost);
 
     List<PhotoPost> getRecentPosts();
+
+    List<PhotoPost> findByContest(int id);
 }

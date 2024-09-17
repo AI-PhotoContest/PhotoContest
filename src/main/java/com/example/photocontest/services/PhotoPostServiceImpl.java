@@ -132,6 +132,11 @@ public class PhotoPostServiceImpl implements PhotoPostService {
         return photoPostRepository.findTop10ByOrderByUploadDateDesc();
     }
 
+    @Override
+    public List<PhotoPost> findByContest(int id) {
+        return photoPostRepository.getPhotoPostsByContestId(id);
+    }
+
 
     private Specification<PhotoPost> hasUsername(String username) {
         return (root, query, cb) -> cb.like(cb.lower(root.get("createdBy").get("username")), "%" + username.toLowerCase() + "%");

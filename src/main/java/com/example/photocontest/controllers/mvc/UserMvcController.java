@@ -41,7 +41,7 @@ public class UserMvcController extends BaseController{
         User user = userService.findUserById(id);
         model.addAttribute("user", user);
         List<PhotoPost> userPosts = photoPostService.findByCreatedBy(user);
-        model.addAttribute("userPostsSize", userPosts.size());
+        model.addAttribute("posts", userPosts);
         return "user-pages/user-page";
     }
 

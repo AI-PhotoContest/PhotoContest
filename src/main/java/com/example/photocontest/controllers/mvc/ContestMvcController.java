@@ -5,6 +5,7 @@ import com.example.photocontest.mappers.ContestMapper;
 import com.example.photocontest.mappers.VoteMapper;
 import com.example.photocontest.models.Category;
 import com.example.photocontest.models.Contest;
+import com.example.photocontest.models.PhotoPost;
 import com.example.photocontest.models.User;
 import com.example.photocontest.models.dto.ContestDto;
 import com.example.photocontest.models.enums.ContestStatus;
@@ -89,7 +90,10 @@ public class ContestMvcController extends BaseController {
     @GetMapping("/{id}")
     public String getContestById(@PathVariable int id, Model model) {
         Contest contest = contestService.getContestById(id);
+        List<PhotoPost> contestPosts = photoPostService.findByContest(contest.getId());
+        model.addAttribute("posts", contestPosts);
         model.addAttribute("contest", contest);
+
         return "contest-pages/contest-details";
     }
 
