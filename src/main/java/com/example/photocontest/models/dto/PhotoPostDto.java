@@ -26,15 +26,15 @@ public class PhotoPostDto {
     @Size(min = 32, max = 8192 , message = "Content must be between 32 and 8192 characters long!")
     private String description;
 
-    @NotEmpty(message = "Photo cannot be empty!")
+//    @NotEmpty(message = "Photo cannot be empty!")
     private String photo;
 
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private LocalDate takenDate;
 
     private Set<Tag> tags; // вместо Set<Tag>
     private String tagsInput;
 
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    private LocalDate takenDate;
     private String cameraModel;
     private String lensMake;
     private String lensModel;
@@ -42,10 +42,10 @@ public class PhotoPostDto {
     private String aperture;
     private String focalLength;
     private String iso;
-    private String retouchingApplied;
 
     private String location;
 
+    private String retouchingApplied;
 
 
 }

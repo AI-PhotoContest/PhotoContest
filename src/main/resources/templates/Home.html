@@ -112,8 +112,8 @@
 
             <div class="camera_wrap camera_emboss pattern_1" id="camera_wrap_4">
                 <div th:each="photoPost : ${randomPhotoPosts}"
-                     th:data-thumb="'/photo-posts-images/' + ${photoPost.getImage()}"
-                     th:data-src="'/photo-posts-images/' + ${photoPost.getImage()}">
+                     th:data-thumb="'/images/photo-posts-images/' + ${photoPost.getImage()}"
+                     th:data-src="'/images/photo-posts-images/' + ${photoPost.getImage()}">
                     <div class="container">
                         <div class="banner-detail fadeFromBottom">
                             <h1 th:text="${photoPost.title}">Photo Title</h1>

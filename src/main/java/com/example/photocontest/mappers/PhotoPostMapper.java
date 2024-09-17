@@ -31,7 +31,7 @@ public class PhotoPostMapper {
         dto.setTitle(photoPost.getTitle());
         dto.setDescription(photoPost.getDescription());
         dto.setPhoto(photoPost.getImage());
-       // dto.setTags(photoPost.getTags().stream().map(Tag::getName).collect(Collectors.toSet())); // Преобразуване на таговете в Set от String
+        // dto.setTags(photoPost.getTags().stream().map(Tag::getName).collect(Collectors.toSet())); // Преобразуване на таговете в Set от String
         dto.setCameraModel(photoPost.getCameraDetails().getCameraModel());
         dto.setLensMake(photoPost.getCameraDetails().getLensMake());
         dto.setLensModel(photoPost.getCameraDetails().getLensModel());
@@ -50,8 +50,7 @@ public class PhotoPostMapper {
         photoPost.setTitle(dto.getTitle());
         photoPost.setDescription(dto.getDescription());
         photoPost.setImage(dto.getPhoto());
-        Set<Tag> tags = tagService.findOrCreateTags(dto.getTags());
-        photoPost.setTags(tags);
+        photoPost.setTags(dto.getTags());
         photoPost.setCameraDetails(mapCameraDetails(dto, photoPost));
         photoPost.setLocation(dto.getLocation());
         photoPost.setRetouchingApplied(dto.getRetouchingApplied());

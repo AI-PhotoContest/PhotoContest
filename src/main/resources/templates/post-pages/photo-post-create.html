@@ -26,86 +26,98 @@
     <div class="clear"></div>
 
     <!-- Форма за качване на снимка -->
-    <div class="upload-container">
-        <!-- Преглед на снимка -->
-        <div class="image-preview">
-            <img src="https://picsum.photos/500/700?random=4-3" alt="Profile photo">
-        </div>
+    <form th:action="@{/photo-posts/create}" method="post" enctype="multipart/form-data">
+        <div class="upload-container">
 
-        <!-- Форма за попълване на детайли -->
-        <div class="upload-details">
-            <!-- Discoverability слайдер -->
-            <div class="discoverability">
-                <label for="discoverability">Discoverability</label>
-                <input type="range" id="discoverability" name="discoverability" min="0" max="100" value="0" disabled>
+            <!-- Преглед на снимка -->
+            <div class="image-preview">
+                <img id="preview-image" src="https://picsum.photos/500/700?random=4-3" alt="Profile photo">
             </div>
 
-            <!-- Поле за заглавие -->
-            <div class="input-field" aria-required="true">
-                <label for="title">Title</label>
-                <input type="text" id="title" name="title" placeholder="Enter title">
-            </div>
-
-            <!-- Поле за описание -->
-            <div class="input-field" aria-required="true">
-                <label for="description">Description</label>
-                <textarea id="description" name="description" placeholder="Add a description and hashtags"></textarea>
-            </div>
-
-            <!-- Контейнер за тагове -->
-            <div class="tag-container">
-                <p>Choose up to three category tags or add your own:</p>
-                <div class="tags">
-                    <span th:each="tag : ${tags}" class="tag"
-                          th:data-value="${tag.name}" th:text="'#' + ${tag.name}">
-                    </span>
+            <!-- Форма за попълване на детайли -->
+            <div class="upload-details">
+                <!-- Discoverability слайдер -->
+                <div class="discoverability">
+                    <label for="discoverability">Discoverability</label>
+                    <input type="range" id="discoverability" name="discoverability" min="0" max="100" value="0" disabled>
                 </div>
-                <input type="text" id="tags" name="tags" placeholder="Enter tags" readonly>
+
+                <!-- Поле за качване на снимка -->
+                <div class="input-field">
+                    <label for="photo">Upload Photo</label>
+                    <input type="file" id="photo" name="photoImg" accept="image/*">
+                </div>
+
+                <!-- Поле за заглавие -->
+                <div class="input-field" aria-required="true">
+                    <label for="title">Title</label>
+                    <input type="text" id="title" name="title" placeholder="Enter title">
+                </div>
+
+                <!-- Поле за описание -->
+                <div class="input-field" aria-required="true">
+                    <label for="description">Description</label>
+                    <textarea id="description" name="description" placeholder="Add a description and hashtags"></textarea>
+                </div>
+
+                <!-- Контейнер за тагове -->
+                <div class="tag-container">
+                    <p>Choose up to three category tags or add your own:</p>
+                    <div class="tags">
+                        <span th:each="tag : ${tags}" class="tag"
+                              th:data-value="${tag.name}" th:text="'#' + ${tag.name}">
+                        </span>
+                    </div>
+                    <input type="text" id="tags" name="tagsInput" placeholder="Enter tags" readonly>
+                </div>
+
+                <!-- Google Maps за избор на местоположение -->
+                <div class="input-field">
+                    <label for="location">Location</label>
+                    <div id="map" style="height: 400px;"></div>
+                    <p>City: <span id="city"></span>, Country: <span id="country"></span></p>
+                    <input type="hidden" id="city-hidden" name="city">
+                    <input type="hidden" id="country-hidden" name="country">
+
+                    <input type="hidden" id="location-hidden" name="location">
+                    <button id="remove-location" onclick="removeMarker()">Remove location</button>
+                </div>
+
+                <!-- Допълнителни полета за информацията от DTO -->
+                <div class="additional-info-container">
+                    <label for="takenDate">Date Taken</label>
+                    <input type="date" id="takenDate" name="takenDate">
+
+                    <label for="cameraModel">Camera Model</label>
+                    <input type="text" id="cameraModel" name="cameraModel" placeholder="Enter camera model">
+
+                    <label for="lensMake">Lens Make</label>
+                    <input type="text" id="lensMake" name="lensMake" placeholder="Enter lens make">
+
+                    <label for="lensModel">Lens Model</label>
+                    <input type="text" id="lensModel" name="lensModel" placeholder="Enter lens model">
+
+                    <label for="shutterSpeed">Shutter Speed</label>
+                    <input type="text" id="shutterSpeed" name="shutterSpeed" placeholder="Enter shutter speed">
+
+                    <label for="aperture">Aperture</label>
+                    <input type="text" id="aperture" name="aperture" placeholder="Enter aperture (e.g. f/1.8)">
+
+                    <label for="focalLength">Focal Length</label>
+                    <input type="text" id="focalLength" name="focalLength" placeholder="Enter focal length (e.g. 50mm)">
+
+                    <label for="iso">ISO</label>
+                    <input type="text" id="iso" name="iso" placeholder="Enter ISO (e.g. 100)">
+
+                    <label for="retouchingApplied">Retouching Applied</label>
+                    <input type="text" id="retouchingApplied" name="retouchingApplied" placeholder="Was retouching applied?">
+                </div>
+
+                <!-- Бутон за завършване на качването -->
+                <button class="upload-btn" type="submit">Finish upload</button>
             </div>
-
-            <!-- Google Maps за избор на местоположение -->
-            <div class="input-field">
-                <label for="location">Location</label>
-                <div id="map" style="height: 400px;"></div>
-                <p>City: <span id="city"></span>, Country: <span id="country"></span></p>
-                <button id="remove-location" onclick="removeMarker()">Remove location</button>
-            </div>
-
-            <!-- Допълнителни полета за информацията от DTO -->
-            <div class="additional-info-container">
-                <label for="takenDate">Date Taken</label>
-                <input type="date" id="takenDate" name="takenDate">
-
-                <label for="cameraModel">Camera Model</label>
-                <input type="text" id="cameraModel" name="cameraModel" placeholder="Enter camera model">
-
-                <label for="lensMake">Lens Make</label>
-                <input type="text" id="lensMake" name="lensMake" placeholder="Enter lens make">
-
-                <label for="lensModel">Lens Model</label>
-                <input type="text" id="lensModel" name="lensModel" placeholder="Enter lens model">
-
-                <label for="shutterSpeed">Shutter Speed</label>
-                <input type="text" id="shutterSpeed" name="shutterSpeed" placeholder="Enter shutter speed">
-
-                <label for="aperture">Aperture</label>
-                <input type="text" id="aperture" name="aperture" placeholder="Enter aperture (e.g. f/1.8)">
-
-                <label for="focalLength">Focal Length</label>
-                <input type="text" id="focalLength" name="focalLength" placeholder="Enter focal length (e.g. 50mm)">
-
-                <label for="iso">ISO</label>
-                <input type="text" id="iso" name="iso" placeholder="Enter ISO (e.g. 100)">
-
-                <label for="retouchingApplied">Retouching Applied</label>
-                <input type="text" id="retouchingApplied" name="retouchingApplied" placeholder="Was retouching applied?">
-            </div>
-
-
-            <!-- Бутон за завършване на качването -->
-            <button class="upload-btn">Finish upload</button>
         </div>
-    </div>
+    </form>
 
     <!-- Скрипт за управление на слайдера Discoverability и Google Maps -->
     <script>
@@ -185,13 +197,14 @@
                 updateLocationInfo(location);
             }
 
-            // Обновяване на информацията за града и държавата
+            // Обновяване на информацията за града и държавата и попълване на комбинираното поле
             function updateLocationInfo(location) {
                 geocoder.geocode({ location: location }, (results, status) => {
                     if (status === "OK") {
                         if (results[0]) {
                             const countryElement = document.getElementById("country");
                             const cityElement = document.getElementById("city");
+                            const locationHidden = document.getElementById("location-hidden");
 
                             let country = "Not found";
                             let city = "Not found";
@@ -206,8 +219,12 @@
                                 }
                             });
 
+                            // Попълваме HTML елементите
                             countryElement.textContent = country;
                             cityElement.textContent = city;
+
+                            // Комбинираме града и държавата в един стринг и го попълваме в скритото поле
+                            locationHidden.value = `${city}, ${country}`;
                         }
                     } else {
                         console.error("Geocoder failed due to: " + status);
@@ -215,7 +232,7 @@
                 });
             }
 
-            // Премахване на маркер
+            // Премахване на маркер и изчистване на полето за локация
             function removeMarker() {
                 if (marker) {
                     marker.setMap(null);
@@ -223,6 +240,7 @@
                 }
                 document.getElementById("city").textContent = "";
                 document.getElementById("country").textContent = "";
+                document.getElementById("location-hidden").value = "";
             }
 
             // Инициализация на картата след зареждане на страницата
@@ -253,6 +271,26 @@
                     // Обновяване на полето за тагове
                     selectedTagsInput.value = selectedTags.join(', ');
                 });
+            });
+        });
+
+
+        // Преглед на избраната снимка
+        document.addEventListener('DOMContentLoaded', function () {
+            const photoInput = document.getElementById('photo');
+            const previewImage = document.getElementById('preview-image');
+
+            photoInput.addEventListener('change', function () {
+                const file = this.files[0];
+                if (file) {
+                    const reader = new FileReader();
+
+                    reader.onload = function (e) {
+                        previewImage.src = e.target.result; // Визуализация на снимката
+                    };
+
+                    reader.readAsDataURL(file); // Прочитане на файла
+                }
             });
         });
     </script>
