@@ -1,96 +1,37 @@
-.card-image-wrapper {
-    position: relative;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+html, body {
+    height: 100%;
+    display: inline-block;
+    justify-content: center;
+    align-items: center;
+    background-color: #f0f0f0;
 }
 
 .filter-bar {
-    background-color: #f9f9f9;
-    padding: 15px;
-    border-radius: 5px;
-    margin-bottom: 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
+    display: flex; /* Подрежда всички групи на един ред */
+    gap: 20px; /* Разстояние между групите */
+    flex-wrap: wrap; /* Ако няма място, ще прехвърли елементи на нов ред */
+    justify-content: center;  /* Подрежда групите в началото на контейнера */
 }
 
 .filter-group {
-    display: flex;
-    flex-direction: column;
-    margin: 0 10px;
+    display: ruby; /* Подрежда всички елементи на един ред */
+    flex-direction: column; /* Подрежда лейбълите над полетата */
+    align-items: flex-start; /* Подравнява елементите към началото на колоната */
+    gap: 5px; /* Добавя разстояние между лейбъла и полето */
 }
 
-.filter-group label {
-    font-weight: bold;
-    margin-bottom: 5px;
-}
-
-.filter-group input, .filter-group select {
-    padding: 5px;
-    width: 200px;
-}
-
-.filter-group button {
+button {
+    align-self: center; /* Центрира бутона спрямо другите елементи */
     padding: 10px 15px;
-    background-color: #007bff;
-    color: white;
-    border: none;
     cursor: pointer;
-    border-radius: 3px;
 }
 
-.filter-group button:hover {
-    background-color: #0056b3;
-}
-
-.overlay-text {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color: white;
-    font-size: 2rem; /* По-голям текст */
-    font-weight: bold;
-    text-align: center;
-    z-index: 2; /* Позициониране на текста над лентата */
-    display: inline-block;
-    white-space: wrap; /* Текстът няма да се пренася на нов ред */
-}
-
-.overlay-background {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 100%;
-    height: 30%;
-    background-color: rgba(0, 0, 0, 0.5); /* Черна лента с 50% прозрачност за по-добър контраст */
-    z-index: 1;
-}
-
-.animated-text span {
-    display: inline-block;
-    animation: bounce 1.5s ease-in-out infinite;
-    font-size: 3rem; /* По-голям текст */
-    font-weight: bold;
-}
-
-/* Анимация за всяка буква */
-@keyframes bounce {
-    0%, 100% {
-        transform: translateY(0);
-    }
-    50% {
-        transform: translateY(-10px); /* Подскачаща анимация */
-    }
-}
-
-/* Задържане на анимацията за всяка буква */
-.animated-text span:nth-child(1) { animation-delay: 0s; }
-.animated-text span:nth-child(2) { animation-delay: 0.1s; }
-.animated-text span:nth-child(3) { animation-delay: 0.2s; }
-.animated-text span:nth-child(4) { animation-delay: 0.3s; }
-/* Можеш да добавиш повече nth-child за по-дълги текстове */
-
+/* Галерия */
 .gallery-track {
     position: fixed;
     display: grid;
@@ -105,8 +46,25 @@
     overflow: hidden;
 }
 
+.card-image-wrapper {
+    height: 135%;
+    will-change: transform;
+}
+
 .card-image-wrapper img {
     width: 100%;
-    height: auto;
+    height: 100%;
     object-fit: cover;
+}
+
+@media (max-width: 800px) {
+    .gallery-track {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 550px) {
+    .gallery-track {
+        grid-template-columns: repeat(1, 1fr);
+    }
 }

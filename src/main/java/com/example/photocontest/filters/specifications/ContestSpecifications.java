@@ -17,9 +17,10 @@ public class ContestSpecifications {
     public static Specification<Contest> hasCategory(String category) {
         return (root, query, criteriaBuilder) -> {
             if (category == null || category.isEmpty()) {
-                return criteriaBuilder.conjunction();
+                return criteriaBuilder.conjunction(); // Връща "всичко", ако няма филтър
             }
-            return criteriaBuilder.equal(root.get("category"), category);
+            // Търси по полето name в обекта Category
+            return criteriaBuilder.equal(root.get("category").get("name"), category);
         };
     }
 
