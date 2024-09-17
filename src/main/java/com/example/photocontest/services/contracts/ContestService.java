@@ -32,4 +32,5 @@ public interface ContestService {
     List<PhotoPost> findTop3ByContestId(int contestId);
 
     void setTheDefaultVotesIfNecessary(Contest contest);
+    List<Contest> getRecentContests();
 }
