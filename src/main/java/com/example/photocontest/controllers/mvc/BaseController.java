@@ -59,10 +59,10 @@ public class BaseController {
         return false;
     }
 
-//    @ModelAttribute("categories")
-//    public List<Category> getAllCategories() {
-//        return categoryService.getAllCategories();
-//    }
+    @ModelAttribute("categories")
+    public List<Category> getAllCategories() {
+        return categoryService.getAllCategories();
+    }
 
 
     private User convertToUser(UserDetails userDetails) {
