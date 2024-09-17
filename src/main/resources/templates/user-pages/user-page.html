@@ -151,6 +151,9 @@
           .photo-item:hover {
               transform: scale(1.05);
           }
+          .info-borderline {
+              padding-top: 10px;
+          }
 
       </style>
   </head>
@@ -171,13 +174,17 @@
             </div>
             <div class="user-info">
                 <h1 th:text="${user.username}">Username</h1>
-                <div>
+                <div class="info-borderline">
                     <h2>Name</h2>
                     <a th:text="${user.firstName + ' ' + user.lastName}">Full Name</a>
                 </div>
-                <div>
+                <div class="info-borderline">
                     <h2>Email</h2>
                     <a th:href="'mailto:' + ${user.email}" th:text="${user.email}">user@example.com</a>
+                </div>
+                <div class="info-borderline">
+                    <h2 th:text="${user.getPoints()}">Junkie</h2>
+                    <a th:text="${'Points: ' + user.getPoints().getPoints()}" >100</a>
                 </div>
             </div>
         </div>
@@ -187,6 +194,7 @@
     <div class="user-gallery-section">
         <h2 class="gallery-heading" th:text="${user.username + '`s Photos'}"></h2>
         <div class="photo-grid">
+            <!-- Loop for the user posts plus a button to relocate them if there are no posts in there profile and want to join contest-->
             <div th:if="${#lists.isEmpty(posts)}" >
                 <h4 STYLE="padding-bottom: 10px">There are no posts!</h4>
                 <a th:href="@{/contests}" >

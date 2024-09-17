@@ -1,10 +1,15 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<link rel="stylesheet" href="../static/css/photo-post.css">
+<head th:replace="~{fragments/head.html :: main-head}">
+    <title>Create Photo Post</title>
 </head>
-<body>
+
+<body style="padding-top: 136px;">
+<header id="header">
+    <div id="searchBarAndLogo" th:replace="~{fragments/searchBarAndLogo.html :: searchBarAndLogo}"></div>
+    <nav th:replace="~{fragments/navbar.html :: navBarMenu ('login')}"></nav>
+</header>
 
 </body>
 </html>
