@@ -4,17 +4,14 @@ import com.example.photocontest.exceptions.EntityNotFoundException;
 import com.example.photocontest.filters.ContestFilterOptions;
 import com.example.photocontest.mappers.ContestMapper;
 import com.example.photocontest.mappers.PhotoPostMapper;
-import com.example.photocontest.mappers.VoteMapper;
 import com.example.photocontest.models.*;
 import com.example.photocontest.models.dto.ContestDto;
 import com.example.photocontest.models.dto.PhotoPostDto;
 import com.example.photocontest.models.enums.ContestStatus;
 import com.example.photocontest.repositories.CategoryRepository;
 import com.example.photocontest.repositories.TagRepository;
-import com.example.photocontest.repositories.UserRepository;
 import com.example.photocontest.services.contracts.ContestService;
 import com.example.photocontest.services.contracts.PhotoPostService;
-import com.example.photocontest.services.contracts.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -40,7 +37,7 @@ import static com.example.photocontest.helpers.AuthenticationHelpers.extractUser
 
 @Controller
 @RequestMapping("/contests")
-public class ContestMvcController extends BaseController {
+public class ContestMvc extends BaseController {
 
     private final ContestService contestService;
     private final CategoryRepository categoryRepository;
@@ -51,9 +48,9 @@ public class ContestMvcController extends BaseController {
     private final PhotoPostMapper photoPostMapper;
 
     @Autowired
-    public ContestMvcController(ContestService contestService, CategoryRepository categoryRepository,
-                                ContestMapper contestMapper, PhotoPostService photoPostService,
-                                TagRepository tagRepository, PhotoPostMapper mapper, PhotoPostMapper photoPostMapper) {
+    public ContestMvc(ContestService contestService, CategoryRepository categoryRepository,
+                      ContestMapper contestMapper, PhotoPostService photoPostService,
+                      TagRepository tagRepository, PhotoPostMapper mapper, PhotoPostMapper photoPostMapper) {
         this.contestService = contestService;
         this.categoryRepository = categoryRepository;
         this.contestMapper = contestMapper;

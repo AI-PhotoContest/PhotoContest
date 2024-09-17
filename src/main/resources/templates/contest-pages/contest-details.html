@@ -243,7 +243,13 @@
             <span>Expert judge: <strong>Nick David</strong></span>
         </div>
         <div class="enter-button">
-            <a th:href="@{/contests/{contestId}/add-photo-post(contestId=${contest.id})}">
+            <!-- If user is logged in -->
+            <a th:if="${loggedInUser != null}" th:href="@{/contests/{contestId}/add-photo-post(contestId=${contest.id})}">
+                <button type="button">Enter a photo</button>
+            </a>
+
+            <!-- If user is not logged in -->
+            <a th:if="${loggedInUser == null}" th:href="@{/auth/login}">
                 <button type="button">Enter a photo</button>
             </a>
         </div>
