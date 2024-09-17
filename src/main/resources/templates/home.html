@@ -69,10 +69,6 @@
         })(jQuery);
 
     </script>
-
-
-
-
     <script type='text/javascript' src='js/jquery.slider.js'></script>
     <script type='text/javascript' src='js/jquery.mobile.customized.min.js'></script>
     <script type='text/javascript' src=' js/jquery.easing.1.3.js'></script>
@@ -94,9 +90,6 @@
 
         })(jQuery);
     </script>
-
-
-
 </head>
 
 <body>
@@ -108,8 +101,6 @@
 
     </header>
     <div class="fluid_container">
-
-
             <div class="camera_wrap camera_emboss pattern_1" id="camera_wrap_4">
                 <div th:each="photoPost : ${randomPhotoPosts}"
                      th:data-thumb="'/photo-posts-images/' + ${photoPost.getImage()}"
@@ -123,30 +114,29 @@
                     </div>
                 </div>
             </div>
-
-
     </div>
     <div class="clear"></div>
     <div class="container">
         <div id="content">
             <div class="strong">
                 <div class="date">
-                    <span class="date-month">jan,10</span>
-                    <span class="year">2014</span>
+                    <!-- Ensure formattedStartDate is properly set in the model -->
+                    <span class="date-month" th:text="${formattedStartDate}">Jan, 10</span>
+                    <!-- Ensure that randomContest.getStartDate().getYear() is not null -->
+                    <span class="year" th:text="${newestContest.startDate.year}">2014</span>
                 </div>
-
-
-                <a class="img-effect" href="people.html">
-                    <img src="images/strong-growth.jpg" alt="" />
-                </a>
-
-
-
-
-                <h2>Strong growth </h2>
-                <p>White Washed Walnut 13mm Laminate L3051</p>
+                <!-- Check if randomContest is not null and has the expected properties -->
+                <div th:if="${newestContest}">
+                    <a class="img-effect" th:href="@{'/contests/' + ${newestContest.id}}">
+                        <!-- Ensure photoUrl is not null and points to the right location -->
+                        <img th:src="'/contest-images/' + ${newestContest.photoUrl}" alt="" />
+                    </a>
+                    <h1 th:text="${newestContest.title}">Contest Title</h1>
+                    <a th:href="@{'/contests/' + ${newestContest.id}}">View Contest</a>
+                </div>
                 <div class="clear"></div>
             </div>
+
 
             <div class="black-day">
 

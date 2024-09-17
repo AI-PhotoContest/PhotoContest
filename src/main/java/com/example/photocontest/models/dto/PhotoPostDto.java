@@ -30,7 +30,7 @@ public class PhotoPostDto {
     private String photo;
 
 
-    private Set<Tag> tags; // вместо Set<Tag>
+    private Set<Tag> tags;
     private String tagsInput;
 
     @JsonFormat(pattern = "yyyy-MM-dd")

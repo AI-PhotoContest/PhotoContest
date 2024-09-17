@@ -13,12 +13,15 @@ import com.example.photocontest.repositories.PhotoPostRepository;
 import com.example.photocontest.services.contracts.ContestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static com.example.photocontest.helpers.ContestHelpers.checkIfContestExists;
@@ -154,5 +157,20 @@ public class ContestServiceImpl implements ContestService {
 
        }
    }
+
+    @Override
+    public List<Contest> getRecentContests() {
+        return contestRepository.findRecentContests(PageRequest.of(0, 10)); // Fetch top 10 recent contests
+    }
+
+    // Get a random contest from recent ones
+    public Optional<Contest> getRandomRecentContest() {
+        List<Contest> recentContests = getRecentContests();
+        if (!recentContests.isEmpty()) {
+            Collections.shuffle(recentContests);
+            return Optional.of(recentContests.get(0)); // Return a random contest
+        }
+        return Optional.empty(); // Return empty if no contests are available
+    }
 
 }
