@@ -16,6 +16,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -36,6 +37,14 @@ public class PhotoPostMvcController extends BaseController{
         this.mapper = mapper;
         this.userService = userService;
         this.photoPostMapper = photoPostMapper;
+    }
+
+    @GetMapping
+    public String listPhotoPosts(Model model) {
+        List<PhotoPost> posts = photoPostService.getAllPhotoPosts();
+        model.addAttribute("active", "posts");
+        model.addAttribute("posts", posts);
+        return "post-pages/photo-posts";
     }
 
     @GetMapping("/{id}")

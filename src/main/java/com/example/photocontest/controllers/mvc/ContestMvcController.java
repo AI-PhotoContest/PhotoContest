@@ -141,4 +141,14 @@ public class ContestMvcController extends BaseController {
         return "contest-pages/rewards-page";
     }
 
+    @GetMapping("/judge")
+    public String judgeContest() {
+        return "contest-pages/judge-page";
+    }
+    //TODO judge
+//    @PostMapping("/judge")
+//    public String judgeContest(){
+//        return "contest-pages/judge-page";
+//    }
+
 }
