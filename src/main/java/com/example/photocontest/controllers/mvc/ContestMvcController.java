@@ -1,15 +1,16 @@
 package com.example.photocontest.controllers.mvc;
 
+import com.example.photocontest.exceptions.EntityNotFoundException;
 import com.example.photocontest.filters.ContestFilterOptions;
 import com.example.photocontest.mappers.ContestMapper;
+import com.example.photocontest.mappers.PhotoPostMapper;
 import com.example.photocontest.mappers.VoteMapper;
-import com.example.photocontest.models.Category;
-import com.example.photocontest.models.Contest;
-import com.example.photocontest.models.PhotoPost;
-import com.example.photocontest.models.User;
+import com.example.photocontest.models.*;
 import com.example.photocontest.models.dto.ContestDto;
+import com.example.photocontest.models.dto.PhotoPostDto;
 import com.example.photocontest.models.enums.ContestStatus;
 import com.example.photocontest.repositories.CategoryRepository;
+import com.example.photocontest.repositories.TagRepository;
 import com.example.photocontest.repositories.UserRepository;
 import com.example.photocontest.services.contracts.ContestService;
 import com.example.photocontest.services.contracts.PhotoPostService;
@@ -18,16 +19,21 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import static com.example.photocontest.helpers.AuthenticationHelpers.checkPermission;
 import static com.example.photocontest.helpers.AuthenticationHelpers.extractUserFromProvider;
@@ -39,23 +45,22 @@ public class ContestMvcController extends BaseController {
     private final ContestService contestService;
     private final CategoryRepository categoryRepository;
     private final ContestMapper contestMapper;
-    private final UserService userService;
     private final PhotoPostService photoPostService;
-    private final UserRepository userRepository;
-    private final VoteMapper voteMapper;
+    private final TagRepository tagRepository;
+    private final PhotoPostMapper mapper;
+    private final PhotoPostMapper photoPostMapper;
 
     @Autowired
     public ContestMvcController(ContestService contestService, CategoryRepository categoryRepository,
-                                ContestMapper contestMapper,
-                                UserService userService, PhotoPostService photoPostService,
-                                UserRepository userRepository, VoteMapper voteMapper) {
+                                ContestMapper contestMapper, PhotoPostService photoPostService,
+                                TagRepository tagRepository, PhotoPostMapper mapper, PhotoPostMapper photoPostMapper) {
         this.contestService = contestService;
         this.categoryRepository = categoryRepository;
         this.contestMapper = contestMapper;
-        this.userService = userService;
         this.photoPostService = photoPostService;
-        this.userRepository = userRepository;
-        this.voteMapper = voteMapper;
+        this.tagRepository = tagRepository;
+        this.mapper = mapper;
+        this.photoPostMapper = photoPostMapper;
     }
 
     @GetMapping
@@ -146,6 +151,73 @@ public class ContestMvcController extends BaseController {
     @GetMapping("/judge")
     public String judgeContest() {
         return "contest-pages/judge-page";
+    }
+
+
+    @GetMapping("/{contestId}/add-photo-post")
+    public String showPostCreatePage(@PathVariable int contestId,Model model) {
+        List<Tag> tags = tagRepository.findAll();
+        Contest contest = contestService.getContestById(contestId);
+        PhotoPost photoPost = new PhotoPost();
+        photoPost.setContest(contest);
+
+        model.addAttribute("tags", tags);
+        model.addAttribute("post", photoPost);
+        return "post-pages/photo-post-create";
+    }
+
+    @PostMapping("/{contestId}/add-photo-post")
+    public String createPost(@Valid @ModelAttribute("post") PhotoPostDto photoPostDto,
+                             @RequestParam("photoImg") MultipartFile photoFile,
+                             BindingResult result, Model model,
+                             @PathVariable int contestId,
+                             Authentication authentication) {
+        User currentUser = extractUserFromProvider(authentication);
+//        checkPermission(currentUser, "PHOTO_JUNKIE");
+        if (result.hasErrors()) {
+            return "post-pages/photo-post-create";
+        }
+        PhotoPost photoPost = mapper.toEntity(photoPostDto);
+        Contest contest = contestService.getContestById(contestId);
+        photoPost.setContest(contest);
+        photoPostDto.setTags(convertStringToTags(photoPostDto.getTagsInput()));
+
+        try {
+            PhotoPost post = photoPostMapper.toEntity(photoPostDto);
+            // Обработка на файла
+            if (!photoFile.isEmpty()) {
+                // Генериране на уникално име за файла
+                String filename = System.currentTimeMillis() + "_" + photoFile.getOriginalFilename();
+                String uploadDir = "src/main/resources/static/images/photo-posts-images/";
+
+                post.setImage(filename);
+                post.setCreator(currentUser);
+
+                // Запазване на файла в директорията
+                Files.copy(photoFile.getInputStream(), Paths.get(uploadDir + filename));
+
+                photoPostService.createPhotoPost(post);
+            }
+            return "redirect:/posts";
+        } catch (EntityNotFoundException e) {
+            model.addAttribute("statusCode", HttpStatus.NOT_FOUND.getReasonPhrase());
+            model.addAttribute("error", e.getMessage());
+            return "post-pages/photo-post-create";
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private Set<Tag> convertStringToTags(String tagsInput) {
+        return Arrays.stream(tagsInput.split(","))
+                .map(String::trim)
+                .map(tagName -> {
+                    Tag tag = new Tag();
+                    tag.setName(tagName);
+                    // Optionally, you can look up existing tags in the database to avoid duplicates
+                    return tag;
+                })
+                .collect(Collectors.toSet());
     }
     //TODO judge
 //    @PostMapping("/judge")
