@@ -5,6 +5,7 @@ import com.example.photocontest.mappers.PhotoPostMapper;
 import com.example.photocontest.models.PhotoPost;
 import com.example.photocontest.models.Tag;
 import com.example.photocontest.models.dto.PhotoPostDto;
+import com.example.photocontest.repositories.TagRepository;
 import com.example.photocontest.services.contracts.PhotoPostService;
 import com.example.photocontest.services.contracts.UserService;
 import jakarta.validation.Valid;
@@ -25,15 +26,17 @@ import java.util.stream.Collectors;
 public class PhotoPostMvcController extends BaseController{
 
     private final PhotoPostService photoPostService;
+    private final TagRepository tagRepository;
     private final PhotoPostMapper mapper;
     private final UserService userService;
     private final PhotoPostMapper photoPostMapper;
 
     @Autowired
-    public PhotoPostMvcController(PhotoPostService photoPostService, PhotoPostMapper mapper, UserService userService, PhotoPostMapper photoPostMapper) {
+    public PhotoPostMvcController(PhotoPostService photoPostService, TagRepository tagRepository, PhotoPostMapper mapper, UserService userService, PhotoPostMapper photoPostMapper) {
 
         super();
         this.photoPostService = photoPostService;
+        this.tagRepository = tagRepository;
         this.mapper = mapper;
         this.userService = userService;
         this.photoPostMapper = photoPostMapper;
@@ -55,6 +58,9 @@ public class PhotoPostMvcController extends BaseController{
 
     @GetMapping("/create")
     public String showPostCreatePage(Model model) {
+        List<Tag> tags = tagRepository.findAll();
+
+        model.addAttribute("tags", tags);
         model.addAttribute("post", new PhotoPostDto());
         return "post-pages/photo-post-create";
     }

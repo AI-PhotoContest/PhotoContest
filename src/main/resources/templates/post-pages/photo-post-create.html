@@ -1,137 +1,262 @@
 <!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<link rel="stylesheet" href="../static/css/photo-post.css">
-<head th:replace="~{fragments/head.html :: main-head}">
-    <title>Create Photo Post</title>
-</head>
-<!--TODO make this good looking -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Photo Upload with Google Maps</title>
 
+    <!-- Включваме Google Maps API с вашия API ключ -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCtAcQdGuiN28ooIbGAC8C2a36GbJBf0bA" async defer></script>
 
+    <!-- Връзка към вашия CSS файл -->
+    <link href="../../static/css/contest-styles.css" rel="stylesheet" type="text/css" th:href="@{/css/contest-styles.css}"/>
 
-<body style="padding-top: 136px;">
-<header id="header">
-    <div id="searchBarAndLogo" th:replace="~{fragments/searchBarAndLogo.html :: searchBarAndLogo}"></div>
-    <nav th:replace="~{fragments/navbar.html :: navBarMenu ('login')}"></nav>
-</header>
-<div class="clear"></div>
-<div class="container">
-    <div id="content">
-        <div class="photo-post-header">
-            <h1>Create New Photo Post</h1>
+    <!-- Включване на главния head фрагмент -->
+    <head th:replace="~{fragments/head.html :: main-head}"></head>
+
+<body style="padding-top: 1200px;">
+<div id="wrap">
+
+    <!-- Header с навигация и логото -->
+    <header id="header">
+        <div id="searchBarAndLogo" th:replace="~{fragments/searchBarAndLogo.html :: searchBarAndLogo}"></div>
+        <nav th:replace="~{fragments/navbar.html :: navBarMenu ('contests')}"></nav>
+    </header>
+
+    <div class="clear"></div>
+
+    <!-- Форма за качване на снимка -->
+    <div class="upload-container">
+        <!-- Преглед на снимка -->
+        <div class="image-preview">
+            <img src="https://picsum.photos/500/700?random=4-3" alt="Profile photo">
         </div>
 
-        <div class="photo-post-container">
-            <div class="photo-post-details">
-                <h2>Photo Information</h2>
-                <form action="/photos/create" method="POST" enctype="multipart/form-data" class="create-photo-post-form">
-
-                    <!-- Title -->
-                    <label for="title">Title:</label>
-                    <input type="text" id="title" name="title" required minlength="3" maxlength="64" placeholder="Enter post title">
-
-                    <!-- Description -->
-                    <label for="description">Description:</label>
-                    <textarea id="description" name="description" rows="4" required minlength="32" maxlength="8192"
-                              placeholder="Enter description of the photo"></textarea>
-
-                    <!-- Photo Upload -->
-                    <div class="upload-photo-wrapper">
-                        <label for="photo" class="upload-label">Upload Photo:</label>
-                        <input type="file" id="photo" name="photo" accept="image/*" required class="upload-input">
-                        <div class="upload-placeholder">
-                            <span id="file-name">No file chosen</span>
-                            <button type="button" class="upload-btn" onclick="document.getElementById('photo').click()">Choose File</button>
-                        </div>
-                    </div>
-
-                    <!-- Preview Image Container -->
-                    <div class="image-preview-wrapper">
-                        <img id="image-preview" class="image-preview" alt="Image Preview" style="display: none;">
-                    </div>
-
-                    <!-- Taken Date -->
-                    <label for="takenDate">Date Taken:</label>
-                    <input type="date" id="takenDate" name="takenDate" required>
-
-                    <!-- Tags -->
-                    <label for="tags">Tags:</label>
-                    <input type="text" id="tags" name="tags" placeholder="Enter tags, separated by commas">
-
-                    <!-- Camera Details -->
-                    <h3>Camera Details</h3>
-
-                    <!-- Camera Model -->
-                    <label for="cameraModel">Camera Model:</label>
-                    <input type="text" id="cameraModel" name="cameraModel" placeholder="Enter camera model">
-
-                    <!-- Lens Make -->
-                    <label for="lensMake">Lens Make:</label>
-                    <input type="text" id="lensMake" name="lensMake" placeholder="Enter lens make">
-
-                    <!-- Lens Model -->
-                    <label for="lensModel">Lens Model:</label>
-                    <input type="text" id="lensModel" name="lensModel" placeholder="Enter lens model">
-
-                    <!-- Shutter Speed -->
-                    <label for="shutterSpeed">Shutter Speed:</label>
-                    <input type="text" id="shutterSpeed" name="shutterSpeed" placeholder="Enter shutter speed">
-
-                    <!-- Aperture -->
-                    <label for="aperture">Aperture:</label>
-                    <input type="text" id="aperture" name="aperture" placeholder="Enter aperture (e.g., f/2.8)">
-
-                    <!-- Focal Length -->
-                    <label for="focalLength">Focal Length:</label>
-                    <input type="text" id="focalLength" name="focalLength" placeholder="Enter focal length (e.g., 50mm)">
-
-                    <!-- ISO -->
-                    <label for="iso">ISO:</label>
-                    <input type="text" id="iso" name="iso" placeholder="Enter ISO value">
-
-                    <!-- Location -->
-                    <label for="location">Location:</label>
-                    <input type="text" id="location" name="location" placeholder="Enter photo location">
-
-                    <!-- Retouching Applied -->
-                    <label for="retouchingApplied">Retouching Applied:</label>
-                    <input type="text" id="retouchingApplied" name="retouchingApplied" placeholder="Enter retouching details, if any">
-
-                    <!-- Submit Button -->
-                    <div class="submit-button">
-                        <button type="submit">Create Photo Post</button>
-                    </div>
-                </form>
+        <!-- Форма за попълване на детайли -->
+        <div class="upload-details">
+            <!-- Discoverability слайдер -->
+            <div class="discoverability">
+                <label for="discoverability">Discoverability</label>
+                <input type="range" id="discoverability" name="discoverability" min="0" max="100" value="0" disabled>
             </div>
+
+            <!-- Поле за заглавие -->
+            <div class="input-field" aria-required="true">
+                <label for="title">Title</label>
+                <input type="text" id="title" name="title" placeholder="Enter title">
+            </div>
+
+            <!-- Поле за описание -->
+            <div class="input-field" aria-required="true">
+                <label for="description">Description</label>
+                <textarea id="description" name="description" placeholder="Add a description and hashtags"></textarea>
+            </div>
+
+            <!-- Контейнер за тагове -->
+            <div class="tag-container">
+                <p>Choose up to three category tags or add your own:</p>
+                <div class="tags">
+                    <span th:each="tag : ${tags}" class="tag"
+                          th:data-value="${tag.name}" th:text="'#' + ${tag.name}">
+                    </span>
+                </div>
+                <input type="text" id="tags" name="tags" placeholder="Enter tags" readonly>
+            </div>
+
+            <!-- Google Maps за избор на местоположение -->
+            <div class="input-field">
+                <label for="location">Location</label>
+                <div id="map" style="height: 400px;"></div>
+                <p>City: <span id="city"></span>, Country: <span id="country"></span></p>
+                <button id="remove-location" onclick="removeMarker()">Remove location</button>
+            </div>
+
+            <!-- Допълнителни полета за информацията от DTO -->
+            <div class="additional-info-container">
+                <label for="takenDate">Date Taken</label>
+                <input type="date" id="takenDate" name="takenDate">
+
+                <label for="cameraModel">Camera Model</label>
+                <input type="text" id="cameraModel" name="cameraModel" placeholder="Enter camera model">
+
+                <label for="lensMake">Lens Make</label>
+                <input type="text" id="lensMake" name="lensMake" placeholder="Enter lens make">
+
+                <label for="lensModel">Lens Model</label>
+                <input type="text" id="lensModel" name="lensModel" placeholder="Enter lens model">
+
+                <label for="shutterSpeed">Shutter Speed</label>
+                <input type="text" id="shutterSpeed" name="shutterSpeed" placeholder="Enter shutter speed">
+
+                <label for="aperture">Aperture</label>
+                <input type="text" id="aperture" name="aperture" placeholder="Enter aperture (e.g. f/1.8)">
+
+                <label for="focalLength">Focal Length</label>
+                <input type="text" id="focalLength" name="focalLength" placeholder="Enter focal length (e.g. 50mm)">
+
+                <label for="iso">ISO</label>
+                <input type="text" id="iso" name="iso" placeholder="Enter ISO (e.g. 100)">
+
+                <label for="retouchingApplied">Retouching Applied</label>
+                <input type="text" id="retouchingApplied" name="retouchingApplied" placeholder="Was retouching applied?">
+            </div>
+
+
+            <!-- Бутон за завършване на качването -->
+            <button class="upload-btn">Finish upload</button>
         </div>
     </div>
-</div>
 
-<script>
-    const photoInput = document.getElementById('photo');
-    const fileNameDisplay = document.getElementById('file-name');
-    const imagePreview = document.getElementById('image-preview');
+    <!-- Скрипт за управление на слайдера Discoverability и Google Maps -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const discoverabilitySlider = document.getElementById('discoverability');
+            const fields = ['title', 'description', 'tags', 'location'];
 
-    photoInput.addEventListener('change', function (event) {
-        const file = event.target.files[0];
-        if (file) {
-            fileNameDisplay.textContent = file.name;
-            if (file.type.startsWith('image/')) {
-                const reader = new FileReader();
-                reader.onload = function (e) {
-                    imagePreview.src = e.target.result;
-                    imagePreview.style.display = 'block';
-                };
-                reader.readAsDataURL(file);
-            } else {
-                alert('Please upload a valid image file.');
-                imagePreview.style.display = 'none';
+            fields.forEach(function(field) {
+                const inputField = document.getElementById(field);
+                if (inputField) { // Проверяваме дали елементът съществува
+                    inputField.addEventListener('input', updateDiscoverability);
+                }
+            });
+
+            function updateDiscoverability() {
+                let filledFields = 0;
+
+                fields.forEach(function(field) {
+                    const inputField = document.getElementById(field);
+                    if (inputField && inputField.value.trim() !== '') {
+                        filledFields++;
+                    }
+                });
+
+                const discoverabilityValue = (filledFields / fields.length) * 100;
+                discoverabilitySlider.value = discoverabilityValue;
+
+                if (discoverabilityValue < 40) {
+                    discoverabilitySlider.style.background = 'red';
+                } else if (discoverabilityValue < 70) {
+                    discoverabilitySlider.style.background = 'yellow';
+                } else {
+                    discoverabilitySlider.style.background = 'green';
+                }
             }
-        } else {
-            fileNameDisplay.textContent = "No file chosen";
-            imagePreview.style.display = 'none';
-        }
-    });
-</script>
+        });
+        // Google Maps
+        document.addEventListener('DOMContentLoaded', function () {
+            let map;
+            let marker;
+            let geocoder;
 
+            function initMap() {
+                const initialPosition = { lat: 55.7558, lng: 37.6173 }; // Москва, Русия (по подразбиране)
+
+                map = new google.maps.Map(document.getElementById("map"), {
+                    zoom: 4,
+                    center: initialPosition,
+                });
+
+                geocoder = new google.maps.Geocoder();
+
+                // Поставяме маркер на началното местоположение
+                marker = new google.maps.Marker({
+                    position: initialPosition,
+                    map: map,
+                });
+
+                updateLocationInfo(initialPosition);
+
+                // Добавяме слушател за кликове върху картата
+                map.addListener("click", (event) => {
+                    placeMarker(event.latLng);
+                });
+            }
+
+            // Поставяне на маркер
+            function placeMarker(location) {
+                if (marker) {
+                    marker.setPosition(location);
+                } else {
+                    marker = new google.maps.Marker({
+                        position: location,
+                        map: map,
+                    });
+                }
+                updateLocationInfo(location);
+            }
+
+            // Обновяване на информацията за града и държавата
+            function updateLocationInfo(location) {
+                geocoder.geocode({ location: location }, (results, status) => {
+                    if (status === "OK") {
+                        if (results[0]) {
+                            const countryElement = document.getElementById("country");
+                            const cityElement = document.getElementById("city");
+
+                            let country = "Not found";
+                            let city = "Not found";
+
+                            // Обхождаме компонентите от резултатите на Geocoding API, за да намерим държавата и града
+                            results[0].address_components.forEach(component => {
+                                if (component.types.includes("country")) {
+                                    country = component.long_name;
+                                }
+                                if (component.types.includes("locality")) {
+                                    city = component.long_name;
+                                }
+                            });
+
+                            countryElement.textContent = country;
+                            cityElement.textContent = city;
+                        }
+                    } else {
+                        console.error("Geocoder failed due to: " + status);
+                    }
+                });
+            }
+
+            // Премахване на маркер
+            function removeMarker() {
+                if (marker) {
+                    marker.setMap(null);
+                    marker = null;
+                }
+                document.getElementById("city").textContent = "";
+                document.getElementById("country").textContent = "";
+            }
+
+            // Инициализация на картата след зареждане на страницата
+            initMap();
+        });
+
+        // Тагове
+        document.addEventListener('DOMContentLoaded', function () {
+            const tags = document.querySelectorAll('.tag');
+            const selectedTagsInput = document.getElementById('tags');
+            let selectedTags = [];
+
+            tags.forEach(tag => {
+                tag.addEventListener('click', function () {
+                    const tagValue = tag.getAttribute('data-value');
+
+                    // Проверяваме дали вече е избран този таг
+                    if (selectedTags.includes(tagValue)) {
+                        selectedTags = selectedTags.filter(t => t !== tagValue);
+                        tag.classList.remove('active');
+                    } else {
+                        if (selectedTags.length < 3) { // Позволяваме до 3 тагове
+                            selectedTags.push(tagValue);
+                            tag.classList.add('active');
+                        }
+                    }
+
+                    // Обновяване на полето за тагове
+                    selectedTagsInput.value = selectedTags.join(', ');
+                });
+            });
+        });
+    </script>
+
+</div>
 </body>
 </html>
