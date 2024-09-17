@@ -54,13 +54,6 @@ public class UserMvcController extends BaseController{
         return "post-pages/photo-posts";
     }
 
-    @GetMapping("/stats/{id}")
-    public String getUserStats(Model model, @ModelAttribute("id") int id) {
-        User user = userService.findUserById(id);
-        model.addAttribute("user", user);
-        return "user-pages/user-stats";
-    }
-
     @GetMapping("/judge")
     public String getJudgePage() {
         return "user-pages/judge-page";
