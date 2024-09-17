@@ -1,4 +1,4 @@
-﻿package com.example.photocontest.controllers.mvc;
+package com.example.photocontest.controllers.mvc;
 
 import com.example.photocontest.exceptions.EntityNotFoundException;
 import com.example.photocontest.filters.ContestFilterOptions;
