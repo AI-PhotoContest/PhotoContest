@@ -243,7 +243,9 @@
             <span>Expert judge: <strong>Nick David</strong></span>
         </div>
         <div class="enter-button">
-            <button>Enter a photo</button>
+            <a th:href="@{/contests/{contestId}/add-photo-post(contestId=${contest.id})}">
+                <button type="button">Enter a photo</button>
+            </a>
         </div>
     </div>
 </div>
