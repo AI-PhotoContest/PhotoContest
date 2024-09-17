@@ -27,4 +27,6 @@ public interface PhotoPostService  {
     Page<PhotoPost> findAll(String usernameFilter, String emailFilter, String titleFilter, Pageable pageable);
 
     PhotoPost updatePhotoPost(PhotoPost photoPost);
+
+    List<PhotoPost> getRecentPosts();
 }

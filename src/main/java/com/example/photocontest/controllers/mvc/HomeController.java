@@ -51,9 +51,11 @@ public class HomeController extends BaseController {
         // Избиране на първите 4 поста, ако списъкът е по-голям от 4
         List<PhotoPost> randomPhotoPosts;
 
-        List<Contest> randomContest = contestService.getRecentContests();
+        List<PhotoPost> recentPosts = postService.getRecentPosts();
+
+        List<Contest> recentContests = contestService.getRecentContests();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM, d");
-        String formattedDate = randomContest.get(0).getStartDate().format(formatter);
+        String formattedDate = recentContests.get(0).getStartDate().format(formatter);
 
 
         if (posts.size() > 4) {
@@ -61,8 +63,10 @@ public class HomeController extends BaseController {
         } else {
             randomPhotoPosts = posts;  // Ако има по-малко от 4 поста, вземи всички
         }
+
+        model.addAttribute("recentPosts", recentPosts);
         model.addAttribute("formattedStartDate", formattedDate);
-        model.addAttribute("newestContest", randomContest.get(0));
+        model.addAttribute("newestContest", recentContests.get(0));
         model.addAttribute("randomPhotoPosts", randomPhotoPosts);
         model.addAttribute("active", "home");
         model.addAttribute("posts", posts);

@@ -3,7 +3,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>iMag99 | home page layout one</title>
+    <title>AI Photo Contest | home page</title>
     <link href="css/imag99.css" rel="stylesheet" type="text/css" />
     <link href="css/camera.css" rel="stylesheet" type="text/css" />
     <link href="fonts/stylesheet.css" rel="stylesheet" type="text/css" />
@@ -153,13 +153,24 @@
 
             <div class="photography">
                 <div class="date">
-                    <span class="date-month">jan,10</span>
-                    <span class="year">2014</span>
+                    <!-- Показване на форматирана дата от обекта -->
+                    <span class="date-month" th:text="${#temporals.format(randomPhotoPosts.get(0).uploadDate, 'MMM, dd')}">Jan, 10</span>
+                    <!-- Показване на годината от датата -->
+                    <span class="year" th:text="${#temporals.format(randomPhotoPosts.get(0).uploadDate, 'yyyy')}">2014</span>
                 </div>
-                <a class="img-effect" href="photography.html"><img src="images/photography.jpg" alt="" /></a>
-                <h1>photography</h1>
-                <p>Completely free. No Credit Card required</p>
-                <a class="more-photos" href="photography.html">see more photos</a>
+
+                <!-- Проверка дали randomPhotoPosts не е null -->
+                <div th:if="${randomPhotoPosts}">
+                    <a class="img-effect" th:href="@{'/contests/' + ${randomPhotoPosts.get(0).id}}">
+                        <!-- Показване на снимката от фото поста -->
+                        <img th:src="'/images/photo-posts-images/' + ${randomPhotoPosts.get(0).image}" alt="" />
+                    </a>
+                    <!-- Показване на заглавието на състезанието -->
+                    <h1 th:text="${randomPhotoPosts.get(0).title}">Photo Post Title</h1>
+                    <!-- Линк към детайлите на състезанието -->
+                    <a class="more-photos" th:href="@{'/posts/' + ${randomPhotoPosts.get(0).id}}" style="color: #1ab188">View Photo Post</a>
+                </div>
+
                 <div class="clear"></div>
             </div>
 
@@ -306,106 +317,47 @@
 
             <div class="clear"></div>
             <div class="latest-article">
-
-                <div class="heading">
+                <div class="heading" style="text-align:center;">
                     <h2>RECENT POSTS</h2>
-                    <div class="clear"></div>
+                    <div style="clear:both;"></div>
                 </div>
 
-                <div id="carousel" class='outerWrapper'>
-                    <div class="item">
-                        <a class="img-effect" href="travel.html"><img src="images/article-img1.jpg" alt="" /></a>
-                        <div class="art-detail">
-                            <h3>jigsaw Travertine Tile</h3>
-                            <p>proceeded to lean on his horn drowning </p>
-                            <a href="travel.html" class="read-more">read more</a>
-                        </div>
-                    </div>
-                    <div class="item">
-                        <a class="img-effect" href="video.html"><img src="images/article-img2.jpg" alt="" /></a>
-                        <div class="art-detail">
-                            <h3>jigsaw Travertine Tile</h3>
-                            <p>proceeded to lean on his horn drowning </p>
-                            <a href="video.html" class="read-more">read more</a>
-                        </div>
-                    </div>
-                    <div class="item">
-                        <a class="img-effect" href="fashion.html"><img src="images/article-img3.jpg" alt="" /></a>
-                        <div class="art-detail">
-                            <h3>jigsaw Travertine Tile</h3>
-                            <p>proceeded to lean on his horn drowning </p>
-                            <a href="fashion.html" class="read-more">read more</a>
-                        </div>
-                    </div>
-                    <div class="item">
-                        <a class="img-effect" href="photography.html"><img src="images/article-img4.jpg" alt="" /></a>
-                        <div class="art-detail">
-                            <h3>jigsaw Travertine Tile</h3>
-                            <p>proceeded to lean on his horn drowning </p>
-                            <a href="photography.html" class="read-more">read more</a>
-                        </div>
-                    </div>
-                    <div class="item">
-                        <a class="img-effect" href="video-detail.html"><img src="images/article-img5.jpg" alt="" /></a>
-                        <div class="art-detail">
-                            <h3>jigsaw Travertine Tile</h3>
-                            <p>proceeded to lean on his horn drowning </p>
-                            <a href="video-detail.html" class="read-more">read more</a>
-                        </div>
-                    </div>
+                <div id="carousel" class='outerWrapper' style="display: flex; overflow-x: auto; scroll-snap-type: x mandatory;">
+                    <!-- Thymeleaf цикъл за обхождане на recentPosts -->
+                    <div th:each="post : ${recentPosts}" class="item" style="min-width: 200px; margin-right: 15px; scroll-snap-align: start;">
+                        <!-- Линк към поста -->
+                        <a class="img-effect" th:href="@{'/photo-post/' + ${post.id}}">
+                            <!-- Изображение на поста с фиксиран размер 274x330 -->
+                            <img th:src="'/images/photo-posts-images/' + ${post.image}" th:alt="${post.title}" style="width: 274px; height: 330px; object-fit: cover;" />
+                        </a>
 
+                        <!-- Детайли за поста -->
+                        <div class="art-detail">
+                            <h3 th:text="${post.title}">Post Title</h3>
+                            <p th:text="${post.description}">Short description of the post</p>
+                        </div>
+                    </div>
                 </div>
+
+                <div style="clear:both;"></div>
 
                 <div class="clear"></div>
 
-                <div id="clients" class='outerWrapper'>
-                    <div class="item">
-                        <div class="bw pic"><a href="#."><img src="images/client1.jpg" alt="" /></a></div>
+                <div id="clients" class="outerWrapper" style="display: flex; overflow-x: auto; scroll-snap-type: x mandatory;">
+                    <!-- Thymeleaf цикъл за категориите -->
+                    <div th:each="category : ${categories}" class="item" style="min-width: 200px; margin-right: 15px; scroll-snap-align: start;">
+                        <div class="bw pic">
+                            <!-- Линк към категорията и изображението на категорията -->
+                            <a th:href="@{'/categories/' + ${category.id}}">
+                                <img th:src="'/AI_category_generated_images/' + ${category.image}" th:alt="${category.name}" style="width: 117px; height: 50px; object-fit: cover;">
+                            </a>
+                        </div>
                         <div class="art-detail">
-
+                            <!-- Име на категорията под снимката -->
+                            <h3 th:text="${category.name}" style="text-align: center; margin-top: 10px;">Category Name</h3>
                         </div>
                     </div>
-
-                    <div class="item">
-                        <div class="bw pic"><a href="#."><img src="images/client2.jpg" alt="" /></a></div>
-                        <div class="art-detail">
-                        </div>
-                    </div>
-
-
-                    <div class="item">
-                        <div class="bw pic"><a href="#."><img src="images/client3.jpg" alt="" /></a></div>
-                        <div class="art-detail">
-                        </div>
-                    </div>
-
-
-                    <div class="item">
-                        <div class="bw pic"><a href="#."><img src="images/client4.jpg" alt="" /></a></div>
-                        <div class="art-detail">
-                        </div>
-                    </div>
-
-
-                    <div class="item">
-                        <div class="bw pic"><a href="#."><img src="images/client5.jpg" alt="" /></a></div>
-                        <div class="art-detail">
-                        </div>
-                    </div>
-
-
-                    <div class="item">
-                        <div class="bw pic"><a href="#."><img src="images/client6.jpg" alt="" /></a></div>
-                        <div class="art-detail">
-
-                        </div>
-                    </div>
-
-
-
-
                 </div>
-
 
             </div>
 
@@ -425,10 +377,12 @@
                 </div>
 
                 <div class="email">
-
-                    <input name="" type="text" onblur="if(this.value == '') { this.value='Enter your email address'}"
-                           onfocus="if (this.value == 'Enter your email address') {this.value=''}" value="Enter your email address">
-                    <a class="subscribe" href="#.">Subscribe</a>
+                    <form th:action="@{/newsletter/subscribe}" method="post">
+                        <input type="email" name="email" placeholder="Enter your email address" required
+                               onblur="if(this.value == '') { this.value='Enter your email address'}"
+                               onfocus="if (this.value == 'Enter your email address') {this.value=''}" value="">
+                        <button class="subscribe" type="submit">Subscribe</button>
+                    </form>
                 </div>
                 <div class="clear"></div>
             </div>
@@ -446,13 +400,7 @@
                 </div>
 
                 <div class="menu menu2">
-                    <span class="title">CATEGORIES</span>
-                    <ul>
-                        <li><a href="#.">Low Price Promise</a></li>
-                        <li><a href="#.">Damages Policy</a></li>
-                        <li><a href="#.">Terms and Conditions</a></li>
-                        <li><a href="#.">Privacy Policy</a></li>
-                    </ul>
+
                 </div>
 
             </div>
@@ -460,26 +408,9 @@
 
             <div class="foot-sec sec2">
 
-                <div class="share">
-                    <span class="title">Share Buttons</span>
-                    <img src="images/share-button.png" alt="" />
-                </div>
-
-                <div class="payment">
-                    <span class="title">payment method</span>
-                    <img src="images/payment.jpg" alt="" />
-                </div>
-
             </div>
 
             <div class="foot-sec sec3">
-
-                <div class="contact">
-                    <span class="number">Product Questions: 111-111-0002 or 222-222-3705</span>
-                    <span class="number">Installation Questions: 111-222-1017</span>
-                    <img src="images/bbb.jpg" alt="" />
-                </div>
-
 
 
             </div>
