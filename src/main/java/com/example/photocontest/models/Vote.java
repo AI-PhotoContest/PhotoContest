@@ -21,12 +21,12 @@ public class Vote {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private User user;
+    private User judge;
 
     private boolean categoryMismatch;
 
     //This is made, so we can have a default score if no one judges this photo post
-    private int score;
+    private int score = 3;
 
     private String comment;
 

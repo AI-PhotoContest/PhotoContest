@@ -7,11 +7,13 @@ import com.example.photocontest.mappers.PhotoPostMapper;
 import com.example.photocontest.models.*;
 import com.example.photocontest.models.dto.ContestDto;
 import com.example.photocontest.models.dto.PhotoPostDto;
+import com.example.photocontest.models.dto.VoteDto;
 import com.example.photocontest.models.enums.ContestStatus;
 import com.example.photocontest.repositories.CategoryRepository;
 import com.example.photocontest.repositories.TagRepository;
 import com.example.photocontest.services.contracts.ContestService;
 import com.example.photocontest.services.contracts.PhotoPostService;
+import com.example.photocontest.services.contracts.VoteService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -47,11 +49,12 @@ public class ContestMvc extends BaseController {
     private final TagRepository tagRepository;
     private final PhotoPostMapper mapper;
     private final PhotoPostMapper photoPostMapper;
+    private final VoteService voteService;
 
     @Autowired
     public ContestMvc(ContestService contestService, CategoryRepository categoryRepository,
                       ContestMapper contestMapper, PhotoPostService photoPostService,
-                      TagRepository tagRepository, PhotoPostMapper mapper, PhotoPostMapper photoPostMapper) {
+                      TagRepository tagRepository, PhotoPostMapper mapper, PhotoPostMapper photoPostMapper, VoteService voteService) {
         this.contestService = contestService;
         this.categoryRepository = categoryRepository;
         this.contestMapper = contestMapper;
@@ -59,6 +62,7 @@ public class ContestMvc extends BaseController {
         this.tagRepository = tagRepository;
         this.mapper = mapper;
         this.photoPostMapper = photoPostMapper;
+        this.voteService = voteService;
     }
 
     @GetMapping
@@ -213,24 +217,23 @@ public class ContestMvc extends BaseController {
                 .collect(Collectors.toSet());
     }
 
-    // View to display photo posts to be judged
-    @GetMapping("/{contestId}/judge-photo-post/{postId}")
-    public String judgePhotoPost(@PathVariable("contestId") int contestId,
-                                 @PathVariable("postId") int postId,
-                                 Model model) {
-        PhotoPost post = photoPostService.getPhotoPostById(postId);
-        model.addAttribute("post", post);
-        return "contest-pages/judge-page"; // Thymeleaf template for judging
-    }
 
-    // Method to handle rating submission
-    @PostMapping("/{contestId}/judge-photo-post/{postId}/rate")
-    public String ratePhotoPost(@PathVariable("contestId") int contestId,
-                                @PathVariable("postId") int postId,
-                                @RequestParam("score") int score,
-                                @AuthenticationPrincipal User judge) {
-        photoPostService.ratePhotoPost(postId, score, judge);
-        return "redirect:/contests/" + contestId;
+    @PostMapping("/{contestId}/judge-photo-post/{postId}")
+    public String ratePhotoPost(@PathVariable int contestId, @PathVariable int postId,@Valid @ModelAttribute("vote") VoteDto voteDto,
+                                Model model, Authentication authentication) {
+        try{
+        // Get the logged-in user (assuming UserDetailsService is in place)
+        User judge = (User) authentication.getPrincipal();
+
+        // Save the vote
+        voteService.saveVote(postId,judge.getId(),voteDto);
+        }catch (EntityNotFoundException e) {
+            model.addAttribute("statusCode", HttpStatus.NOT_FOUND.getReasonPhrase());
+            model.addAttribute("error", e.getMessage());
+            return "redirect:/contests/" + contestId + "/photo-posts/" + postId;
+        }
+
+        return "redirect:/contest-pages/{contestId}/judge-page/" + postId;
     }
 
 }

@@ -22,9 +22,8 @@ public class VoteMapper {
     public Vote toEntity(VoteDto voteDto, User user, PhotoPost photoPost) {
         Vote vote = new Vote();
 
-
         vote.setPhotoPost(photoPost);
-        vote.setUser(user);
+        vote.setJudge(user);
         vote.setScore(voteDto.getScore());
         vote.setComment(voteDto.getComment());
         vote.setCategoryMismatch(voteDto.isCategoryMismatch());

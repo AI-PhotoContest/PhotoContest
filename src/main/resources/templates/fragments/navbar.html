@@ -23,16 +23,6 @@
                     </li>
                 </ul>
             </li>
-
-            <!-- My Posts -->
-            <li th:if="${loggedInUser != null}">
-                <a>Photo Posts</a>
-                <ul class="sub-menu">
-                    <li>
-                        <a th:href="@{/user/posts}">My Photo Posts</a>
-                    </li>
-                </ul>
-            </li>
             <li th:classappend="${active == 'categories'} ? 'sel' : ''" class="navigation-menu-item">
                 <a class="navigation-menu-trigger">
                     Categories

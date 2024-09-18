@@ -32,5 +32,4 @@ public interface PhotoPostService  {
 
     List<PhotoPost> findByContest(int id);
 
-    void ratePhotoPost(int postId, int score, User judge);
 }

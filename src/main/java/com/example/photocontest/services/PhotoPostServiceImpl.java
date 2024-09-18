@@ -34,16 +34,13 @@ public class PhotoPostServiceImpl implements PhotoPostService {
     private final PhotoPostRepository photoPostRepository;
     private final UserRepository userRepository;
     private final TagRepository tagRepository;
-    private final VoteRepository judgeRatingRepository;
-    private final TagMapper tagMapper;
+
 
     @Autowired
     public PhotoPostServiceImpl(PhotoPostRepository photoPostRepository, UserRepository userRepository, TagRepository tagRepository, VoteRepository judgeRatingRepository, TagMapper tagMapper){
         this.photoPostRepository = photoPostRepository;
         this.userRepository = userRepository;
         this.tagRepository = tagRepository;
-        this.judgeRatingRepository = judgeRatingRepository;
-        this.tagMapper = tagMapper;
     }
 
     @Override
@@ -154,36 +151,4 @@ public class PhotoPostServiceImpl implements PhotoPostService {
         return (root, query, cb) -> cb.like(cb.lower(root.get("title")), "%" + title.toLowerCase() + "%");
     }
 
-    @Override
-    public void ratePhotoPost(int postId, int score, User judge) {
-        PhotoPost post = getPhotoPostById(postId);
-
-        // Check if the judge has already rated this post
-        Vote existingRating = judgeRatingRepository.findByPhotoPostAndJudge(post, judge);
-        if (existingRating != null) {
-            // Update the score
-            existingRating.setScore(score);
-            judgeRatingRepository.save(existingRating);
-        } else {
-            // Add new rating
-            Vote rating = new Vote();
-            rating.setPhotoPost(post);
-            rating.setUser(judge);
-            rating.setScore(score);
-            judgeRatingRepository.save(rating);
-        }
-    }
-
-    public void setDefaultRatingIfNotJudged(int contestId) {
-        List<PhotoPost> photoPosts = photoPostRepository.getPhotoPostsByContestId(contestId);
-
-        for (PhotoPost post : photoPosts) {
-            if (post.getVotes().isEmpty()) {
-                Vote defaultRating = new Vote();
-                defaultRating.setPhotoPost(post);
-                defaultRating.setScore(3); // Default score
-                judgeRatingRepository.save(defaultRating);
-            }
-        }
-    }
 }
