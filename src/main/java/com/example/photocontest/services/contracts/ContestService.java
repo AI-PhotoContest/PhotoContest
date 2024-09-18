@@ -33,4 +33,6 @@ public interface ContestService {
 
     void setTheDefaultVotesIfNecessary(Contest contest);
     List<Contest> getRecentContests();
+
+    void addJudgeToContest(int contestId, int userId);
 }

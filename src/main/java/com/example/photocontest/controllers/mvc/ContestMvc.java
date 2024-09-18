@@ -285,4 +285,10 @@ public class ContestMvc extends BaseController {
 
         return "redirect:/contests/" + contestId + "/photo-posts/" + postId;
     }
+
+    @PostMapping("/{contestId}/add-judge")
+    public String addJudgeToContest(@PathVariable int contestId, @RequestParam int userId) {
+        contestService.addJudgeToContest(contestId, userId);
+        return "redirect:/contests/" + contestId; // Redirect to the contest details page
+    }
 }
