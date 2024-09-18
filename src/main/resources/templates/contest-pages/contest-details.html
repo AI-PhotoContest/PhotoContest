@@ -261,7 +261,13 @@
             <div class="strong post-container" th:each="post : ${contest.photoPosts}">
                 <div class="post-item">
                     <div class="img-container">
-                        <a class="img-effect" th:href="@{/contests/{id}(id=${contest.id})/judge-photo-post/{id}(id=${post.id})}">
+                        <!-- If the user is logged in and is a judge, show "Judge Photo" link -->
+                        <a th:if="${isJudge}" class="img-effect" th:href="@{/contests/{contestId}/judge-photo-post/{postId}(contestId=${contest.id}, postId=${post.id})}">
+                            <img th:src="@{'/images/photo-posts-images/' + ${post.image}}" alt="Photo" />
+                            <p>Judge Photo</p>
+                        </a>
+                        <!-- If the user is not a judge or is not logged in, show the regular post link -->
+                        <a th:if="${isJudge == null or !isJudge}" class="img-effect" th:href="@{/photo-posts/{id}(id=${post.id})}">
                             <img th:src="@{'/images/photo-posts-images/' + ${post.image}}" alt="Photo" />
                         </a>
                     </div>

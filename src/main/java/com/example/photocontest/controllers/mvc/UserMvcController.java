@@ -53,9 +53,4 @@ public class UserMvcController extends BaseController{
         model.addAttribute("photoPosts", userPosts);
         return "post-pages/photo-posts";
     }
-
-    @GetMapping("/judge")
-    public String getJudgePage() {
-        return "user-pages/judge-page";
-    }
 }
