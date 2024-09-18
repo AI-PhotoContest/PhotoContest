@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<link href="../../static/css/login.css" rel="stylesheet" type="text/css" th:href="@{/css/login.css}"/>
+<head th:replace="~{fragments/head.html :: main-head}">
+
+    <title>Photo | Page</title>
+</head>
+
+<body>
+<div id="wrap">
+
+    <header id="header">
+        <div id="searchBarAndLogo" th:replace="~{fragments/searchBarAndLogo.html :: searchBarAndLogo}"></div>
+        <nav th:replace="~{fragments/navbar.html :: navBarMenu ('contests')}">
+        </nav>
+
+    </header>
+
+</div>
+</body>
+</html>
