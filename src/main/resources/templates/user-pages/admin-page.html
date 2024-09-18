@@ -1,19 +1,31 @@
 <!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+<link rel="stylesheet" type="text/css" href="../../static/css/admin.css" th:href="@{/css/admin.css}"/>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Panel - User Management</title>
-    <link href="../../static/css/admin.css" rel="stylesheet" type="text/css" th:href="@{/css/admin.css}"/>
-</head>
-<body style="padding-top: 200px;">
+    <title>Photo Upload with Google Maps</title>
+
+    <!-- Включваме Google Maps API с вашия API ключ -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCtAcQdGuiN28ooIbGAC8C2a36GbJBf0bA" async defer></script>
+
+    <!-- Връзка към вашия CSS файл -->
+    <link href="../../static/css/contest-styles.css" rel="stylesheet" type="text/css" th:href="@{/css/contest-styles.css}"/>
+
+    <!-- Включване на главния head фрагмент -->
+    <head th:replace="~{fragments/head.html :: main-head}"></head>
+
+<body style="padding-top: 400px;">
 <div id="wrap">
+
+    <!-- Header с навигация и логото -->
     <header id="header">
         <div id="searchBarAndLogo" th:replace="~{fragments/searchBarAndLogo.html :: searchBarAndLogo}"></div>
-        <nav th:replace="~{fragments/navbar.html :: navBarMenu ('admin')}"></nav>
+        <nav th:replace="~{fragments/navbar.html :: navBarMenu ('contests')}"></nav>
     </header>
 
     <div class="clear"></div>
+
 
     <div class="admin-container">
         <h1>User Management</h1>
