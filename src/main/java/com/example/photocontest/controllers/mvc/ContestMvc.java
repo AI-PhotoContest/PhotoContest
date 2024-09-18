@@ -115,7 +115,6 @@ public class ContestMvc extends BaseController {
         model.addAttribute("posts", contestPosts);
         model.addAttribute("contest", contest);
 
-
         return "contest-pages/contest-details";
     }
 
