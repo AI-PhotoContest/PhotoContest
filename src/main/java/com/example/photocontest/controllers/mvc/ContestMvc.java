@@ -98,20 +98,28 @@ public class ContestMvc extends BaseController {
     }
 
     @GetMapping("/{id}")
-    public String getContestById(@PathVariable int id, Model model,Authentication authentication) {
+    public String getContestById(@PathVariable int id, Model model) {
+        // Retrieve the contest by ID
         Contest contest = contestService.getContestById(id);
+
+        // Retrieve all photo posts for the contest
         List<PhotoPost> contestPosts = photoPostService.findByContest(contest.getId());
 
-        User loggedInUser = extractUserFromProvider(authentication);
+        // Retrieve the logged-in user's details
+        UserDetails userDetails = userService.getLoggedInUser();
+
+        User user = userService.findUserByUsername(userDetails.getUsername());
 
         // Check if the logged-in user is a judge for this contest
         boolean isJudge = contest.getJudges().stream()
-                .anyMatch(judge -> judge.getId() == loggedInUser.getId());
+                .anyMatch(judge -> judge.getId() == user.getId());
 
+        // Add attributes to the model
         model.addAttribute("posts", contestPosts);
         model.addAttribute("contest", contest);
         model.addAttribute("isJudge", isJudge);
 
+        // Return the view name
         return "contest-pages/contest-details";
     }
 

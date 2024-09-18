@@ -5,6 +5,7 @@ import com.example.photocontest.models.Role;
 import com.example.photocontest.models.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.List;
 
@@ -46,4 +47,6 @@ public interface UserService {
 
     User setRole(User user, String role);
     User removeRole(User user, String role);
+
+    UserDetails getLoggedInUser();
 }
