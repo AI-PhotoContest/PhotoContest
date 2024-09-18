@@ -32,10 +32,10 @@ public class VoteServiceImpl implements VoteService {
 
     @Override
     public Vote saveVote(int photoPostId, int judgeId, VoteDto voteDto) {
-        Optional<Vote> existingVote = voteRepository.findByPhotoPostIdAndJudgeId(photoPostId, judgeId);
         User judge = userService.findUserById(judgeId);
         PhotoPost post = photoPostService.getPhotoPostById(photoPostId);
         Vote vote = mapper.toEntity(voteDto,judge,post);
+
         return voteRepository.save(vote);
     }
 

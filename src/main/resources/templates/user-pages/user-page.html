@@ -219,7 +219,7 @@
                 </div>
 
                 <!-- Action Buttons (Visible for Admin or Post Creator) -->
-                <form th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')') || loggedInUser.id == post.creator.id}"
+                <form th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}"
                       th:action="@{/posts/{id}/action(id=${post.id})}"
                       method="post"
                       onsubmit="return confirm('Are you sure you want to delete this post?');">

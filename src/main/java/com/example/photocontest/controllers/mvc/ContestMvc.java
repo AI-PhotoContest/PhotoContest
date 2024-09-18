@@ -13,6 +13,7 @@ import com.example.photocontest.repositories.CategoryRepository;
 import com.example.photocontest.repositories.TagRepository;
 import com.example.photocontest.services.contracts.ContestService;
 import com.example.photocontest.services.contracts.PhotoPostService;
+import com.example.photocontest.services.contracts.UserService;
 import com.example.photocontest.services.contracts.VoteService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -50,11 +51,12 @@ public class ContestMvc extends BaseController {
     private final PhotoPostMapper mapper;
     private final PhotoPostMapper photoPostMapper;
     private final VoteService voteService;
+    private final UserService userService;
 
     @Autowired
     public ContestMvc(ContestService contestService, CategoryRepository categoryRepository,
                       ContestMapper contestMapper, PhotoPostService photoPostService,
-                      TagRepository tagRepository, PhotoPostMapper mapper, PhotoPostMapper photoPostMapper, VoteService voteService) {
+                      TagRepository tagRepository, PhotoPostMapper mapper, PhotoPostMapper photoPostMapper, VoteService voteService, UserService userService) {
         this.contestService = contestService;
         this.categoryRepository = categoryRepository;
         this.contestMapper = contestMapper;
@@ -63,6 +65,7 @@ public class ContestMvc extends BaseController {
         this.mapper = mapper;
         this.photoPostMapper = photoPostMapper;
         this.voteService = voteService;
+        this.userService = userService;
     }
 
     @GetMapping
@@ -95,11 +98,19 @@ public class ContestMvc extends BaseController {
     }
 
     @GetMapping("/{id}")
-    public String getContestById(@PathVariable int id, Model model) {
+    public String getContestById(@PathVariable int id, Model model,Authentication authentication) {
         Contest contest = contestService.getContestById(id);
         List<PhotoPost> contestPosts = photoPostService.findByContest(contest.getId());
+
+        User loggedInUser = extractUserFromProvider(authentication);
+
+        // Check if the logged-in user is a judge for this contest
+        boolean isJudge = contest.getJudges().stream()
+                .anyMatch(judge -> judge.getId() == loggedInUser.getId());
+
         model.addAttribute("posts", contestPosts);
         model.addAttribute("contest", contest);
+        model.addAttribute("isJudge", isJudge);
 
         return "contest-pages/contest-details";
     }
@@ -218,22 +229,60 @@ public class ContestMvc extends BaseController {
     }
 
 
-    @PostMapping("/{contestId}/judge-photo-post/{postId}")
-    public String ratePhotoPost(@PathVariable int contestId, @PathVariable int postId,@Valid @ModelAttribute("vote") VoteDto voteDto,
-                                Model model, Authentication authentication) {
-        try{
-        // Get the logged-in user (assuming UserDetailsService is in place)
-        User judge = (User) authentication.getPrincipal();
+    @GetMapping("/{contestId}/judge-photo-post/{postId}")
+    public String ratePhotoPost(
+            @PathVariable int contestId,
+            @PathVariable int postId,
+            Model model) {
 
-        // Save the vote
-        voteService.saveVote(postId,judge.getId(),voteDto);
-        }catch (EntityNotFoundException e) {
-            model.addAttribute("statusCode", HttpStatus.NOT_FOUND.getReasonPhrase());
-            model.addAttribute("error", e.getMessage());
-            return "redirect:/contests/" + contestId + "/photo-posts/" + postId;
-        }
+        // Fetch the contest and photo post details
+        Contest contest = contestService.getContestById(contestId);
+        PhotoPost post = photoPostService.getPhotoPostById(postId);
 
-        return "redirect:/contest-pages/{contestId}/judge-page/" + postId;
+        // Ensure that the judge has not already voted on this post (optional)
+        VoteDto voteDto = new VoteDto(); // Prepare an empty DTO for the form
+
+        // Add data to the model
+        model.addAttribute("contest", contest);
+        model.addAttribute("post", post);
+        model.addAttribute("vote", voteDto); // For the form submission
+
+        return "contest-pages/judge-page"; // Return the page with the form for voting
     }
 
+
+    @PostMapping("/{contestId}/judge-photo-post/{postId}")
+    public String ratePhotoPost(
+            @PathVariable int contestId,
+            @PathVariable int postId,
+            @Valid @ModelAttribute("vote") VoteDto voteDto,
+            BindingResult bindingResult, // To handle validation errors
+            Model model,
+            Authentication authentication) {
+
+        if (bindingResult.hasErrors()) {
+            // Add errors to the model
+            model.addAttribute("vote", voteDto);
+            return "/contest-pages/judge-page"; // Reload the page with validation errors
+        }
+
+        try {
+            // Get the logged-in user
+            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+            String username = userDetails.getUsername();
+
+            // Fetch the User entity using the username (or another method)
+            User judge = userService.findUserByUsername(username);
+
+            // Save the vote
+            voteService.saveVote(postId, judge.getId(), voteDto);
+
+        } catch (EntityNotFoundException e) {
+            model.addAttribute("statusCode", HttpStatus.NOT_FOUND.getReasonPhrase());
+            model.addAttribute("error", e.getMessage());
+            return "error"; // Display an error page if something goes wrong
+        }
+
+        return "redirect:/contests/" + contestId + "/photo-posts/" + postId;
+    }
 }

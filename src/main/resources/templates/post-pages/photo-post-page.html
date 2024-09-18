@@ -1,9 +1,8 @@
 <!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<link href="../../static/css/login.css" rel="stylesheet" type="text/css" th:href="@{/css/login.css}"/>
+<link href="../../static/css/photo-post.css" rel="stylesheet" type="text/css" th:href="@{/css/photo-post.css}"/>
 <head th:replace="~{fragments/head.html :: main-head}">
-
-    <title>Photo | Page</title>
+    <title>Photo Post Details</title>
 </head>
 
 <body>
@@ -11,11 +10,68 @@
 
     <header id="header">
         <div id="searchBarAndLogo" th:replace="~{fragments/searchBarAndLogo.html :: searchBarAndLogo}"></div>
-        <nav th:replace="~{fragments/navbar.html :: navBarMenu ('contests')}">
-        </nav>
-
+        <nav th:replace="~{fragments/navbar.html :: navBarMenu ('contests')}"></nav>
     </header>
 
+    <main>
+        <div class="photo-post-details">
+            <h1 th:text="${post.title}">Photo Title</h1>
+            <img th:src="@{${post.image}}" alt="Photo Image" />
+            <p th:text="${post.description}">Photo Description</p>
+
+            <div>
+                <h2>Creator</h2>
+                <p th:text="${post.creator.username}">Creator Username</p>
+                <!-- You might need to adjust according to your User model -->
+            </div>
+
+            <div>
+                <h2>Camera Details</h2>
+                <p th:text="${post.cameraDetails.model}">Camera Model</p>
+                <!-- Add other camera details as needed -->
+            </div>
+
+            <div>
+                <h2>Upload Date</h2>
+                <p th:text="${#dates.format(post.uploadDate, 'dd MMM yyyy HH:mm:ss')}">Upload Date</p>
+            </div>
+
+            <div>
+                <h2>Taken Date</h2>
+                <p th:text="${#dates.format(post.takenDate, 'dd MMM yyyy')}">Taken Date</p>
+            </div>
+
+            <div>
+                <h2>Retouching Applied</h2>
+                <p th:text="${post.retouchingApplied}">Retouching Applied</p>
+            </div>
+
+            <div>
+                <h2>Location</h2>
+                <p th:text="${post.location}">Location</p>
+            </div>
+
+            <div>
+                <h2>Tags</h2>
+                <ul>
+                    <li th:each="tag : ${post.tags}" th:text="${tag.name}">Tag Name</li>
+                </ul>
+            </div>
+
+            <div>
+                <h2>Contest</h2>
+                <p th:text="${post.contest.name}">Contest Name</p>
+                <!-- Adjust based on your Contest model -->
+            </div>
+
+            <div>
+                <h2>Votes</h2>
+                <p th:text="'Total Votes: ' + ${post.votes.size()}">Total Votes</p>
+                <p th:text="'Score: ' + ${post.score}">Total Score</p>
+                <p th:text="'Average Score: ' + ${post.averageScore}">Average Score</p>
+            </div>
+        </div>
+    </main>
 </div>
 </body>
 </html>
