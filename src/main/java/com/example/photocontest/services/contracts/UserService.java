@@ -46,4 +46,14 @@ public interface UserService {
 
     User setRole(User user, String role);
     User removeRole(User user, String role);
+
+    List<User> searchUsersByUsername(String username);
+
+    void promoteUserToOrganizer(int userId);
+
+    void banUser(int userId);
+
+    void unbanUser(int userId);
+
+    List<User> findAllUsers();
 }

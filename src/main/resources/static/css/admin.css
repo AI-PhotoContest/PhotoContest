@@ -1,0 +1,45 @@
+.admin-container {
+    width: 90%;
+    margin: 20px auto;
+    text-align: center;
+}
+
+.user-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.user-table th, .user-table td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: center;
+}
+
+.user-table th {
+    background-color: #f4f4f4;
+}
+
+button {
+    padding: 5px 10px;
+    background-color: #1ab188;
+    border: none;
+    color: white;
+    cursor: pointer;
+}
+
+button.danger {
+    background-color: #e74c3c;
+}
+
+button:hover {
+    background-color: #16a085;
+}
+
+button.danger:hover {
+    background-color: #c0392b;
+}
+
+.user-filter {
+    margin-bottom: 20px;
+}

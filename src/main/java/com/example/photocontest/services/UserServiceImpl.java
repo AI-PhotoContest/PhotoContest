@@ -15,7 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -222,6 +221,47 @@ public class UserServiceImpl implements UserService {
     }
 
 
+    @Override
+    public List<User> searchUsersByUsername(String username) {
+        return userRepository.findByUsernameContainingIgnoreCase(username);
+    }
+
+    @Override
+    public void promoteUserToOrganizer(int userId) {
+        User user = userRepository.findById(userId);
+        if (user == null) {
+            throw new EntityNotFoundException("User", userId);
+        }
+        Role role = roleRepository.findByName(RoleType.ORGANIZER);
+        user.addRole(role);
+        userRepository.save(user);
+    }
+
+    @Override
+    public void banUser(int userId) {
+        User user = userRepository.findById(userId);
+        if (user == null) {
+            throw new EntityNotFoundException("User", userId);
+        }
+        user.setBanned(true);
+        userRepository.save(user);
+    }
+
+    @Override
+    public void unbanUser(int userId) {
+        User user = userRepository.findById(userId);
+        if (user == null) {
+            throw new EntityNotFoundException("User", userId);
+        }
+        user.setBanned(false);
+        userRepository.save(user);
+    }
+
+    @Override
+    public List<User> findAllUsers() {
+        return userRepository.findAll();
+    }
+
 
     private void checkEmailUnique(User user) {
         if (userRepository.findByEmail(user.getEmail()) != null) {
@@ -244,5 +284,7 @@ public class UserServiceImpl implements UserService {
         }
         return newUsername;
     }
+
+
 
 }

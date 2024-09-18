@@ -1,5 +1,6 @@
 package com.example.photocontest.models;
 
+import com.example.photocontest.models.enums.RoleType;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -62,5 +63,20 @@ public class User {
             authorities.add(new SimpleGrantedAuthority("ROLE_" + role.getName()));
         }
         return authorities;
+    }
+
+    public void addRole(Role role) {
+        if (roles == null) {
+            roles = new ArrayList<>();
+        }
+        roles.add(role);
+    }
+    public boolean hasRole(String roleName) {
+        for (Role role : roles) {
+            if (role.getName().equals(RoleType.valueOf(roleName))) {
+                return true;
+            }
+        }
+        return false;
     }
 }

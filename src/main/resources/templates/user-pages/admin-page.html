@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - User Management</title>
+    <link href="../../static/css/admin.css" rel="stylesheet" type="text/css" th:href="@{/css/admin.css}"/>
+</head>
+<body style="padding-top: 200px;">
+<div id="wrap">
+    <header id="header">
+        <div id="searchBarAndLogo" th:replace="~{fragments/searchBarAndLogo.html :: searchBarAndLogo}"></div>
+        <nav th:replace="~{fragments/navbar.html :: navBarMenu ('admin')}"></nav>
+    </header>
+
+    <div class="clear"></div>
+
+    <div class="admin-container">
+        <h1>User Management</h1>
+
+        <!-- Filter section for searching users -->
+        <div class="user-filter">
+            <form th:action="@{/admin/users}" method="get">
+                <input type="text" name="search" placeholder="Search by username or email" th:value="${searchQuery}">
+                <button type="submit">Filter</button>
+            </form>
+        </div>
+
+        <!-- Table for listing users -->
+        <table class="user-table">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Profile Picture</th>
+                <th>Username</th>
+                <th>Email</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Points</th>
+                <th>Role</th>
+                <th>Blocked</th>
+                <th>Banned</th>
+                <th>Votable</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <!-- Loop through users -->
+            <tr th:each="user : ${users}">
+                <td th:text="${user.id}">1</td>
+                <td>
+                    <img th:src="'/images/profile/' + ${user.profilePicture}" alt="Profile Picture" style="width: 50px; height: 50px; object-fit: cover;">
+                </td>
+                <td th:text="${user.username}">JohnDoe</td>
+                <td th:text="${user.email}">john@example.com</td>
+                <td th:text="${user.firstName}">John</td>
+                <td th:text="${user.lastName}">Doe</td>
+                <td th:text="${user.points.points}">100</td>
+                <td>
+                    <span th:each="role, iterStat : ${user.roles}" th:text="${role.name} + (', ')">USER</span>
+                </td>
+                <td th:text="${user.isBlocked ? 'Yes' : 'No'}">No</td>
+                <td th:text="${user.isBanned ? 'Yes' : 'No'}">No</td>
+                <td th:text="${user.isVotable ? 'Yes' : 'No'}">Yes</td>
+                <td>
+                    <!-- Promote to ORGANIZER -->
+                    <form th:action="@{/admin/users/promote}" method="post" th:unless="${user.hasRole('ORGANIZER')}">
+                        <input type="hidden" name="userId" th:value="${user.id}"/>
+                        <button type="submit">Promote to Organizer</button>
+                    </form>
+
+                    <!-- Block user -->
+                    <form th:action="@{/admin/users/block}" method="post" th:if="${!user.isBlocked}">
+                        <input type="hidden" name="userId" th:value="${user.id}"/>
+                        <button type="submit">Block</button>
+                    </form>
+
+                    <!-- Unblock user -->
+                    <form th:action="@{/admin/users/unblock}" method="post" th:if="${user.isBlocked}">
+                        <input type="hidden" name="userId" th:value="${user.id}"/>
+                        <button type="submit">Unblock</button>
+                    </form>
+
+                    <!-- Ban user -->
+                    <form th:action="@{/admin/users/ban}" method="post" th:if="${!user.isBanned}">
+                        <input type="hidden" name="userId" th:value="${user.id}"/>
+                        <button type="submit">Ban</button>
+                    </form>
+
+                    <!-- Unban user -->
+                    <form th:action="@{/admin/users/unban}" method="post" th:if="${user.isBanned}">
+                        <input type="hidden" name="userId" th:value="${user.id}"/>
+                        <button type="submit">Unban</button>
+                    </form>
+
+                    <!-- Delete user -->
+                    <form th:action="@{/admin/users/delete}" method="post">
+                        <input type="hidden" name="userId" th:value="${user.id}"/>
+                        <button type="submit" class="danger">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <footer id="footer" th:replace="~{fragments/footer.html :: footer}"></footer>
+</div>
+</body>
+</html>

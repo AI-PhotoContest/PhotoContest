@@ -104,13 +104,17 @@ public class ContestMvc extends BaseController {
 
         User loggedInUser = extractUserFromProvider(authentication);
 
-        // Check if the logged-in user is a judge for this contest
-        boolean isJudge = contest.getJudges().stream()
-                .anyMatch(judge -> judge.getId() == loggedInUser.getId());
+        if (loggedInUser != null) {
+            // Check if the logged-in user is a judge for this contest
+            boolean isJudge = contest.getJudges().stream()
+                    .anyMatch(judge -> judge.getId() == loggedInUser.getId());
+            model.addAttribute("isJudge", isJudge);
+        }
+
 
         model.addAttribute("posts", contestPosts);
         model.addAttribute("contest", contest);
-        model.addAttribute("isJudge", isJudge);
+
 
         return "contest-pages/contest-details";
     }
