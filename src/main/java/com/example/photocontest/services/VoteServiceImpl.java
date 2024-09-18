@@ -39,8 +39,4 @@ public class VoteServiceImpl implements VoteService {
         return voteRepository.save(vote);
     }
 
-    @Override
-    public Optional<Vote> findVoteById(int id) {
-        return voteRepository.findById(id);
-    }
 }

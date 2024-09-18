@@ -10,5 +10,4 @@ public interface VoteService {
 
     Vote saveVote(int photoPostId, int judgeId, VoteDto voteDto);
 
-    Optional<Vote> findVoteById(int id);
 }

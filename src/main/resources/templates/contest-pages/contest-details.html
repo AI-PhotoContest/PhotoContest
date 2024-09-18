@@ -261,7 +261,7 @@
             <div class="strong post-container" th:each="post : ${contest.photoPosts}">
                 <div class="post-item">
                     <div class="img-container">
-                        <a class="img-effect" th:href="@{/photo-posts/{id}(id=${post.id})}">
+                        <a class="img-effect" th:href="@{/contests/{id}(id=${contest.id})/judge-photo-post/{id}(id=${post.id})}">
                             <img th:src="@{'/images/photo-posts-images/' + ${post.image}}" alt="Photo" />
                         </a>
                     </div>
