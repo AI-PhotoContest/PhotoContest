@@ -23,6 +23,6 @@ public class NewsletterController {
         } catch (Exception e) {
             model.addAttribute("message", "There was an error. Please try again.");
         }
-        return "home";
+        return "redirect:/home";
     }
 }
