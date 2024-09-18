@@ -3,15 +3,19 @@ package com.example.photocontest.controllers.mvc;
 import com.example.photocontest.models.User;
 import com.example.photocontest.models.enums.RoleType;
 import com.example.photocontest.services.contracts.UserService;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import static com.example.photocontest.helpers.AuthenticationHelpers.checkPermission;
+import static com.example.photocontest.helpers.AuthenticationHelpers.extractUserFromProvider;
+
 @Controller
 @RequestMapping("/admin/users")
-public class AdminUserController {
+public class AdminUserController extends BaseController {
 
     private final UserService userService;
 
@@ -20,7 +24,11 @@ public class AdminUserController {
     }
 
     @GetMapping
-    public String listUsers(@RequestParam(value = "search", required = false) String searchQuery, Model model) {
+    public String listUsers(@RequestParam(value = "search", required = false) String searchQuery,
+                            Model model, Authentication authentication) {
+        User loggedUser = extractUserFromProvider(authentication);
+        checkPermission(loggedUser, "ADMIN");
+
         List<User> users;
         if (searchQuery != null && !searchQuery.isEmpty()) {
             users = userService.searchUsersByUsername(searchQuery);

@@ -53,6 +53,13 @@
                     <li><a th:href="@{/auth/logout}">Logout</a></li>
                 </ul>
             </li>
+            <li th:if="${isAdmin}">
+                <a style="color: #1ab188;">ADMIN</a>
+                <ul class="sub-menu">
+                    <!-- Profile Submenu -->
+                    <li><a th:href="@{/admin/users}">USERS PAGE</a></li>
+                </ul>
+            </li>
         </ul>
 
     </div>
