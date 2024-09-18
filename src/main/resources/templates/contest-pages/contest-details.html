@@ -225,22 +225,18 @@
     <div class="contest-summary">
         <div class="summary-item">
             <span class="icon">🕒</span>
-            <span>1 week, 2 days left to enter</span>
+            <span th:text="${'End date: ' + contest.endDate.dayOfMonth + ' ' + contest.endDate.month}">1 week, 2 days left to enter</span>
         </div>
         <div class="summary-item">
             <span class="icon">📷</span>
-            <span>3,318 photos entered</span>
+            <span th:text="${'Photos entered: ' + contest.getPhotoPosts().size()}">3,318 photos entered</span>
         </div>
         <div class="summary-item">
             <span class="icon">👤</span>
-            <span>1,146 photographers</span>
+            <span th:text="${'Users: ' + contest.getPhotoPosts().size()}">1,146 photographers</span>
         </div>
         <div class="summary-item">
-            <span class="icon">⚖️</span>
-            <span>3.0x Ranking points multiplier</span>
-        </div>
-        <div class="summary-item">
-            <span>Expert judge: <strong>Nick David</strong></span>
+            <span>Creator: <strong th:text="${contest.getCreator().getUsername()}">Nick David</strong></span>
         </div>
         <div class="enter-button">
             <!-- If user is logged in -->
