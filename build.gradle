@@ -18,52 +18,58 @@ repositories {
 }
 
 dependencies {
+    // Core Spring Boot starters
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-security'
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-    //Swagger dependencies
-    implementation 'org.springframework.boot:spring-boot-starter-validation:3.3.2'
-    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
-    implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
-    implementation 'javax.validation:validation-api:2.0.1.Final'
-    //OAuth2 client
-    implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
-
-    //Starter mail dependencies
     implementation 'org.springframework.boot:spring-boot-starter-mail'
 
-    //email validation dependencies
+    // Swagger for API documentation
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0'
+
+    // Thymeleaf Spring Security Integration
+    implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
+
+    // OAuth2 Client
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+
+    // Validation API
+    implementation 'javax.validation:validation-api:2.0.1.Final'
+
+    // Apache HTTP Client for email validation
     implementation 'org.apache.httpcomponents:httpclient:4.5.13'
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.15.2'
 
-    //OkHttp3 Image Generator dependencies
+    // OkHttp3 for API requests
     implementation 'com.squareup.okhttp3:okhttp:4.9.3'
     implementation 'org.json:json:20220320'
 
-    //for UI tests
-    testImplementation 'org.seleniumhq.selenium:selenium-java:4.0.0'
+    // .env file support
+    implementation 'io.github.cdimascio:java-dotenv:5.2.2'
 
+    // Lombok for reducing boilerplate code
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
 
-    runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
-    annotationProcessor 'jakarta.validation:jakarta.validation-api'
+    // MariaDB Driver
+    implementation 'org.mariadb.jdbc:mariadb-java-client'
+
+    // Spring Security testing
     testImplementation 'org.springframework.security:spring-security-test'
 
-
+    // Servlet API for compile-time use
     compileOnly 'javax.servlet:javax.servlet-api:4.0.1'
 
-
-
+    // DevTools for faster development
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
-    implementation 'org.springframework.boot:spring-boot-devtools'
+
+    // JUnit and Spring Boot testing dependencies
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
-
-
 }
+
 configurations {
     all {
         exclude group: 'commons-logging', module: 'commons-logging'
