@@ -63,7 +63,6 @@ public class HomeController extends BaseController {
         } else {
             randomPhotoPosts = posts;  // Ако има по-малко от 4 поста, вземи всички
         }
-
         model.addAttribute("recentPosts", recentPosts);
         model.addAttribute("formattedStartDate", formattedDate);
         model.addAttribute("newestContest", recentContests.get(0));
@@ -74,8 +73,6 @@ public class HomeController extends BaseController {
         model.addAttribute("httpServletRequest", request);
         return "home";
     }
-
-
 
 
 }

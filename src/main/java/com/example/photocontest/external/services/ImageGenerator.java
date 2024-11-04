@@ -69,6 +69,6 @@ public class ImageGenerator {
             }
         }
 
-        return outputFile.getPath();
+        return outputFile.getName();
     }
 }
