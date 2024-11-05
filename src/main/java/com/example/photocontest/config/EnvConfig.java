@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
 public class EnvConfig {
 
     public static void init() {
-        Dotenv dotenv = Dotenv.configure().load();
+        Dotenv dotenv = Dotenv.configure().ignoreIfMissing().load();
         dotenv.entries().forEach(entry -> System.setProperty(entry.getKey(), entry.getValue()));
     }
 }
